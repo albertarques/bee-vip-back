@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Entrepreneurship extends Authenticatable
+class Entrepreneurship extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
+
     protected $fillable = [
         'user_id',
         'title',
         'logo',
-        'image',
+        'product_img',
         'description',
-        'category_id',
-        'phone',
+        'category',
+        'phone_number',
         'email',
         'avg_score',
         'payment_1',
@@ -27,8 +27,7 @@ class Entrepreneurship extends Authenticatable
         'stock',
         'availability',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
-    
 }
