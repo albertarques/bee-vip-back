@@ -3,9 +3,10 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class CategoryFactory extends Factory
 {
@@ -17,8 +18,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
-            'name' => fake()->word(),
+            'name' => fake()->name(),
         ];
     }
 }
