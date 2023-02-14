@@ -13,17 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('entrepreneurship', function(Blueprint $table){
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        Schema::create('entrepreneurships', function(Blueprint $table){
+            $table->id();
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->string('title');
-            $table->string('image');
             $table->string('logo')->nullable();
-            $table->string('tags');
-            $table->string('company');
-            $table->string('location');
-            $table->string('email');
-            $table->string('website');
+            $table->string('image')->nullable();
             $table->longText('description');
+            $table->foreignId('category_id')->references('id')->on('categories');
+            $table->string('phone');
+            // $table->string('tags');
+            // $table->string('company');
+            // $table->string('location');
+            $table->string('email');
+            // $table->string('website');
             $table->integer('avg_score');
             $table->char('payment_1');
             $table->char('payment_2');
@@ -31,7 +34,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->boolean('availability');
             $table->timestamps();
-            }); 
+            });
     }
 
     /**
@@ -41,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entrepreneurship');
+        Schema::dropIfExists('entrepreneurships');
     }
 };
