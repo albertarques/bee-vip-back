@@ -32,8 +32,5 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EntrepreneurshipSeeder::class
         ]);
-
-
-
     }
 }
