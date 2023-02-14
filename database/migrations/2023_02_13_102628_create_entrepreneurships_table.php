@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('entrepreneurships', function(Blueprint $table){
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
             $table->string('logo')->nullable();
             $table->string('image')->nullable();
