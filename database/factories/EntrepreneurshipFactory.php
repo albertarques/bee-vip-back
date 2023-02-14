@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,13 +20,15 @@ class EntrepreneurshipFactory extends Factory
      */
     public function definition()
     {
+        $category = Category::all()->random();
+        $user = User::all()->random();
         return [
-        'user_id' => fake()->numberBetween($int1 = 1, $int2 = 21),
+        'user_id' => $user->id,
         'title'=> fake()->text($maxNbChars = 100),
         'logo'=> fake()->image($dir = null, $width = 173, $height= 80),
         'image'=> fake()->image($dir = null, $width = 390, $height= 203),
         'description'=> fake()->text($maxNbChars = 300),
-        'category_id' => fake()->numberBetween($int1 = 1, $int2 = 11),
+        'category_id' => $category->id,
         'phone'=> fake()->phoneNumber(),
         'email'=> fake()->email(),
         'avg_score'=> fake()->numberBetween($int1 = 0, $int2 = 5),
