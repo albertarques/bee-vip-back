@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class EntrepreneurshipSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(5)->create();
+        \App\Models\Entrepreneurship::factory(5)->create();
     }
 }
