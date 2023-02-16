@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('card_name');
             $table->string('card_number');
-            $table->date('expire_date');
+            $table->string('expire_date');
             $table->string('brand');
             $table->string('type');
             $table->timestamps();
