@@ -23,7 +23,6 @@ class PaymentMethodFactory extends Factory
             'card_name' => fake()->name(),
             'card_number' => fake()->creditCardNumber(),
             'expire_date'=> fake()->creditCardExpirationDateString(),
-            'brand' => fake()->word(),
             'type' => fake()->creditCardType(),
         ];
     }

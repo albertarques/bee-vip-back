@@ -13,7 +13,6 @@ class PaymentMethod extends Model
         'card_name',
         'card_number',
         'expire_date',
-        'brand',
         'type',
     ];
     public function user(){

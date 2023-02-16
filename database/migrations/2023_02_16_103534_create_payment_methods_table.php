@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('card_name');
             $table->string('card_number');
             $table->string('expire_date');
-            $table->string('brand');
             $table->string('type');
             $table->timestamps();
         });
