@@ -32,8 +32,8 @@ class EntrepreneurshipFactory extends Factory
         'payment_3',
         'stock'=> fake()->numberBetween($int1 = 0, $int2 = 50),
         'availability'=> fake()->boolean($chanceOfGettingTrue = 1),
-        'created_at',
-        'updated_at',
+        // 'created_at',
+        // 'updated_at',
         ];
 
     }

@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('image');
             $table->string('logo')->nullable();
-            $table->string('tags');
-            $table->string('company');
-            $table->string('location');
+            // $table->string('tags');
+            // $table->string('company');
+            // $table->string('location');
             $table->string('email');
             $table->string('website');
             $table->longText('description');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->boolean('availability');
             $table->timestamps();
-            }); 
+            });
     }
 
     /**
@@ -42,5 +42,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('entrepreneurship');
+        Schema::disableForeignKeyConstraints();
     }
 };
