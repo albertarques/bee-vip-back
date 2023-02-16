@@ -37,5 +37,10 @@ class DatabaseSeeder extends Seeder
             CommentsSeeder::class
         ]);
 
+        $this->call([
+            OrderSeeder::class
+        ]);
+
+
     }
 }
