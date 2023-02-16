@@ -18,11 +18,12 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
-        // $provider = User::all()->random();
+       
         $customer = User::all()->random();
 
         return [
-        'customer_id'=>$customer->id,
+     
+        'customer_id' => $customer->id
         ];
     }
 }
