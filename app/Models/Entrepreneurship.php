@@ -30,38 +30,16 @@ class Entrepreneurship extends Model
         'updated_at',
     ];
 
-}
-<?php
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 
-namespace App\Models;
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
-class Entrepreneurship extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
-    protected $fillable = [
-        'user_id',
-        'title',
-        'logo',
-        'image',
-        'description',
-        'category_id',
-        'phone',
-        'email',
-        'avg_score',
-        'payment_1',
-        'payment_2',
-        'payment_3',
-        'stock',
-        'availability',
-        'created_at',
-        'updated_at'
-    ];
-
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 
 }

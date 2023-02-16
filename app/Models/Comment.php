@@ -5,17 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Comment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'entrepreneurship_id',
+        'user_id',
+        'score',
+        'comment',
         'created_at',
         'updated_at',
     ];
 
-    public function entrepreneurships(){
-        return $this->hasMany(Entrepreneurship::class);
+    public function entrepreneurship(){
+        return $this->belongsTo(Entrepreneurship::class);
     }
+
 }

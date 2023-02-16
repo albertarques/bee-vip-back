@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\PaymentMethod;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,11 +28,29 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            CategoriesSeeder::class
+            CategorySeeder::class
         ]);
 
         $this->call([
             EntrepreneurshipSeeder::class
         ]);
+
+        $this->call([
+            CommentsSeeder::class
+        ]);
+
+        $this->call([
+            OrderSeeder::class
+        ]);
+
+        $this->call([
+            OrderDetailSeeder::class
+        ]);
+
+        $this->call([
+            PaymentMethodsSeeder::class
+        ]);
+
+
     }
 }

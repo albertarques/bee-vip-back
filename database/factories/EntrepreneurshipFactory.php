@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,19 +20,21 @@ class EntrepreneurshipFactory extends Factory
      */
     public function definition()
     {
+        $category = Category::all()->random();
+        $user = User::all()->random();
         return [
-        'user_id',
+        'user_id' => $user->id,
         'title'=> fake()->text($maxNbChars = 100),
-        'logo'=> fake()->image($width = 173, $height= 80),
-        'image'=> fake()->image($width = 390, $height= 203),
+        'logo'=> fake()->image($dir = null, $width = 173, $height= 80),
+        'image'=> fake()->image($dir = null, $width = 390, $height= 203),
         'description'=> fake()->text($maxNbChars = 300),
-        'category_id',
+        'category_id' => $category->id,
         'phone'=> fake()->phoneNumber(),
-        'email'=> fake()->mail(),
+        'email'=> fake()->email(),
         'avg_score'=> fake()->numberBetween($int1 = 0, $int2 = 5),
-        'payment_1',
-        'payment_2',
-        'payment_3',
+        'payment_1' => fake()->boolean(),
+        'payment_2' => fake()->boolean(),
+        'payment_3' => fake()->boolean(),
         'stock'=> fake()->numberBetween($int1 = 0, $int2 = 50),
         'availability'=> fake()->boolean($chanceOfGettingTrue = 1),
         // 'created_at',

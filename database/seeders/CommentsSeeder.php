@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CategoriesSeeder extends Seeder
+class CommentsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,6 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        //
-        \App\Models\Category::factory(10)->create();
+        \App\Models\Comment::factory(10)->create();
     }
 }
