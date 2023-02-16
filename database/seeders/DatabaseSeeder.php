@@ -32,5 +32,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EntrepreneurshipSeeder::class
         ]);
+
+        $this->call([
+            CommentsSeeder::class
+        ]);
+
     }
 }
