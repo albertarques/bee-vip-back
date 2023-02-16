@@ -40,6 +40,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             OrderSeeder::class
         ]);
+        
+        $this->call([
+            OrderDetailSeeder::class
+        ]);
+
 
 
     }
