@@ -24,7 +24,7 @@ class RoleAndPermissionSeeder extends Seeder
 
     $superAdminRole = Role::create(['name' => 'SuperAdmin']);
     $adminRole = Role::create(['name' => 'Admin']);
-    $userRole = Role::create(['name' => 'User']);
+    // $userRole = Role::create(['name' => 'User']);
 
     $superAdminRole->givePermissionTo([
       'approve-admin-users',
@@ -32,8 +32,8 @@ class RoleAndPermissionSeeder extends Seeder
       'edit-users',
       'delete-users',
       'ban-users',
-      'approve-entrepreneurship',
-      'delete-entrepreneurship',
+      'approve-entrepreneurships',
+      'delete-entrepreneurships',
     ]);
 
     $adminRole->givePermissionTo([
@@ -42,10 +42,9 @@ class RoleAndPermissionSeeder extends Seeder
       'delete-entrepreneurships',
     ]);
 
-    $userRole->givePermissionTo([
-      'create-entrepreneurships',
-      'edit-entrepreneurships',
-      'delete-entrepreneurships',
-    ]);
+    // $userRole->givePermissionTo([
+    //   'edit-entrepreneurships',
+    //   'delete-entrepreneurships',
+    // ]);
   }
 }
