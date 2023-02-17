@@ -29,9 +29,9 @@ return new class extends Migration
             $table->string('email');
             // $table->string('website');
             $table->integer('avg_score');
-            $table->char('payment_1');
-            $table->char('payment_2');
-            $table->char('payment_3');
+            $table->boolean('cash_payment');
+            $table->boolean('card_payment');
+            $table->boolean('bizum_payment');
             $table->integer('stock');
             $table->boolean('availability');
             $table->timestamps();
