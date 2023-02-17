@@ -18,6 +18,7 @@ class Comment extends Model
         'updated_at',
     ];
 
+    // Relation between Comments and Entrepreneurships Table
     public function entrepreneurship(){
         return $this->belongsTo(Entrepreneurship::class);
     }

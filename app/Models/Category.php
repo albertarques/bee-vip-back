@@ -15,6 +15,7 @@ class Category extends Model
         'updated_at',
     ];
 
+    // Relation between Categories and Entrepreneurships Table
     public function entrepreneurships(){
         return $this->hasMany(Entrepreneurship::class);
     }
