@@ -52,16 +52,16 @@ class User extends Authenticatable implements JWTSubject
     public function entrepreneurships(){
         return $this->hasMany(Entrepreneurship::class);
     }
-    
+
     public function orders(){
         return $this->hasMany(Order::class);
     }
 
     public function paymentMethods(){
         return $this->hasMany(PaymentMethod::class);
+    }
 
-    public function getJWTIdentifier()
-    {
+    public function getJWTIdentifier(){
         return $this->getKey();
     }
 
