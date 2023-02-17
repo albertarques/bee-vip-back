@@ -48,19 +48,22 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    // Databse Relationships
+    // Relation between Users and Entrepreneurships Table
     public function entrepreneurships(){
         return $this->hasMany(Entrepreneurship::class);
     }
 
+    // Relation between Users and Orders Table
     public function orders(){
         return $this->hasMany(Order::class);
     }
 
+    // Relation between Users and PaymentMethods Table
     public function paymentMethods(){
         return $this->hasMany(PaymentMethod::class);
     }
 
+    // Relation between Users and JWTIdentifier Table
     public function getJWTIdentifier(){
         return $this->getKey();
     }

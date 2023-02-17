@@ -15,6 +15,8 @@ class PaymentMethod extends Model
         'expire_date',
         'type',
     ];
+
+    // Relation between PaymentMethods and Users Table
     public function user(){
         return $this->belongsTo(User::class);
     }
