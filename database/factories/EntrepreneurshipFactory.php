@@ -31,7 +31,6 @@ class EntrepreneurshipFactory extends Factory
             'price' => fake()->randomFloat($nbMaxDecimals = 2, $min = 0.50, $max = 1000),
             'category_id' => $category->id,
             'avg_score'=> fake()->numberBetween($int1 = 0, $int2 = 5),
-            'phone'=> fake()->phoneNumber(),
             'cash_payment' => fake()->boolean(),
             'card_payment' => fake()->boolean(),
             'bizum_payment' => fake()->boolean(),
