@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'auth.entrepreneurships' => \App\Http\Middleware\EntrepreneurshipsAuth::class,
         'auth.users' => \App\Http\Middleware\UsersAuth::class,
         'auth.orders' => \App\Http\Middleware\OrdersAuth::class,
+        'auth.order_details' => \App\Http\Middleware\OrderDetailAuth::class,
         'auth.paymentMethods' => \App\Http\Middleware\PaymentMethodsAuth::class,
         'auth.roles' => \App\Http\Middleware\RolesAuth::class,
         'auth.roleAssignments' => \App\Http\Middleware\RolesAssignmentAuth::class,

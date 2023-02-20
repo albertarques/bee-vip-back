@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\PaymentMethodsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoleAsignmentsController;
@@ -60,6 +61,16 @@ Route::controller(OrdersController::class)->group(function () {
     Route::delete('order/{id}', [OrdersController::class, 'destroy'])->middleware('auth.orders');
 });
 
+Route::controller(OrderDetailsController::class)->group(function () {
+
+    // Detalles de la orden
+    // Route::get('users', [UsersController::class, 'index']);
+    Route::post('order_detail', [OrderDetailsController::class, 'store'])->middleware('auth.order_details');
+    Route::get('order_detail/{id}', [OrderDetailsController::class, 'show'])->middleware('auth.order_details');
+    Route::put('order_detail/{id}', [OrderDetailsController::class, 'update'])->middleware('auth.order_details');
+    Route::delete('order_detail/{id}', [OrderDetailsController::class, 'destroy'])->middleware('auth.order_details');
+});
+
 Route::controller(PaymentMethodsController::class)->group(function () {
 
     // Métodos de pago
@@ -89,4 +100,3 @@ Route::controller(RoleAsignmentsController::class)->group(function () {
     Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.roleAssignments');
     Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.roleAssignments');
 });
-
