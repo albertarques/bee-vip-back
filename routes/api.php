@@ -40,8 +40,8 @@ Route::controller(RoleAsignmentsController::class)->group(function () {
 
     // Emprendimientos
     Route::get('roleAssignments', [RoleAsignmentsController::class, 'index']);
-    Route::post('roleAssignment', [RoleAsignmentsController::class, 'store'])->middleware('auth.entrepreneurships');
+    Route::post('roleAssignment', [RoleAsignmentsController::class, 'store'])->middleware('auth.roleAssignments');
     Route::get('roleAssignment/{id}', [RoleAsignmentsController::class, 'show']);
-    Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.entrepreneurships');
-    Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.entrepreneurships');
+    Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.roleAssignments');
+    Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.roleAssignments');
 });
