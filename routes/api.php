@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
+use App\Http\Controllers\PaymentMethodsController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
@@ -33,6 +34,14 @@ Route::controller(EntrepreneurshipsController::class)->group(function () {
     Route::get('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'show']);
     Route::put('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'update'])->middleware('auth.entrepreneurships');
     Route::delete('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'destroy'])->middleware('auth.entrepreneurships');
+});
 
+Route::controller(PaymentMethodsController::class)->group(function () {
 
+    // Emprendimientos
+    Route::get('payment_methods', [PaymentMethodsController::class, 'index']);
+    Route::post('payment_method', [PaymentMethodsController::class, 'store'])->middleware('auth.paymentMethods');
+    Route::get('payment_method/{id}', [PaymentMethodsController::class, 'show']);
+    Route::put('payment_method/{id}', [PaymentMethodsController::class, 'update'])->middleware('auth.paymentMethods');
+    Route::delete('payment_method/{id}', [PaymentMethodsController::class, 'destroy'])->middleware('auth.paymentMethods');
 });
