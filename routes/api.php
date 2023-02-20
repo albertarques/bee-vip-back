@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
+use App\Http\Controllers\UsersController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
