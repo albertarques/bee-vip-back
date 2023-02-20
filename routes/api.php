@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
 use App\Http\Controllers\PaymentMethodsController;
+use App\Http\Controllers\RolesController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
@@ -38,10 +39,20 @@ Route::controller(EntrepreneurshipsController::class)->group(function () {
 
 Route::controller(PaymentMethodsController::class)->group(function () {
 
-    // Emprendimientos
+    // Métodos de pago
     Route::get('payment_methods', [PaymentMethodsController::class, 'index']);
     Route::post('payment_method', [PaymentMethodsController::class, 'store'])->middleware('auth.paymentMethods');
     Route::get('payment_method/{id}', [PaymentMethodsController::class, 'show']);
     Route::put('payment_method/{id}', [PaymentMethodsController::class, 'update'])->middleware('auth.paymentMethods');
     Route::delete('payment_method/{id}', [PaymentMethodsController::class, 'destroy'])->middleware('auth.paymentMethods');
+});
+
+Route::controller(RolesController::class)->group(function () {
+
+    // Roles
+    Route::get('roles', [RolesController::class, 'index']);
+    Route::post('role', [RolesController::class, 'store'])->middleware('auth.entrepreneurships');
+    Route::get('role/{id}', [RolesController::class, 'show']);
+    Route::put('role/{id}', [RolesController::class, 'update'])->middleware('auth.entrepreneurships');
+    Route::delete('role/{id}', [RolesController::class, 'destroy'])->middleware('auth.entrepreneurships');
 });
