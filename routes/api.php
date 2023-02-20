@@ -23,6 +23,7 @@ Route::controller(CategoriesController::class)->group(function () {
     Route::get('category/{id}', [CategoriesController::class, 'show']);
     Route::put('category/{id}', [CategoriesController::class, 'update'])->middleware('auth.entrepreneurships');
     Route::delete('category/{id}', [CategoriesController::class, 'destroy'])->middleware('auth.entrepreneurships');
+});
 
 Route::controller(EntrepreneurshipsController::class)->group(function () {
 
