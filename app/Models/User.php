@@ -20,11 +20,11 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'username',
-        // 'name',
-        // 'surname',
+        'picture',
         'email',
         'password',
         'phone',
+        'state',
         'created_at',
         'updated_at'
     ];
@@ -66,6 +66,11 @@ class User extends Authenticatable implements JWTSubject
     // Relation between Users and JWTIdentifier Table
     public function getJWTIdentifier(){
         return $this->getKey();
+    }
+
+    // Relation between Users and RoleAssignments Table
+    public function roleAssignment(){
+        return $this->hasOne(RoleAssignment::class);
     }
 
     /**
