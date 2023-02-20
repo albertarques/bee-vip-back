@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\OrderDetailsController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
@@ -55,4 +56,14 @@ Route::controller(OrdersController::class)->group(function () {
     Route::get('order/{id}', [OrdersController::class, 'show'])->middleware('auth.orders');
     Route::put('order/{id}', [OrdersController::class, 'update'])->middleware('auth.orders');
     Route::delete('order/{id}', [OrdersController::class, 'destroy'])->middleware('auth.orders');
+});
+
+Route::controller(OrderDetailsController::class)->group(function () {
+
+    // Detalles de la orden
+    // Route::get('users', [UsersController::class, 'index']);
+    Route::post('order_detail', [OrderDetailsController::class, 'store'])->middleware('auth.order_details');
+    Route::get('order_detail/{id}', [OrderDetailsController::class, 'show'])->middleware('auth.order_details');
+    Route::put('order_detail/{id}', [OrderDetailsController::class, 'update'])->middleware('auth.order_details');
+    Route::delete('order_detail/{id}', [OrderDetailsController::class, 'destroy'])->middleware('auth.order_details');
 });
