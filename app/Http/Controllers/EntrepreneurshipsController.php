@@ -25,8 +25,23 @@ class EntrepreneurshipsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'logo' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'product_img' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'price' => 'required|float',
+            'category_id' => 'required|string|max:255',
+            'avg_score' => 'required|float',
+            'cash_payment' => 'required|boolean',
+            'card_payment' => 'required|boolean',
+            'bizum_payment' => 'required|boolean',
+            'stock' => 'required|integer|max:3',
+            'availability' => 'required|boolean',
+            'phone' => 'required|integer|max:15',
+            'email' => 'required|integer|max:255',
+            'location' => 'required|integer|max:255',
         ]);
 
         $entrepreneurship = Entrepreneurship::create([
@@ -67,8 +82,23 @@ class EntrepreneurshipsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'user_id' => 'required|string|max:255',
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'logo' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'product_img' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'price' => 'required|float',
+            'category_id' => 'required|string|max:255',
+            'avg_score' => 'required|float',
+            'cash_payment' => 'required|boolean',
+            'card_payment' => 'required|boolean',
+            'bizum_payment' => 'required|boolean',
+            'stock' => 'required|integer|max:3',
+            'availability' => 'required|boolean',
+            'phone' => 'required|integer|max:15',
+            'email' => 'required|integer|max:255',
+            'location' => 'required|integer|max:255',
         ]);
 
         $entrepreneurship = Entrepreneurship::find($id);
