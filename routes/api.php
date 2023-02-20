@@ -33,6 +33,14 @@ Route::controller(EntrepreneurshipsController::class)->group(function () {
     Route::get('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'show']);
     Route::put('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'update'])->middleware('auth.entrepreneurships');
     Route::delete('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'destroy'])->middleware('auth.entrepreneurships');
+});
 
+Route::controller(UsersController::class)->group(function () {
 
+    // Usuarios
+    // Route::get('users', [UsersController::class, 'index']);
+    Route::post('user', [UsersController::class, 'store'])->middleware('auth.users');
+    Route::get('user/{id}', [UsersController::class, 'show'])->middleware('auth.users');
+    Route::put('user/{id}', [UsersController::class, 'update'])->middleware('auth.users');
+    Route::delete('user/{id}', [UsersController::class, 'destroy'])->middleware('auth.users');
 });
