@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'auth.entrepreneurships' => \App\Http\Middleware\EntrepreneurshipsAuth::class,
         'auth.paymentMethods' => \App\Http\Middleware\PaymentMethodsAuth::class,
         'auth.roles' => \App\Http\Middleware\RolesAuth::class,
+        'auth.roleAssignments' => \App\Http\Middleware\RolesAssignmentAuth::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
