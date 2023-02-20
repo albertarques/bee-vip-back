@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
+use App\Http\Controllers\RolesController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
@@ -33,6 +34,14 @@ Route::controller(EntrepreneurshipsController::class)->group(function () {
     Route::get('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'show']);
     Route::put('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'update'])->middleware('auth.entrepreneurships');
     Route::delete('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'destroy'])->middleware('auth.entrepreneurships');
+});
 
+Route::controller(RolesController::class)->group(function () {
 
+    // Roles
+    Route::get('roles', [RolesController::class, 'index']);
+    Route::post('role', [RolesController::class, 'store'])->middleware('auth.entrepreneurships');
+    Route::get('role/{id}', [RolesController::class, 'show']);
+    Route::put('role/{id}', [RolesController::class, 'update'])->middleware('auth.entrepreneurships');
+    Route::delete('role/{id}', [RolesController::class, 'destroy'])->middleware('auth.entrepreneurships');
 });
