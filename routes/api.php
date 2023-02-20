@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
+use App\Http\Controllers\RoleAsignmentsController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
@@ -33,6 +34,14 @@ Route::controller(EntrepreneurshipsController::class)->group(function () {
     Route::get('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'show']);
     Route::put('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'update'])->middleware('auth.entrepreneurships');
     Route::delete('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'destroy'])->middleware('auth.entrepreneurships');
+});
 
+Route::controller(RoleAsignmentsController::class)->group(function () {
 
+    // Emprendimientos
+    Route::get('roleAssignments', [RoleAsignmentsController::class, 'index']);
+    Route::post('roleAssignment', [RoleAsignmentsController::class, 'store'])->middleware('auth.entrepreneurships');
+    Route::get('roleAssignment/{id}', [RoleAsignmentsController::class, 'show']);
+    Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.entrepreneurships');
+    Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.entrepreneurships');
 });
