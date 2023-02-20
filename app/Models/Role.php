@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Roles extends Model
+class Role extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'role_name',
-        'user_id',
     ];
+
+    // // Relation between Roles and RoleAssignments Table
+    public function roleassignments(){
+        return $this->hasMany(RoleAssignment::class);
+    }
 
 }
