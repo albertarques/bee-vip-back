@@ -8,6 +8,9 @@ use App\Http\Controllers\EntrepreneurshipsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\OrderDetailsController;
+use App\Http\Controllers\PaymentMethodsController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\RoleAsignmentsController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
@@ -66,4 +69,34 @@ Route::controller(OrderDetailsController::class)->group(function () {
     Route::get('order_detail/{id}', [OrderDetailsController::class, 'show'])->middleware('auth.order_details');
     Route::put('order_detail/{id}', [OrderDetailsController::class, 'update'])->middleware('auth.order_details');
     Route::delete('order_detail/{id}', [OrderDetailsController::class, 'destroy'])->middleware('auth.order_details');
+});
+
+Route::controller(PaymentMethodsController::class)->group(function () {
+
+    // Métodos de pago
+    Route::get('payment_methods', [PaymentMethodsController::class, 'index']);
+    Route::post('payment_method', [PaymentMethodsController::class, 'store'])->middleware('auth.paymentMethods');
+    Route::get('payment_method/{id}', [PaymentMethodsController::class, 'show']);
+    Route::put('payment_method/{id}', [PaymentMethodsController::class, 'update'])->middleware('auth.paymentMethods');
+    Route::delete('payment_method/{id}', [PaymentMethodsController::class, 'destroy'])->middleware('auth.paymentMethods');
+});
+
+Route::controller(RolesController::class)->group(function () {
+
+    // Roles
+    Route::get('roles', [RolesController::class, 'index']);
+    Route::post('role', [RolesController::class, 'store'])->middleware('auth.entrepreneurships');
+    Route::get('role/{id}', [RolesController::class, 'show']);
+    Route::put('role/{id}', [RolesController::class, 'update'])->middleware('auth.entrepreneurships');
+    Route::delete('role/{id}', [RolesController::class, 'destroy'])->middleware('auth.entrepreneurships');
+});
+
+Route::controller(RoleAsignmentsController::class)->group(function () {
+
+    // Asignación de roles
+    Route::get('roleAssignments', [RoleAsignmentsController::class, 'index']);
+    Route::post('roleAssignment', [RoleAsignmentsController::class, 'store'])->middleware('auth.roleAssignments');
+    Route::get('roleAssignment/{id}', [RoleAsignmentsController::class, 'show']);
+    Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.roleAssignments');
+    Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.roleAssignments');
 });
