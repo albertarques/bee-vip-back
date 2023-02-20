@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\EntrepreneurshipsController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PaymentMethodsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoleAsignmentsController;
@@ -38,14 +40,24 @@ Route::controller(EntrepreneurshipsController::class)->group(function () {
     Route::delete('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'destroy'])->middleware('auth.entrepreneurships');
 });
 
-Route::controller(RoleAsignmentsController::class)->group(function () {
+Route::controller(UsersController::class)->group(function () {
 
-    // Asignación de roles
-    Route::get('roleAssignments', [RoleAsignmentsController::class, 'index']);
-    Route::post('roleAssignment', [RoleAsignmentsController::class, 'store'])->middleware('auth.roleAssignments');
-    Route::get('roleAssignment/{id}', [RoleAsignmentsController::class, 'show']);
-    Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.roleAssignments');
-    Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.roleAssignments');
+    // Usuarios
+    // Route::get('users', [UsersController::class, 'index']);
+    Route::post('user', [UsersController::class, 'store'])->middleware('auth.users');
+    Route::get('user/{id}', [UsersController::class, 'show'])->middleware('auth.users');
+    Route::put('user/{id}', [UsersController::class, 'update'])->middleware('auth.users');
+    Route::delete('user/{id}', [UsersController::class, 'destroy'])->middleware('auth.users');
+});
+
+Route::controller(OrdersController::class)->group(function () {
+
+    // Ordenes
+    // Route::get('users', [UsersController::class, 'index']);
+    Route::post('order', [OrdersController::class, 'store'])->middleware('auth.orders');
+    Route::get('order/{id}', [OrdersController::class, 'show'])->middleware('auth.orders');
+    Route::put('order/{id}', [OrdersController::class, 'update'])->middleware('auth.orders');
+    Route::delete('order/{id}', [OrdersController::class, 'destroy'])->middleware('auth.orders');
 });
 
 Route::controller(PaymentMethodsController::class)->group(function () {
@@ -67,3 +79,14 @@ Route::controller(RolesController::class)->group(function () {
     Route::put('role/{id}', [RolesController::class, 'update'])->middleware('auth.entrepreneurships');
     Route::delete('role/{id}', [RolesController::class, 'destroy'])->middleware('auth.entrepreneurships');
 });
+
+Route::controller(RoleAsignmentsController::class)->group(function () {
+
+    // Asignación de roles
+    Route::get('roleAssignments', [RoleAsignmentsController::class, 'index']);
+    Route::post('roleAssignment', [RoleAsignmentsController::class, 'store'])->middleware('auth.roleAssignments');
+    Route::get('roleAssignment/{id}', [RoleAsignmentsController::class, 'show']);
+    Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.roleAssignments');
+    Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.roleAssignments');
+});
+
