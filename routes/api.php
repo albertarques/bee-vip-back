@@ -64,7 +64,7 @@ Route::controller(UsersController::class)->group(function () {
 Route::controller(OrdersController::class)->group(function () {
 
     // Ordenes
-    // Route::get('users', [UsersController::class, 'index']);
+    // Route::get('users', [OrdersController::class, 'index']);
     Route::post('order', [OrdersController::class, 'store'])->middleware('auth.orders');
     Route::get('order/{id}', [OrdersController::class, 'show'])->middleware('auth.orders');
     Route::put('order/{id}', [OrdersController::class, 'update'])->middleware('auth.orders');
@@ -74,7 +74,7 @@ Route::controller(OrdersController::class)->group(function () {
 Route::controller(OrderDetailsController::class)->group(function () {
 
     // Detalles de la orden
-    // Route::get('users', [UsersController::class, 'index']);
+    // Route::get('users', [OrderDetailsController::class, 'index']);
     Route::post('order_detail', [OrderDetailsController::class, 'store'])->middleware('auth.order_details');
     Route::get('order_detail/{id}', [OrderDetailsController::class, 'show'])->middleware('auth.order_details');
     Route::put('order_detail/{id}', [OrderDetailsController::class, 'update'])->middleware('auth.order_details');
