@@ -35,10 +35,11 @@ class EntrepreneurshipFactory extends Factory
             'card_payment' => fake()->boolean(),
             'bizum_payment' => fake()->boolean(),
             'stock'=> fake()->numberBetween($int1 = 0, $int2 = 50),
-            'availability'=> fake()->boolean(),
+            'available'=> fake()->boolean(),
             'phone_number' => fake()->phoneNumber(),
             'email'=> fake()->email(),
             'location' => fake()->city(),
+            'state' => fake()->numberBetween($int1 = 0, $int2 = 2),
         ];
 
     }
