@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entrepreneurship;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -21,6 +23,7 @@ class UsersController extends Controller
         ]);
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
@@ -28,8 +31,8 @@ class UsersController extends Controller
             'picture' => 'nullable|string|max:255',
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
-            'phone' => 'required|string|max:15',
-            'state' => 'nullable|boolean|max:1', 
+            'phone' => 'required|string|digits_between:9,15',
+            'state' => 'required|integer|max:0',
         ]);
 
         $user = User::create([
@@ -38,7 +41,7 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'phone' => $request->phone,
-            'state' => $request->state,            
+            'state' => $request->state,
         ]);
 
         return response()->json([
@@ -51,9 +54,15 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+        $user_id = $user->id;
+        $entrepreneurships = Entrepreneurship::all()->where('user_id', '=', $user_id);
+        // $role = Role::find()->where($user_id = 'user_id');
+
         return response()->json([
             'status' => 'success',
-            'users' => $user,
+            'user' => $user,
+            // 'role' => $role,
+            'entrepreneurships' => $entrepreneurships,
         ]);
     }
 
@@ -64,8 +73,8 @@ class UsersController extends Controller
             'picture' => 'nullable|string|max:255',
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
-            'phone' => 'required|string|max:15',
-            'state' => 'nullable|boolean|max:1', 
+            'phone' => 'required|string|digits_between:9,15',
+            'state' => 'required|integer|min:0|max:2',
         ]);
 
         $user = User::find($id);
