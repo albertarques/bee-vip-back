@@ -23,11 +23,11 @@ return new class extends Migration
             $table->longText('description');
             $table->float('price');
             $table->foreignId('category_id')->references('id')->on('categories');
-            $table->integer('avg_score');
+            $table->integer('avg_score')->nullable();
             $table->boolean('cash_payment');
             $table->boolean('card_payment');
             $table->boolean('bizum_payment');
-            $table->integer('stock');
+            $table->integer('stock')->nullable();
             $table->boolean('availability');
             $table->string('phone_number');
             $table->string('email');
