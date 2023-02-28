@@ -56,11 +56,10 @@ class AuthController extends Controller
     public function register(Request $request){
         $request->validate([
             'username' => 'required|string|max:255',
-            // 'name' => 'required|string|max:255',
-            // 'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'phone' => 'required|string|max:12|unique:users',
+            'state' => 'required|integer|min:1|max:3'
         ]);
 
         $user = User::create([
@@ -70,6 +69,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
+            'state' => 1,
         ]);
 
         $token = Auth::login($user);
