@@ -17,27 +17,32 @@ class Entrepreneurship extends Model
         'logo',
         'product_img',
         'description',
-        'category',
-        'phone_number',
-        'email',
+        'price',
+        'category_id',
         'avg_score',
-        'payment_1',
-        'payment_2',
-        'payment_3',
+        'cash_payment',
+        'card_payment',
+        'bizum_payment',
         'stock',
         'availability',
+        'phone_number',
+        'email',
+        'location',
         'created_at',
         'updated_at',
     ];
 
+    // Relation between Entrepreneurships and Categories Table
     public function category(){
         return $this->belongsTo(Category::class);
     }
 
+    // Relation between Entrepreneurships and Users Table
     public function user(){
         return $this->belongsTo(User::class);
     }
 
+    // Relation between Entrepreneurships and Comments Table
     public function comments(){
         return $this->hasMany(Comment::class);
     }

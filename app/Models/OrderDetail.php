@@ -19,11 +19,12 @@ class OrderDetail extends Model
         'updated_at'
     ];
 
-    
+    // Relation between OrderDetails and Order Table
     public function order(){
         return $this->belongsTo(Order::class);
     }
 
+    // Relation between OrderDetails and Entrepreneurship Table
     public function entrepreurship(){
         return $this->hasMany(Entrepreneurship::class);
     }
