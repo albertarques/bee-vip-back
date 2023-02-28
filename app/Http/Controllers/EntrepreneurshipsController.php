@@ -17,9 +17,9 @@ class EntrepreneurshipsController extends Controller
         $this->middleware('api');
     }
 
-    public function indexAproved()
+    public function approvedIndex()
     {
-        // Obtiene todos los emprendimientos y todas las categorías.
+        // Obtiene todos los emprendimientos aprovados y todas las categorías.
         $entrepreneurships = Entrepreneurship::all()->where('state', '=', '1');
         $category = Category::all();
 
@@ -30,14 +30,16 @@ class EntrepreneurshipsController extends Controller
         ]);
     }
 
-    public function indexPending()
+    public function pendingIndex()
     {
         // Obtiene todos los emprendimientos pendientes de aprovación.
         $entrepreneurships = Entrepreneurship::all()->where('state', '=', '0');
+        $category = Category::all();
 
         return response()->json([
             'status' => 'success',
             'entrepreneurships' => $entrepreneurships,
+            'categories' => $category,
         ]);
     }
 
