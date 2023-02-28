@@ -32,7 +32,7 @@ class UsersController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
-            'state' => 'required|integer|max:0',
+            'state' => 'required|integer|min:1|max:3',
         ]);
 
         $user = User::create([
@@ -74,7 +74,7 @@ class UsersController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
-            'state' => 'required|integer|min:0|max:2',
+            'state' => 'required|integer|min:1|max:3',
         ]);
 
         $user = User::find($id);
