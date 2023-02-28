@@ -24,10 +24,12 @@ class Entrepreneurship extends Model
         'card_payment',
         'bizum_payment',
         'stock',
+        'available',
         'availability',
         'phone_number',
         'email',
         'location',
+        'state',
         'created_at',
         'updated_at',
     ];

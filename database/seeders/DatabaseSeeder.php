@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call([
-            RoleSeeder::class
-        ]);
+        // $this->call([
+        //     RoleSeeder::class
+        // ]);
 
         $this->call([
             UserSeeder::class
@@ -54,9 +54,14 @@ class DatabaseSeeder extends Seeder
             PaymentMethodsSeeder::class
         ]);
 
+        // $this->call([
+        //     RoleAssignmentSeeder::class
+        // ]);
+
         $this->call([
-            RoleAssignmentSeeder::class
+            RoleAndPermissionSeeder::class
         ]);
+
 
     }
 }
