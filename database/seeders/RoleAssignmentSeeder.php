@@ -29,7 +29,7 @@ class RoleAssignmentSeeder extends Seeder
         ]);
         \App\Models\RoleAssignment::create([
             'user_id'=>'4',
-            'role_id'=>'2',
+            'role_id'=>'1',
         ]);
         \App\Models\RoleAssignment::create([
             'user_id'=>'5',
