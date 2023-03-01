@@ -44,6 +44,8 @@ class UsersController extends Controller
             // 'state' => $request->state,
         ]);
 
+        $user->assignRole('user');
+
         return response()->json([
             'status' => 'success',
             'message' => 'user created successfully',

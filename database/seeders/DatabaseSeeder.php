@@ -22,10 +22,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // $this->call([
-        //     RoleSeeder::class
-        // ]);
-
         $this->call([
             UserSeeder::class
         ]);
@@ -53,10 +49,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PaymentMethodsSeeder::class
         ]);
-
-        // $this->call([
-        //     RoleAssignmentSeeder::class
-        // ]);
 
         $this->call([
             RoleAndPermissionSeeder::class
