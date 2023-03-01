@@ -14,13 +14,19 @@ class EntrepreneurshipsController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('api');
+        // $this->middleware('api');
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+        // Middleware only applied to these methods
+        $this->middleware(['permission:create'])->only([
+            'store',
+            'edit'
+        ]);
     }
 
     public function approvedIndex()
     {
         // Obtiene todos los emprendimientos aprovados y todas las categorías.
-        $entrepreneurships = Entrepreneurship::all()->where('state', '=', '1');
+        $entrepreneurships = Entrepreneurship::all();
         $category = Category::all();
 
         return response()->json([
@@ -33,7 +39,7 @@ class EntrepreneurshipsController extends Controller
     public function pendingIndex()
     {
         // Obtiene todos los emprendimientos pendientes de aprovación.
-        $entrepreneurships = Entrepreneurship::all()->where('state', '=', '0');
+        $entrepreneurships = Entrepreneurship::all();
         $category = Category::all();
 
         return response()->json([
@@ -62,7 +68,7 @@ class EntrepreneurshipsController extends Controller
             'phone' => 'required|string|digits_between:9,15',
             'email' => 'required|integer|max:255',
             'location' => 'required|integer|max:255',
-            'state' => 'required|integer|max:0',
+            // 'state' => 'required|integer|max:0',
         ]);
 
         $entrepreneurship = Entrepreneurship::create([
@@ -82,8 +88,7 @@ class EntrepreneurshipsController extends Controller
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'location' => $request->location,
-            'state' => $request->state,
-
+            // 'state' => $request->state,
         ]);
 
         return response()->json([
@@ -131,7 +136,7 @@ class EntrepreneurshipsController extends Controller
             'phone' => 'required|string|digits_between:9,15',
             'email' => 'required|integer|max:255',
             'location' => 'required|integer|max:255',
-            'state' => 'required|integer|min:0|max:2'
+            // 'state' => 'required|integer|min:0|max:2'
         ]);
 
         $entrepreneurship = Entrepreneurship::find($id);
