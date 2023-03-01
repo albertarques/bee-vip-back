@@ -10,7 +10,7 @@ class RoleAndPermissionSeeder extends Seeder
 {
     public function run()
     {
-        Permission::create(['name' => 'index']);
+        Permission::create(['name' => 'store']);
         // Permission::create(['name' => 'edit-me']);
         // Permission::create(['name' => 'delete-me']);
 
@@ -18,12 +18,12 @@ class RoleAndPermissionSeeder extends Seeder
         // Permission::create(['name' => 'edit-order']);
         // Permission::create(['name' => 'delete-blog-posts']);
 
-        $userRole = Role::create(['name' => 'User']);
-        $adminRole = Role::create(['name' => 'Admin']);
-        $editorRole = Role::create(['name' => 'Superadmin']);
+        $userRole = Role::create(['name' => 'user']);
+        $adminRole = Role::create(['name' => 'admin']);
+        $editorRole = Role::create(['name' => 'superadmin']);
 
         $userRole->givePermissionTo([
-            'index',
+            'store',
         //     'delete-users',
         //     'create-blog-posts',
         //     'edit-blog-posts',
