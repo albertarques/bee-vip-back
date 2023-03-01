@@ -10,6 +10,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\PaymentMethodsController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoleAsignmentsController;
 
@@ -89,6 +90,10 @@ Route::controller(PaymentMethodsController::class)->group(function () {
     Route::get('payment_method/{id}', [PaymentMethodsController::class, 'show']);
     Route::put('payment_method/{id}', [PaymentMethodsController::class, 'update'])->middleware('auth.paymentMethods');
     Route::delete('payment_method/{id}', [PaymentMethodsController::class, 'destroy'])->middleware('auth.paymentMethods');
+});
+
+Route::controller(PaymentController::class)->group(function () {
+  Route::post('/payments', [PaymentController::class, 'process']);
 });
 
 Route::controller(RolesController::class)->group(function () {
