@@ -45,7 +45,7 @@ Route::controller(AuthController::class)->group(function () {
 // Rutas con Autorización y Permisos
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::controller(UsersController::class)->group(function () {
-        Route::put('/user/{id}/update', 'update')->middleware('can:update-user-profile');
+        Route::patch('/user/{id}/update', 'update')->middleware('can:update-user-profile');
         Route::delete('/user/{id}/delete', 'destroy')->middleware('can:delete-user-profile');
     });
 
