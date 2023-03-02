@@ -81,6 +81,7 @@ class RoleAndPermissionSeeder extends Seeder
             MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
             MyPermission::CAN_UPDATE_ENTREPRENEURSHIP,
             MyPermission::CAN_DELETE_ENTREPRENEURSHIP,
+            MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
 
         ]);
 
