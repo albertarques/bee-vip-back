@@ -15,12 +15,11 @@ class AvailabilityStatesSeeder extends Seeder
     public function run()
     {
         \App\Models\AvailabilityState::create([
-            'name' => 'available',
-            
+            'name' => 'unavailable',
         ]);
 
         \App\Models\AvailabilityState::create([
-             'name' => 'unavailable',
+            'name' => 'available',
          ]);
     }
 }
