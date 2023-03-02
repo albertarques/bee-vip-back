@@ -79,11 +79,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => $request->card_payment,
             'bizum_payment' => $request->bizum_payment,
             'stock' => $request->stock,
-            'available' => $request->available,
+            'availability_state' => $request->availability_state,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'location' => $request->location,
-            // 'state' => $request->state,
+            'inspection_state' => $request->inspection_state,
         ]);
 
         return response()->json([
@@ -127,11 +127,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => 'required|boolean',
             'bizum_payment' => 'required|boolean',
             'stock' => 'nullable|integer|max:500',
-            'available' => 'required|boolean',
+            'availability_state' => 'required|integer|min:1|max:2',
             'phone' => 'required|string|digits_between:9,15',
             'email' => 'required|integer|max:255',
             'location' => 'required|integer|max:255',
-            // 'state' => 'required|integer|min:0|max:2'
+            'inspection_state' => 'requiered|integer|min:1|max:3',
         ]);
 
         $entrepreneurship = Entrepreneurship::find($id);

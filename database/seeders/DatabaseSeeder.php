@@ -22,6 +22,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class
         ]);
+        
+        $this->call([
+            AvailabilityStatesSeeder::class
+        ]);
+
+        $this->call([
+            InspectionStatesSeeder::class
+        ]);
 
         $this->call([
             EntrepreneurshipSeeder::class
@@ -46,6 +54,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleAndPermissionSeeder::class
         ]);
+
+       
 
 
     }
