@@ -14,7 +14,7 @@ use App\Http\Controllers\PaymentMethodsController;
 // ** Rutas públicas ******************************************************
     // Entrepreneurships
     Route::controller(EntrepreneurshipsController::class)->group(function () {
-        Route::get('entrepreneurships', 'index');
+        Route::get('entrepreneurships', 'approvedIndex');
         Route::get('entrepreneurship/{id}', 'show');
     });
 
@@ -71,23 +71,15 @@ Route::group(['middleware' => 'auth.jwt'], function () {
         Route::patch('/entrepreneurship/{id}/update', 'update')->middleware('can:update-entrepreneurship');
         Route::delete('/entrepreneurship/{id}/delete', 'destroy')->middleware('can:delete-entrepreneurship');
         Route::get('/entrepreneurships_pending', 'store')->middleware('can:create-entrepreneurship');
+        Route::get('/entrepreneurships/pending', 'pendingIndex')->middleware('can:view-pending-entrepreneurships');
 
     });
 
     Route::controller(CommentsController::class)->group(function () {
-        Route::post('/comment/create', 'store')->middleware('can:create-comment');
-        Route::patch('/comment/{id}/update', 'update')->middleware('can:update-comment');
-        Route::delete('/comment/{id}/delete', 'destroy')->middleware('can:delete-comment');
+        Route::post('/entrepreneurship/{id}/comment/create', 'store')->middleware('can:create-comment');
+        // Route::patch('/comment/{id}/update', 'update')->middleware('can:update-comment');
+        // Route::delete('/comment/{id}/delete', 'destroy')->middleware('can:delete-comment');
     });
-
-    Route::controller(CommentsController::class)->group(function () {
-        Route::post('/comment/create', 'store')->middleware('can:create-comment');
-        Route::patch('/comment/{id}/update', 'update')->middleware('can:update-comment');
-        Route::delete('/comment/{id}/delete', 'destroy')->middleware('can:delete-comment');
-    });
-
-
-
 });
 
 // Usuarios
