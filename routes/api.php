@@ -66,24 +66,24 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     // Route::get('user', 'show');
 // });
 
-// Categorías
-// Route::controller(CategoriesController::class)->group(function () {
-//     Route::get('categories', 'index');
-//     Route::post('category', 'store');
-//     Route::get('category/{id}', 'show');
-//     Route::put('category/{id}', 'update');
-//     // Route::delete('category/{id}', 'destroy')->middleware('auth.entrepreneurships');
-// });
+//Categorías
+Route::controller(CategoriesController::class)->group(function () {
+    Route::get('categories', 'index');
+    Route::post('category', 'store');
+    Route::get('category/{id}', 'show');
+    Route::put('category/{id}', 'update');
+    // Route::delete('category/{id}', 'destroy')->middleware('auth.entrepreneurships');
+});
 
 // Emprendimientos
-// Route::controller(EntrepreneurshipsController::class)->group(function () {
-//     Route::get('entrepreneurships', 'approvedIndex');
-//     Route::get('entrepreneurships_pending', 'pendingIndex');
-//     Route::post('entrepreneurship', 'store')->middleware('auth.')
-//     Route::get('entrepreneurship/{id}', 'show');
-//     Route::put('entrepreneurship/{id}', 'update');
-//     Route::delete('entrepreneurship/{id}', 'destroy');
-// });
+Route::controller(EntrepreneurshipsController::class)->group(function () {
+    Route::get('entrepreneurships', 'approvedIndex');
+    Route::get('entrepreneurships_pending', 'pendingIndex');
+    Route::post('entrepreneurship', 'store')->middleware('auth.');
+    Route::get('entrepreneurship/{id}', 'show');
+    Route::put('entrepreneurship/{id}', 'update');
+    Route::delete('entrepreneurship/{id}', 'destroy');
+});
 
 // Comentarios
 // Route::controller(CommentsController::class)->group(function () {
