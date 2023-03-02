@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasRoles, HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'phone',
-        'state',
+        // 'state',
         'created_at',
         'updated_at'
     ];

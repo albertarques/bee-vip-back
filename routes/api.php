@@ -14,102 +14,137 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoleAsignmentsController;
 
+// Rutas con autenticación.
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
     Route::post('register', 'App\Http\Controllers\AuthController@register');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
+
+    // TODO: Añadir lista emprendimientos, rol del usuario.
     Route::post('me', 'App\Http\Controllers\AuthController@me');
+
+    // Podemos ver todas las órdenes del sistema sin estar logeado! MAL!
+    // Route::controller(OrdersController::class)->group(function () {
+    //     Route::get('orders', 'index'); // Devolver solo las ordenens del usuario
+    // });
 });
 
-Route::controller(CategoriesController::class)->group(function () {
+// Rutas para usuarios registrados
+Route::group(['middleware' => 'auth.jwt'], function () {
 
-    // Categorías
-    Route::get('categories', [CategoriesController::class, 'index']);
-    Route::post('category', [CategoriesController::class, 'store'])->middleware('auth.entrepreneurships');
-    Route::get('category/{id}', [CategoriesController::class, 'show']);
-    Route::put('category/{id}', [CategoriesController::class, 'update'])->middleware('auth.entrepreneurships');
-    Route::delete('category/{id}', [CategoriesController::class, 'destroy'])->middleware('auth.entrepreneurships');
+    Route::controller(EntrepreneurshipsController::class)->group(function () {
+        Route::post('/entrepreneurship/create', 'store')->middleware('can:create-bussines');
+        Route::post('/orders', 'store');
+    });
+
+    // // Rutas para usuarios con rol User
+    // Route::group(['middleware:auth' => 'role:user'], function (){
+
+    // });
+
+    // // Rutas para usuarios con role Admin
+    // Route::group(['middleware:auth' => 'role:admin'], function (){
+    // });
+
+    // // Rutas para usuarios con role Superadmin
+    // Route::group(['middleware:auth' => 'role:superadmin'], function (){
+    //     // Devuelve todas las rutas del sistema.
+    //     // Route::get('orders', [OrdersController::class, 'index']);
+
+    // });
+
+
 });
 
-Route::controller(EntrepreneurshipsController::class)->group(function () {
 
-    // Emprendimientos
-    Route::get('entrepreneurships', [EntrepreneurshipsController::class, 'index']);
-    Route::post('entrepreneurship', [EntrepreneurshipsController::class, 'store'])->middleware('auth.entrepreneurships');
-    Route::get('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'show']);
-    Route::put('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'update'])->middleware('auth.entrepreneurships');
-    Route::delete('entrepreneurship/{id}', [EntrepreneurshipsController::class, 'destroy'])->middleware('auth.entrepreneurships');
-});
+// Usuarios
 
-Route::controller(CommentsController::class)->group(function () {
-
-    // Comentarios
-    Route::get('comments', [CommentsController::class, 'index']);
-    Route::post('comment', [CommentsController::class, 'store'])->middleware('auth.entrepreneurships');
-    Route::get('comment/{id}', [CommentsController::class, 'show']);
-    Route::put('comment/{id}', [CommentsController::class, 'update'])->middleware('auth.entrepreneurships');
-    Route::delete('comment/{id}', [CommentsController::class, 'destroy'])->middleware('auth.entrepreneurships');
-});
-
-Route::controller(UsersController::class)->group(function () {
-
-    // Usuarios
+// Route::controller(UsersController::class)->group(function () {
     // Route::get('users', [UsersController::class, 'index']);
-    Route::post('user', [UsersController::class, 'store'])->middleware('auth.users');
-    Route::get('user/{id}', [UsersController::class, 'show'])->middleware('auth.users');
-    Route::put('user/{id}', [UsersController::class, 'update'])->middleware('auth.users');
-    Route::delete('user/{id}', [UsersController::class, 'destroy'])->middleware('auth.users');
-});
+    // Devuelve un usuario y sus emprendimientos.
+    // Route::get('user', 'show');
+// });
 
-Route::controller(OrdersController::class)->group(function () {
+// Categorías
+// Route::controller(CategoriesController::class)->group(function () {
+//     Route::get('categories', 'index');
+//     Route::post('category', 'store');
+//     Route::get('category/{id}', 'show');
+//     Route::put('category/{id}', 'update');
+//     // Route::delete('category/{id}', 'destroy')->middleware('auth.entrepreneurships');
+// });
 
-    // Ordenes
-    // Route::get('users', [OrdersController::class, 'index']);
-    Route::post('order', [OrdersController::class, 'store'])->middleware('auth.orders');
-    Route::get('order/{id}', [OrdersController::class, 'show'])->middleware('auth.orders');
-    Route::put('order/{id}', [OrdersController::class, 'update'])->middleware('auth.orders');
-    Route::delete('order/{id}', [OrdersController::class, 'destroy'])->middleware('auth.orders');
-});
+// Emprendimientos
+// Route::controller(EntrepreneurshipsController::class)->group(function () {
+//     Route::get('entrepreneurships', 'approvedIndex');
+//     Route::get('entrepreneurships_pending', 'pendingIndex');
+//     Route::post('entrepreneurship', 'store')->middleware('auth.')
+//     Route::get('entrepreneurship/{id}', 'show');
+//     Route::put('entrepreneurship/{id}', 'update');
+//     Route::delete('entrepreneurship/{id}', 'destroy');
+// });
 
-Route::controller(OrderDetailsController::class)->group(function () {
+// Comentarios
+// Route::controller(CommentsController::class)->group(function () {
+//     Route::post('comment', 'store');
+//     Route::get('comment/{id}', 'show');
+//     Route::put('comment/{id}', 'update');
+//     Route::delete('comment/{id}', 'destroy');
+// });
 
-    // Detalles de la orden
-    // Route::get('users', [OrderDetailsController::class, 'index']);
-    Route::post('order_detail', [OrderDetailsController::class, 'store'])->middleware('auth.order_details');
-    Route::get('order_detail/{id}', [OrderDetailsController::class, 'show'])->middleware('auth.order_details');
-    Route::put('order_detail/{id}', [OrderDetailsController::class, 'update'])->middleware('auth.order_details');
-    Route::delete('order_detail/{id}', [OrderDetailsController::class, 'destroy'])->middleware('auth.order_details');
-});
+// Usuarios
+// Route::controller(UsersController::class)->group(function () {
+//     Route::post('user', 'store');
+//     Route::get('user/{id}', 'show');
+//     Route::put('user/{id}', 'update');
+//     Route::delete('user/{id}', 'destroy');
+// });
 
-Route::controller(PaymentMethodsController::class)->group(function () {
+// Ordenes
+// Route::controller(OrdersController::class)->group(function () {
+//     Route::post('order', 'store');
+//     Route::get('order/{id}', 'show');
+    // Route::put('order/{id}', 'update')->middleware('auth.orders');
+    // Route::delete('order/{id}', 'destroy'])->middleware('auth.orders');
+// });
 
-    // Métodos de pago
-    Route::get('payment_methods', [PaymentMethodsController::class, 'index']);
-    Route::post('payment_method', [PaymentMethodsController::class, 'store'])->middleware('auth.paymentMethods');
-    Route::get('payment_method/{id}', [PaymentMethodsController::class, 'show']);
-    Route::put('payment_method/{id}', [PaymentMethodsController::class, 'update'])->middleware('auth.paymentMethods');
-    Route::delete('payment_method/{id}', [PaymentMethodsController::class, 'destroy'])->middleware('auth.paymentMethods');
-});
+// Detalles de la orden
+// Route::controller(OrderDetailsController::class)->group(function () {
+//     Route::post('order_detail', 'store');
+//     Route::get('order_detail/{id}', 'show');
+//     Route::put('order_detail/{id}', 'update');
+//     // Route::delete('order_detail/{id}', 'destroy'])->middleware('auth.order_details');
+// });
 
-Route::post('/payments', [PaymentController::class, 'charge']);
+// Métodos de pago
+// Route::controller(PaymentMethodsController::class)->group(function () {
+//     // TODO: Devolver los métodos del pago del usuario.
+//     Route::get('payment_methods','index');
+//     // TODO: Añadir método de pago.
+//     Route::post('payment_method','store');
+//     // TODO: Ver método de pago.
+//     Route::get('payment_method/{id}','show');
+//     // TODO: Actualizar método de pago
+//     Route::put('payment_method/{id}','update');
+//     // TODO: Eliminar.
+//     Route::delete('payment_method/{id}','destroy');
+// });
 
-Route::controller(RolesController::class)->group(function () {
+// Roles
+// Route::controller(RolesController::class)->group(function () {
+//     Route::get('roles', 'index');
+//     Route::post('role', 'store');
+//     Route::get('role/{id}', 'show');
+//     Route::put('role/{id}', 'update');
+//     Route::delete('role/{id}', 'destroy');
+// });
 
-    // Roles
-    Route::get('roles', [RolesController::class, 'index']);
-    Route::post('role', [RolesController::class, 'store'])->middleware('auth.entrepreneurships');
-    Route::get('role/{id}', [RolesController::class, 'show']);
-    Route::put('role/{id}', [RolesController::class, 'update'])->middleware('auth.entrepreneurships');
-    Route::delete('role/{id}', [RolesController::class, 'destroy'])->middleware('auth.entrepreneurships');
-});
-
-Route::controller(RoleAsignmentsController::class)->group(function () {
-
-    // Asignación de roles
-    Route::get('roleAssignments', [RoleAsignmentsController::class, 'index']);
-    Route::post('roleAssignment', [RoleAsignmentsController::class, 'store'])->middleware('auth.roleAssignments');
-    Route::get('roleAssignment/{id}', [RoleAsignmentsController::class, 'show']);
-    Route::put('roleAssignment/{id}', [RoleAsignmentsController::class, 'update'])->middleware('auth.roleAssignments');
-    Route::delete('roleAssignment/{id}', [RoleAsignmentsController::class, 'destroy'])->middleware('auth.roleAssignments');
-});
+// Asignación de roles
+// Route::controller(RoleAsignmentsController::class)->group(function () {
+//     Route::get('roleAssignments', 'index');
+//     Route::post('roleAssignment', 'store');
+//     Route::get('roleAssignment/{id}', 'show');
+//     Route::put('roleAssignment/{id}', 'update');
+//     Route::delete('roleAssignment/{id}', 'destroy');
+// });

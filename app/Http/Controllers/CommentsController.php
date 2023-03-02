@@ -12,14 +12,14 @@ class CommentsController extends Controller
         $this->middleware('api');
     }
 
-    public function index()
-    {
-        $comments = Comment::all();
-        return response()->json([
-            'status' => 'success',
-            'comments' => $comments,
-        ]);
-    }
+    // public function index($entrepreneurship_id)
+    // {
+    //     $comments = Comment::all();
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'comments' => $comments,
+    //     ]);
+    // }
 
     public function store(Request $request)
     {
