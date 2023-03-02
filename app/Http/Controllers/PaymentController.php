@@ -18,13 +18,15 @@ class PaymentController extends Controller
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         $token = $request->input('stripeToken');
+        $email = $request->input('email');
         $amount = $request->input('amount');
         $description = $request->input('description');
 
         try {
             Charge::create([
                 'amount' => $amount,
-                'currency' => 'usd',
+                'currency' => 'eur',
+                'email' => $email,
                 'description' => $description,
                 'source' => $token,
             ]);

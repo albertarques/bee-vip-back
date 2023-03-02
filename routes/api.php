@@ -92,9 +92,7 @@ Route::controller(PaymentMethodsController::class)->group(function () {
     Route::delete('payment_method/{id}', [PaymentMethodsController::class, 'destroy'])->middleware('auth.paymentMethods');
 });
 
-Route::controller(PaymentController::class)->group(function () {
-  Route::post('/payments', [PaymentController::class, 'process']);
-});
+Route::post('/payments', [PaymentController::class, 'charge']);
 
 Route::controller(RolesController::class)->group(function () {
 
