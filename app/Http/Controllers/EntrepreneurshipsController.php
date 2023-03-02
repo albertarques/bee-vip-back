@@ -15,17 +15,11 @@ class EntrepreneurshipsController extends Controller
     public function __construct()
     {
         $this->middleware('api');
-        // $this->middleware('auth', ['except' => ['index', 'show']]);
-        // // Middleware only applied to these methods
-        // $this->middleware(['permission:create'])->only([
-        //     'store',
-        //     'edit'
-        // ]);
     }
 
     public function approvedIndex()
     {
-        // Obtiene todos los emprendimientos aprovados y todas las categorías.
+        // TODO: Obtiene todos los emprendimientos aprovados y todas las categorías.
         $entrepreneurships = Entrepreneurship::all();
         $category = Category::all();
 
@@ -38,7 +32,7 @@ class EntrepreneurshipsController extends Controller
 
     public function pendingIndex()
     {
-        // Obtiene todos los emprendimientos pendientes de aprovación.
+        // TODO: Obtiene todos los emprendimientos pendientes de aprovación.
         $entrepreneurships = Entrepreneurship::all();
         $category = Category::all();
 
@@ -85,7 +79,7 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => $request->card_payment,
             'bizum_payment' => $request->bizum_payment,
             'stock' => $request->stock,
-            'available' => $request->availability,
+            'available' => $request->available,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'location' => $request->location,
