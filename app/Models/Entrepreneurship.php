@@ -49,15 +49,15 @@ class Entrepreneurship extends Model
     }
 
     //  Relation between Entrepreneurships and  Inspection state Table
-     public function inspectionState()
-     {
-         return $this->hasOne(InspectionState::class);
-     }
+    public function inspectionState()
+    {
+    return $this->hasOne(InspectionState::class);
+    }
 
-        // Relation between Entrepreneurships and  Availability state Table
-        public function availabilityState()
-        {
-            return $this->hasOne(AvailabilityState::class);
-        }
+    // Relation between Entrepreneurships and  Availability state Table
+    public function availabilityState()
+    {
+        return $this->hasOne(AvailabilityState::class);
+    }
 
 }
