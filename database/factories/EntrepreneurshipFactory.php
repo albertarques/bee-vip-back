@@ -28,7 +28,8 @@ class EntrepreneurshipFactory extends Factory
         $inspection = InspectionState::all()->random();
         return [
             'user_id' => $user->id,
-            'title'=> fake()->text($maxNbChars = 100),
+            'title'=> fake()->sentence($nbWords = 3, $variableNbWords = true),
+            'name' => fake()->sentence($nbWords = 1),
             'logo'=> fake()->image($dir = null, $width = 173, $height= 80),
             'product_img'=> fake()->image($dir = null, $width = 390, $height= 203),
             'description'=> fake()->text($maxNbChars = 300),
