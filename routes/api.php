@@ -14,7 +14,10 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoleAsignmentsController;
 
-// Rutas con autenticación.
+// Rutas públicas
+// TODO : RUTAS PUBLICAS
+
+// Rutas con Autenticación.
 Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
     Route::post('register', 'App\Http\Controllers\AuthController@register');
@@ -24,35 +27,50 @@ Route::controller(AuthController::class)->group(function () {
     // TODO: Añadir lista emprendimientos, rol del usuario.
     Route::post('me', 'App\Http\Controllers\AuthController@me');
 
-    // Podemos ver todas las órdenes del sistema sin estar logeado! MAL!
-    // Route::controller(OrdersController::class)->group(function () {
-    //     Route::get('orders', 'index'); // Devolver solo las ordenens del usuario
-    // });
 });
 
-// Rutas para usuarios registrados
+// Rutas con Autorización y Permisos
 Route::group(['middleware' => 'auth.jwt'], function () {
-
-    Route::controller(EntrepreneurshipsController::class)->group(function () {
-        Route::post('/entrepreneurship/create', 'store')->middleware('can:create-bussines');
-        Route::post('/orders', 'store');
+    Route::controller(UsersController::class)->group(function () {
+        Route::post('/user/update', 'update')->middleware('can:update-user-profile');
+        Route::post('/user/delete', 'destroy')->middleware('can:delete-user-profile');
     });
 
-    // // Rutas para usuarios con rol User
-    // Route::group(['middleware:auth' => 'role:user'], function (){
+    Route::controller(PaymentMethodsController::class)->group(function () {
+        Route::post('/paymentmethod/create', 'store')->middleware('can:create-payment-method');
+        Route::post('/paymentmethod/view', 'view')->middleware('can:view-payment-method');
+        Route::post('/paymentmethod/update', 'update')->middleware('can:update-payment-method');
+        Route::post('/paymentmethod/delete', 'destroy')->middleware('can:delete-payment-method');
+    });
 
-    // });
+    Route::controller(OrdersController::class)->group(function () {
+        Route::post('/order/create', 'store')->middleware('can:create-order');
+        Route::post('/order/view', 'view')->middleware('can:view-order');
+    });
 
-    // // Rutas para usuarios con role Admin
-    // Route::group(['middleware:auth' => 'role:admin'], function (){
-    // });
+    Route::controller(OrderDetailsController::class)->group(function () {
+        Route::post('/orderdetail/create', 'store')->middleware('can:create-order-detail');
+        Route::post('/orderdetail/view', 'view')->middleware('can:view-order-detail');
+    });
 
-    // // Rutas para usuarios con role Superadmin
-    // Route::group(['middleware:auth' => 'role:superadmin'], function (){
-    //     // Devuelve todas las rutas del sistema.
-    //     // Route::get('orders', [OrdersController::class, 'index']);
+    Route::controller(EntrepreneurshipsController::class)->group(function () {
+        Route::post('/entrepreneurship/create', 'store')->middleware('can:create-entrepreneurship');
+        Route::post('/entrepreneurship/update', 'update')->middleware('can:update-entrepreneurship');
+        Route::post('/entrepreneurship/delete', 'destroy')->middleware('can:delete-entrepreneurship');
+    });
 
-    // });
+    Route::controller(CommentsController::class)->group(function () {
+        Route::post('/comment/create', 'store')->middleware('can:create-comment');
+        Route::post('/comment/update', 'update')->middleware('can:update-comment');
+        Route::post('/comment/delete', 'destroy')->middleware('can:delete-comment');
+    });
+
+    Route::controller(CommentsController::class)->group(function () {
+        Route::post('/comment/create', 'store')->middleware('can:create-comment');
+        Route::post('/comment/update', 'update')->middleware('can:update-comment');
+        Route::post('/comment/delete', 'destroy')->middleware('can:delete-comment');
+    });
+
 
 
 });
