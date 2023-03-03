@@ -19,8 +19,8 @@ class EntrepreneurshipsController extends Controller
 
     public function approvedIndex()
     {
-        // Obtiene todos los emprendimientos aprovados y todas las categorías.
-        $entrepreneurships = Entrepreneurship::all()->where('state', '=', '1');
+        // TODO: Obtiene todos los emprendimientos aprovados y todas las categorías.
+        $entrepreneurships = Entrepreneurship::all();
         $category = Category::all();
 
         return response()->json([
@@ -32,8 +32,8 @@ class EntrepreneurshipsController extends Controller
 
     public function pendingIndex()
     {
-        // Obtiene todos los emprendimientos pendientes de aprovación.
-        $entrepreneurships = Entrepreneurship::all()->where('state', '=', '0');
+        // TODO: Obtiene todos los emprendimientos pendientes de aprovación.
+        $entrepreneurships = Entrepreneurship::all();
         $category = Category::all();
 
         return response()->json([
@@ -44,27 +44,28 @@ class EntrepreneurshipsController extends Controller
     }
 
     public function store(Request $request){
-        $request->validate([
-            'user_id' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'logo' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
-            'product_img' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'price' => 'required|float',
-            'category_id' => 'required|string|max:255',
-            'avg_score' => 'required|float',
-            'cash_payment' => 'required|boolean',
-            'card_payment' => 'required|boolean',
-            'bizum_payment' => 'required|boolean',
-            'stock' => 'required|integer|max:500',
-            'availability' => 'required|boolean',
-            'phone' => 'required|string|digits_between:9,15',
-            'email' => 'required|integer|max:255',
-            'location' => 'required|integer|max:255',
-            'state' => 'required|integer|max:0',
-        ]);
+        // $request->validate([
+        //     // 'user_id' => 'required|string|max:255',
+        //     // 'title' => 'required|string|max:255',
+        //     // 'logo' => 'required|string|max:255',
+        //     // 'title' => 'required|string|max:255',
+        //     // 'product_img' => 'required|string|max:255',
+        //     // 'description' => 'required|string|max:500',
+        //     // 'price' => 'required|float',
+        //     // 'category_id' => 'required|string|max:255',
+        //     // 'avg_score' => 'required|float',
+        //     // 'cash_payment' => 'required|boolean',
+        //     // 'card_payment' => 'required|boolean',
+        //     // 'bizum_payment' => 'required|boolean',
+        //     // 'stock' => 'required|integer|max:500',
+        //     // 'availability' => 'required|boolean',
+        //     // 'phone' => 'required|string|digits_between:9,15',
+        //     // 'email' => 'required|integer|max:255',
+        //     // 'location' => 'required|integer|max:255',
+        //     // 'state' => 'required|integer|max:0',
+        // ]);
 
+        // dd($request);
         $entrepreneurship = Entrepreneurship::create([
             'user_id' => $request->user_id,
             'title' => $request->title,
@@ -78,12 +79,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => $request->card_payment,
             'bizum_payment' => $request->bizum_payment,
             'stock' => $request->stock,
-            'availability' => $request->availability,
+            'availability_state' => 1,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'location' => $request->location,
-            'state' => $request->state,
-
+            'inspection_state' => 1,
         ]);
 
         return response()->json([
@@ -127,11 +127,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => 'required|boolean',
             'bizum_payment' => 'required|boolean',
             'stock' => 'nullable|integer|max:500',
-            'available' => 'required|boolean',
+            'availability_state' => 'required|integer|min:1|max:2',
             'phone' => 'required|string|digits_between:9,15',
             'email' => 'required|integer|max:255',
             'location' => 'required|integer|max:255',
-            'state' => 'required|integer|min:0|max:2'
+            'inspection_state' => 'requiered|integer|min:1|max:3',
         ]);
 
         $entrepreneurship = Entrepreneurship::find($id);

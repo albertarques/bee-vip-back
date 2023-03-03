@@ -28,11 +28,11 @@ return new class extends Migration
             $table->boolean('card_payment');
             $table->boolean('bizum_payment');
             $table->integer('stock')->nullable();
-            $table->boolean('available');
+            $table->foreignId('availability_state')->references('id')->on('availability_states');
             $table->string('phone_number');
             $table->string('email');
             $table->string('location');
-            $table->integer('state')->default(0);
+            $table->foreignId('inspection_state')->references('id')->on('inspection_states');
             $table->timestamps();
             });
     }

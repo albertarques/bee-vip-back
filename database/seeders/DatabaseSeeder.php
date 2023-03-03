@@ -15,23 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
-        // $this->call([
-        //     RoleSeeder::class
-        // ]);
-
         $this->call([
             UserSeeder::class
         ]);
 
         $this->call([
             CategorySeeder::class
+        ]);
+        
+        $this->call([
+            AvailabilityStatesSeeder::class
+        ]);
+
+        $this->call([
+            InspectionStatesSeeder::class
         ]);
 
         $this->call([
@@ -54,13 +51,11 @@ class DatabaseSeeder extends Seeder
             PaymentMethodsSeeder::class
         ]);
 
-        // $this->call([
-        //     RoleAssignmentSeeder::class
-        // ]);
-
         $this->call([
             RoleAndPermissionSeeder::class
         ]);
+
+       
 
 
     }

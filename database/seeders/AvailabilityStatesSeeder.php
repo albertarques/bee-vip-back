@@ -3,11 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
-class UserSeeder extends Seeder
+class AvailabilityStatesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create();
+        \App\Models\AvailabilityState::create([
+            'name' => 'unavailable',
+        ]);
+
+        \App\Models\AvailabilityState::create([
+            'name' => 'available',
+         ]);
     }
 }

@@ -24,12 +24,11 @@ class Entrepreneurship extends Model
         'card_payment',
         'bizum_payment',
         'stock',
-        'available',
-        'availability',
+        'availability_state',
         'phone_number',
         'email',
         'location',
-        'state',
+        'inspection_state',
         'created_at',
         'updated_at',
     ];
@@ -47,6 +46,18 @@ class Entrepreneurship extends Model
     // Relation between Entrepreneurships and Comments Table
     public function comments(){
         return $this->hasMany(Comment::class);
+    }
+
+    //  Relation between Entrepreneurships and  Inspection state Table
+    public function inspectionState()
+    {
+    return $this->hasOne(InspectionState::class);
+    }
+
+    // Relation between Entrepreneurships and  Availability state Table
+    public function availabilityState()
+    {
+        return $this->hasOne(AvailabilityState::class);
     }
 
 }

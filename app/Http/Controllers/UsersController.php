@@ -32,7 +32,7 @@ class UsersController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
-            'state' => 'required|integer|min:1|max:3',
+            // 'state' => 'required|integer|min:1|max:3',
         ]);
 
         $user = User::create([
@@ -41,8 +41,10 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'phone' => $request->phone,
-            'state' => $request->state,
+            // 'state' => $request->state,
         ]);
+
+        $user->assignRole('user');
 
         return response()->json([
             'status' => 'success',
@@ -74,7 +76,7 @@ class UsersController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
-            'state' => 'required|integer|min:1|max:3',
+            // 'state' => 'required|integer|min:1|max:3',
         ]);
 
         $user = User::find($id);
@@ -83,7 +85,7 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->phone = $request->phone;
-        $user->state = $request->state;
+        // $user->state = $request->state;
         $user->save();
 
         return response()->json([

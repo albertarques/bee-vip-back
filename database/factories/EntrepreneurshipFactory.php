@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\AvailabilityState;
 use App\Models\Category;
+use App\Models\InspectionState;
 use App\Models\User;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,6 +24,8 @@ class EntrepreneurshipFactory extends Factory
     {
         $category = Category::all()->random();
         $user = User::all()->random();
+        $availability = AvailabilityState::all()->random();
+        $inspection = InspectionState::all()->random();
         return [
             'user_id' => $user->id,
             'title'=> fake()->text($maxNbChars = 100),
@@ -35,11 +39,11 @@ class EntrepreneurshipFactory extends Factory
             'card_payment' => fake()->boolean(),
             'bizum_payment' => fake()->boolean(),
             'stock'=> fake()->numberBetween($int1 = 0, $int2 = 50),
-            'available'=> fake()->boolean(),
+            'availability_state'=> $availability->id,
             'phone_number' => fake()->phoneNumber(),
             'email'=> fake()->email(),
             'location' => fake()->city(),
-            'state' => fake()->numberBetween($int1 = 0, $int2 = 2),
+            'inspection_state' => $inspection->id,
         ];
 
     }
