@@ -16,16 +16,16 @@ class InspectionStatesSeeder extends Seeder
     {
         \App\Models\InspectionState::create([
             'name' => 'pending',
-            
+
         ]);
         \App\Models\InspectionState::create([
-            
+
             'name' => 'approved',
-            
+
         ]);
         \App\Models\InspectionState::create([
-           
-            'name' => 'dennied',
+
+            'name' => 'denied',
         ]);
     }
 }

@@ -69,6 +69,7 @@ class EntrepreneurshipsController extends Controller
         $entrepreneurship = Entrepreneurship::create([
             'user_id' => $request->user_id,
             'title' => $request->title,
+            'name' => $request->name,
             'logo' => $request->logo,
             'product_img' => $request->product_img,
             'description' => $request->description,
@@ -117,7 +118,6 @@ class EntrepreneurshipsController extends Controller
             'user_id' => 'required|string|max:255',
             'title' => 'required|string|max:255',
             'logo' => 'nullable|string|max:255',
-            'title' => 'required|string|max:255',
             'product_img' => 'nullable|string|max:255',
             'description' => 'required|string|max:500',
             'price' => 'required|float',

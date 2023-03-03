@@ -3,13 +3,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\EntrepreneurshipsController;
-use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\PaymentMethodsController;
+use App\Http\Controllers\RoleAsignmentsController;
+use App\Http\Controllers\EntrepreneurshipsController;
 
 // ** Rutas públicas ******************************************************
     // Entrepreneurships
@@ -82,6 +86,8 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     });
 });
 
+Route::post('image',[ImageController::class, 'imageStore']);
+
 // Usuarios
 // Route::controller(UsersController::class)->group(function () {
     // Route::get('users', [UsersController::class, 'index']);
@@ -89,24 +95,24 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     // Route::get('user', 'show');
 // });
 
-// Categorías
-// Route::controller(CategoriesController::class)->group(function () {
-//     Route::get('categories', 'index');
-//     Route::post('category', 'store');
-//     Route::get('category/{id}', 'show');
-//     Route::put('category/{id}', 'update');
-//     // Route::delete('category/{id}', 'destroy')->middleware('auth.entrepreneurships');
-// });
+//Categorías
+Route::controller(CategoriesController::class)->group(function () {
+    Route::get('categories', 'index');
+    Route::post('category', 'store');
+    Route::get('category/{id}', 'show');
+    Route::put('category/{id}', 'update');
+    // Route::delete('category/{id}', 'destroy')->middleware('auth.entrepreneurships');
+});
 
 // Emprendimientos
-// Route::controller(EntrepreneurshipsController::class)->group(function () {
-//     Route::get('entrepreneurships', 'approvedIndex');
-//     Route::get('entrepreneurships_pending', 'pendingIndex');
-//     Route::post('entrepreneurship', 'store')->middleware('auth.')
-//     Route::get('entrepreneurship/{id}', 'show');
-//     Route::put('entrepreneurship/{id}', 'update');
-//     Route::delete('entrepreneurship/{id}', 'destroy');
-// });
+Route::controller(EntrepreneurshipsController::class)->group(function () {
+    Route::get('entrepreneurships', 'approvedIndex');
+    Route::get('entrepreneurships_pending', 'pendingIndex');
+    Route::post('entrepreneurship', 'store')->middleware('auth.');
+    Route::get('entrepreneurship/{id}', 'show');
+    Route::put('entrepreneurship/{id}', 'update');
+    Route::delete('entrepreneurship/{id}', 'destroy');
+});
 
 // Comentarios
 // Route::controller(CommentsController::class)->group(function () {
@@ -116,10 +122,4 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 //     Route::delete('comment/{id}', 'destroy');
 // });
 
-// Usuarios
-// Route::controller(UsersController::class)->group(function () {
-//     Route::post('user', 'store');
-//     Route::get('user/{id}', 'show');
-//     Route::put('user/{id}', 'update');
-//     Route::delete('user/{id}', 'destroy');
 // });
