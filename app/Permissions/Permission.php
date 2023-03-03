@@ -42,6 +42,7 @@ class Permission {
     public const CAN_UPDATE_ENTREPRENEURSHIP = "update-entrepreneurship";
     public const CAN_DELETE_ENTREPRENEURSHIP = "delete-entrepreneurship";
     public const CAN_VIEW_PENDING_ENTREPRENEURSHIPS = "view-pending-entrepreneurships";
+    public const CAN_VIEW_ENTREPRENEURSHIPS = "view-entrepreneurships";
 
     // *************** Superadmin Permissions ************************************
     //Roles

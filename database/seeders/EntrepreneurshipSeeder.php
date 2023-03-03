@@ -15,12 +15,6 @@ class EntrepreneurshipSeeder extends Seeder
      */
     public function run()
     {
-        Entrepreneurship::factory(10)->create();
-        // Entrepreneurship::factory()->create([
-        //   'name' => 'Alimentación',
-        //   'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
-        //   'image' => 'some random image',
-        //   'rating' => '2.5'
-        // ]);
+        Entrepreneurship::factory(50)->create();
     }
 }

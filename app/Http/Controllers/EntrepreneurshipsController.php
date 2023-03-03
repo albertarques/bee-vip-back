@@ -46,7 +46,7 @@ class EntrepreneurshipsController extends Controller
     public function availableIndex()
     {
         // TODO: Obtiene todos los emprendimientos aprovados y disponibles, y todas las categorías.
-        $entrepreneurships = Entrepreneurship::find()->where('inspection_state', '=', 3);
+        $entrepreneurships = Entrepreneurship::all()->where('inspection_state', '=', 3);
         $category = Category::all();
 
         return response()->json([
