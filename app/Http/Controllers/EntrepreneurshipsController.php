@@ -80,11 +80,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => $request->card_payment,
             'bizum_payment' => $request->bizum_payment,
             'stock' => $request->stock,
-            'availability_state' => $request->availability_state,
+            'availability_state' => 1,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'location' => $request->location,
-            'inspection_state' => $request->inspection_state,
+            'inspection_state' => 1,
         ]);
 
         return response()->json([
