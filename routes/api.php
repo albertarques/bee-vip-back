@@ -18,7 +18,7 @@ use App\Http\Controllers\EntrepreneurshipsController;
 // ** Rutas públicas ******************************************************
     // Entrepreneurships
     Route::controller(EntrepreneurshipsController::class)->group(function () {
-        Route::get('entrepreneurships', 'approvedIndex');
+        Route::get('entrepreneurships', 'availableIndex');
         Route::get('entrepreneurship/{id}', 'show');
     });
 
