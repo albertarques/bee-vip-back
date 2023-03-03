@@ -43,6 +43,20 @@ class EntrepreneurshipsController extends Controller
         ]);
     }
 
+    public function availableIndex()
+    {
+        // TODO: Obtiene todos los emprendimientos aprovados y disponibles, y todas las categorías.
+        $entrepreneurships = Entrepreneurship::find()->where('inspection_state', '=', 3);
+        $category = Category::all();
+
+        return response()->json([
+            'status' => 'success',
+            'entrepreneurships' => $entrepreneurships,
+            'categories' => $category,
+        ]);
+    }
+
+
     public function store(Request $request){
         // $request->validate([
         //     // 'user_id' => 'required|string|max:255',
