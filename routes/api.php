@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RolesController;
+// use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PaymentController;
@@ -12,10 +12,13 @@ use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\PaymentMethodsController;
-use App\Http\Controllers\RoleAsignmentsController;
+// use App\Http\Controllers\RoleAsignmentsController;
 use App\Http\Controllers\EntrepreneurshipsController;
 
 // ** Rutas públicas ******************************************************
+Route::post('login', 'App\Http\Controllers\AuthController@login');
+Route::post('register', 'App\Http\Controllers\AuthController@register');
+
 // Entrepreneurships
 Route::controller(EntrepreneurshipsController::class)->group(function () {
     Route::get('entrepreneurships', 'availableIndex');
@@ -36,8 +39,8 @@ Route::controller(CategoriesController::class)->group(function () {
 
 // ** Rutas con Autenticación ******************************************************
 Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'App\Http\Controllers\AuthController@login');
-    Route::post('register', 'App\Http\Controllers\AuthController@register');
+    // Route::post('login', 'App\Http\Controllers\AuthController@login');
+    // Route::post('register', 'App\Http\Controllers\AuthController@register');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
 
@@ -77,7 +80,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
         Route::post('/entrepreneurship/create', 'store')->middleware('can:create-entrepreneurship');
         Route::patch('/entrepreneurship/{id}/update', 'update')->middleware('can:update-entrepreneurship');
         Route::delete('/entrepreneurship/{id}/delete', 'destroy')->middleware('can:delete-entrepreneurship');
-        // Route::get('/entrepreneurships_pending', 'store')->middleware('can:create-entrepreneurship');
         Route::get('/entrepreneurships/pending', 'pendingIndex')->middleware('can:view-pending-entrepreneurships');
 
     });
