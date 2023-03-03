@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 });
 
 Route::post('image',[ImageController::class, 'imageStore']);
+Route::post('payments',[PaymentController::class, 'process']);
 
 // Usuarios
 // Route::controller(UsersController::class)->group(function () {
