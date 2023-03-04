@@ -11,7 +11,10 @@ class RoleAndPermissionSeeder extends Seeder
 {
     public function run()
     {
-        // ************* User permissions ***********************************
+        // ************* User permissions seeder ********************************
+        // Roles
+        Permission::create(['name' => MyPermission::CAN_SHOW_USER_ROLE]);
+
         // User Profile
         Permission::create(['name' => MyPermission::CAN_UPDATE_USERPROFILE]);
         Permission::create(['name' => MyPermission::CAN_DELETE_USERPROFILE]);
@@ -46,7 +49,7 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => MyPermission::CAN_APPROVE_ENTREPRENEURSHIPS]);
 
         //Users
-        Permission::create(['name' => MyPermission::CAN_APPROVE_USERTOADMIN]);
+        Permission::create(['name' => MyPermission::CAN_UPDATE_USER_ROLE]);
 
 
         $userRole = Role::create(['name' => 'user']);
@@ -81,7 +84,6 @@ class RoleAndPermissionSeeder extends Seeder
 
         $adminRole->givePermissionTo([
             $userRole,
-
             // Entrepreneurships
             MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
             MyPermission::CAN_UPDATE_ENTREPRENEURSHIP,
@@ -93,7 +95,8 @@ class RoleAndPermissionSeeder extends Seeder
         $superadminRole->givePermissionTo([
             $adminRole,
             // Roles
-            MyPermission::CAN_APPROVE_USERTOADMIN,
+            MyPermission::CAN_SHOW_USER_ROLE,
+            MyPermission::CAN_UPDATE_USER_ROLE,
 
             // Entrepreneurships
             MyPermission::CAN_APPROVE_ENTREPRENEURSHIPS,
