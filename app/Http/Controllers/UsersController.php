@@ -43,6 +43,7 @@ class UsersController extends Controller
         ]);
 
         return response()->json([
+            'code'=> 200,
             'status' => 'success',
             'message' => 'user created successfully',
             'user' => $user,

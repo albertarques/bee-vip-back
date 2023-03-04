@@ -76,7 +76,7 @@ class RoleAndPermissionSeeder extends Seeder
             MyPermission::CAN_VIEW_ORDER_DETAIL,
 
             // Entrepreneurships
-            // MyPermission::CAN_VIEW_ENTREPRENEURSHIPS,
+            MyPermission::CAN_VIEW_ENTREPRENEURSHIPS,
 
             // Comment Entrepreneurships
             MyPermission::CAN_CREATE_COMMENT,
@@ -88,7 +88,7 @@ class RoleAndPermissionSeeder extends Seeder
             MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
             MyPermission::CAN_UPDATE_ENTREPRENEURSHIP,
             MyPermission::CAN_DELETE_ENTREPRENEURSHIP,
-            MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
+            // MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
 
         ]);
 
