@@ -73,10 +73,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => 'required|boolean',
             'bizum_payment' => 'required|boolean',
             'stock' => 'required|integer|max:500',
-            'availability' => 'required|boolean',
+            'availability' => 'required|integer|min:1|max:2',
             'phone' => 'required|string|digits_between:9,15',
             'email' => 'required|integer|max:255',
             'location' => 'required|integer|max:255',
+            'inspection_state' => 'required|integer|min:1|max:3',
         ]);
 
         // dd($request);
