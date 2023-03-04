@@ -15,6 +15,6 @@ class EntrepreneurshipSeeder extends Seeder
      */
     public function run()
     {
-        Entrepreneurship::factory(50)->create();
+        Entrepreneurship::factory(25)->create();
     }
 }
