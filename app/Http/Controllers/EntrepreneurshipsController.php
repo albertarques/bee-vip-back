@@ -17,6 +17,15 @@ class EntrepreneurshipsController extends Controller
         $this->middleware('api');
     }
 
+    public function index(){
+      $entrepreneurships = Entrepreneurship::all();
+
+      return response()->json([
+        'status'=>'success',
+        'entrepreneurships'=>$entrepreneurships,
+      ]);
+    }
+
     public function approvedIndex()
     {
         // TODO: Obtiene todos los emprendimientos aprovados y todas las categorías.
@@ -35,12 +44,10 @@ class EntrepreneurshipsController extends Controller
     {
         // TODO: Obtiene todos los emprendimientos pendientes de aprovación.
         $entrepreneurships = Entrepreneurship::all();
-        $category = Category::all();
 
         return response()->json([
             'status' => 'success',
             'entrepreneurships' => [...$entrepreneurships],
-            // 'categories' => $category,
         ]);
     }
 
@@ -53,7 +60,6 @@ class EntrepreneurshipsController extends Controller
         return response()->json([
             'status' => 'success',
             'entrepreneurships' => [...$entrepreneurships],
-            // 'categories' => $category,
         ]);
     }
 
@@ -73,7 +79,7 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => 'required|boolean',
             'bizum_payment' => 'required|boolean',
             'stock' => 'required|integer|max:500',
-            'availability' => 'required|integer|min:1|max:2',
+            'availability_state' => 'required|integer|min:1|max:2',
             'phone' => 'required|string|digits_between:9,15',
             'email' => 'required|integer|max:255',
             'location' => 'required|integer|max:255',
