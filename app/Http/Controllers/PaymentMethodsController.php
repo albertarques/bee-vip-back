@@ -40,6 +40,7 @@ class PaymentMethodsController extends Controller
         ]);
 
         return response()->json([
+            'code'=> 200,
             'status' => 'success',
             'message' => 'paymentMethod created successfully',
             'paymentMethod' => $paymentMethod,
