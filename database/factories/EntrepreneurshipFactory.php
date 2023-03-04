@@ -32,7 +32,7 @@ class EntrepreneurshipFactory extends Factory
             'name' => fake()->sentence($nbWords = 1),
             'logo'=> fake()->image($dir = null, $width = 173, $height= 80),
             'product_img'=> fake()->image($dir = null, $width = 390, $height= 203),
-            'description'=> fake()->text($maxNbChars = 300),
+            'description'=> fake()->text($maxNbChars = 150),
             'price' => fake()->randomFloat($nbMaxDecimals = 2, $min = 0.50, $max = 1000),
             'category_id' => $category->id,
             'avg_score'=> fake()->numberBetween($int1 = 0, $int2 = 5),
