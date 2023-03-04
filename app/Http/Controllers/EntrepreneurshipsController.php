@@ -24,9 +24,10 @@ class EntrepreneurshipsController extends Controller
         $category = Category::all();
 
         return response()->json([
+            'code' => 200,
             'status' => 'success',
-            'entrepreneurships' => $entrepreneurships,
-            'categories' => $category,
+            'entrepreneurships' => [...$entrepreneurships],
+            // 'categories' => $category,
         ]);
     }
 
@@ -38,7 +39,7 @@ class EntrepreneurshipsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'entrepreneurships' => $entrepreneurships,
+            'entrepreneurships' => [...$entrepreneurships],
             'categories' => $category,
         ]);
     }
@@ -51,33 +52,32 @@ class EntrepreneurshipsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'entrepreneurships' => $entrepreneurships,
+            'entrepreneurships' => [...$entrepreneurships],
             'categories' => $category,
         ]);
     }
 
 
     public function store(Request $request){
-        // $request->validate([
-        //     // 'user_id' => 'required|string|max:255',
-        //     // 'title' => 'required|string|max:255',
-        //     // 'logo' => 'required|string|max:255',
-        //     // 'title' => 'required|string|max:255',
-        //     // 'product_img' => 'required|string|max:255',
-        //     // 'description' => 'required|string|max:500',
-        //     // 'price' => 'required|float',
-        //     // 'category_id' => 'required|string|max:255',
-        //     // 'avg_score' => 'required|float',
-        //     // 'cash_payment' => 'required|boolean',
-        //     // 'card_payment' => 'required|boolean',
-        //     // 'bizum_payment' => 'required|boolean',
-        //     // 'stock' => 'required|integer|max:500',
-        //     // 'availability' => 'required|boolean',
-        //     // 'phone' => 'required|string|digits_between:9,15',
-        //     // 'email' => 'required|integer|max:255',
-        //     // 'location' => 'required|integer|max:255',
-        //     // 'state' => 'required|integer|max:0',
-        // ]);
+        $request->validate([
+            'user_id' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'logo' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'product_img' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'price' => 'required|float',
+            'category_id' => 'required|string|max:255',
+            'avg_score' => 'required|float',
+            'cash_payment' => 'required|boolean',
+            'card_payment' => 'required|boolean',
+            'bizum_payment' => 'required|boolean',
+            'stock' => 'required|integer|max:500',
+            'availability' => 'required|boolean',
+            'phone' => 'required|string|digits_between:9,15',
+            'email' => 'required|integer|max:255',
+            'location' => 'required|integer|max:255',
+        ]);
 
         // dd($request);
         $entrepreneurship = Entrepreneurship::create([
