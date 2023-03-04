@@ -33,9 +33,10 @@ class EntrepreneurshipsController extends Controller
         $category = Category::all();
 
         return response()->json([
+            'code' => 200,
             'status' => 'success',
-            'entrepreneurships' => $entrepreneurships,
-            'categories' => $category,
+            'entrepreneurships' => [...$entrepreneurships],
+            // 'categories' => $category,
         ]);
     }
 
@@ -58,7 +59,7 @@ class EntrepreneurshipsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'entrepreneurships' => $entrepreneurships,
+            'entrepreneurships' => [...$entrepreneurships],
             'categories' => $category,
         ]);
     }
@@ -80,7 +81,6 @@ class EntrepreneurshipsController extends Controller
             'bizum_payment' => 'required|boolean',
             'stock' => 'required|integer|max:500',
             'availability_state' => 'required|integer|min:1|max:2',
-            'availability' => 'required|boolean',
             'phone' => 'required|string|digits_between:9,15',
             'email' => 'required|integer|max:255',
             'location' => 'required|integer|max:255',
