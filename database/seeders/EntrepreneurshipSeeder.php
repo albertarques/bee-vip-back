@@ -19,7 +19,7 @@ class EntrepreneurshipSeeder extends Seeder
           'title' => 'Café Colombiano Black Toast',
           'name' => 'Rodrigo Suárez',
           'logo' => '',
-          'product_img' => '/storage/app/public/image/xDHxww0jNPLpPmBXWajUkdqeXf5jNl5KvaN6AXB3.png',
+          'product_img' => 'storage/app/public/images/xDHxww0jNPLpPmBXWajUkdqeXf5jNl5KvaN6AXB3.png',
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
           'price' => '100.5',
           'category_id' => '1',
