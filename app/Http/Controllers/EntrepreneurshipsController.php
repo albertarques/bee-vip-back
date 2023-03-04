@@ -81,6 +81,7 @@ class EntrepreneurshipsController extends Controller
 
         // dd($request);
         $entrepreneurship = Entrepreneurship::create([
+            
             'user_id' => $request->user_id,
             'title' => $request->title,
             'name' => $request->name,
@@ -102,6 +103,7 @@ class EntrepreneurshipsController extends Controller
         ]);
 
         return response()->json([
+            'code' => 200,
             'status' => 'success',
             'message' => 'entrepreneurship created successfully',
             'entrepreneurship' => $entrepreneurship,
