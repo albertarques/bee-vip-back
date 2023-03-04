@@ -14,23 +14,21 @@ use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\PaymentMethodsController;
 // use App\Http\Controllers\RoleAsignmentsController;
 use App\Http\Controllers\EntrepreneurshipsController;
+use App\Http\Controllers\ModelHasRolesController;
 
 // ** Rutas públicas ******************************************************
 Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('register', 'App\Http\Controllers\AuthController@register');
 
-// Entrepreneurships
 Route::controller(EntrepreneurshipsController::class)->group(function () {
     Route::get('entrepreneurships', 'availableIndex');
     Route::get('entrepreneurship/{id}', 'show');
 });
 
-// Usuarios
 Route::controller(UsersController::class)->group(function () {
     Route::get('user/{id}', 'show');
 });
 
-// Categorías
 Route::controller(CategoriesController::class)->group(function () {
     Route::get('categories', 'index');
     Route::get('category/{id}', 'show');
@@ -39,12 +37,10 @@ Route::controller(CategoriesController::class)->group(function () {
 
 // ** Rutas con Autenticación ******************************************************
 Route::controller(AuthController::class)->group(function () {
-    // Route::post('login', 'App\Http\Controllers\AuthController@login');
-    // Route::post('register', 'App\Http\Controllers\AuthController@register');
     Route::post('logout', 'App\Http\Controllers\AuthController@logout');
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
 
-    // TODO: Añadir lista emprendimientos, rol del usuario.
+    // TODO: Añadir lista emprendimientos, estado de los emprendimientos y rol del usuario.
     Route::post('me', 'App\Http\Controllers\AuthController@me');
 
 });
@@ -89,4 +85,10 @@ Route::group(['middleware' => 'auth.jwt'], function () {
         // Route::patch('/comment/{id}/update', 'update')->middleware('can:update-comment');
         // Route::delete('/comment/{id}/delete', 'destroy')->middleware('can:delete-comment');
     });
+
+    Route::controller(ModelHasRolesController::class)->group(function () {
+      Route::patch('/update/user/{id}', 'update')->middleware('can:update-user-role');
+      Route::patch('/showrole/user/{id}', 'update')->middleware('can:show-user-role');
+    });
+
 });
