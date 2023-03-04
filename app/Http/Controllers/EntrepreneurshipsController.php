@@ -40,7 +40,7 @@ class EntrepreneurshipsController extends Controller
         return response()->json([
             'status' => 'success',
             'entrepreneurships' => [...$entrepreneurships],
-            'categories' => $category,
+            // 'categories' => $category,
         ]);
     }
 
@@ -48,12 +48,12 @@ class EntrepreneurshipsController extends Controller
     {
         // TODO: Obtiene todos los emprendimientos aprovados y disponibles, y todas las categorías.
         $entrepreneurships = Entrepreneurship::all()->where('inspection_state', '=', 3);
-        $category = Category::all();
+        // $category = Category::all();
 
         return response()->json([
             'status' => 'success',
             'entrepreneurships' => [...$entrepreneurships],
-            'categories' => $category,
+            // 'categories' => $category,
         ]);
     }
 
@@ -81,7 +81,7 @@ class EntrepreneurshipsController extends Controller
 
         // dd($request);
         $entrepreneurship = Entrepreneurship::create([
-            
+
             'user_id' => $request->user_id,
             'title' => $request->title,
             'name' => $request->name,
