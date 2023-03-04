@@ -32,7 +32,6 @@ class UsersController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
-            // 'state' => 'required|integer|min:1|max:3',
         ]);
 
         $user = User::create([
@@ -41,12 +40,10 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'phone' => $request->phone,
-            // 'state' => $request->state,
         ]);
 
-        $user->assignRole('user');
-
         return response()->json([
+            'code'=> 200,
             'status' => 'success',
             'message' => 'user created successfully',
             'user' => $user,

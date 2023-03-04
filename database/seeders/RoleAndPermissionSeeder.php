@@ -11,7 +11,10 @@ class RoleAndPermissionSeeder extends Seeder
 {
     public function run()
     {
-        // ************* User permissions ***********************************
+        // ************* User permissions seeder ********************************
+        // Roles
+        Permission::create(['name' => MyPermission::CAN_SHOW_USER_ROLE]);
+
         // User Profile
         Permission::create(['name' => MyPermission::CAN_UPDATE_USERPROFILE]);
         Permission::create(['name' => MyPermission::CAN_DELETE_USERPROFILE]);
@@ -38,13 +41,15 @@ class RoleAndPermissionSeeder extends Seeder
         Permission::create(['name' => MyPermission::CAN_CREATE_ENTREPRENEURSHIP]);
         Permission::create(['name' => MyPermission::CAN_UPDATE_ENTREPRENEURSHIP]);
         Permission::create(['name' => MyPermission::CAN_DELETE_ENTREPRENEURSHIP]);
+        Permission::create(['name' => MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS]);
+        Permission::create(['name' => MyPermission::CAN_VIEW_ENTREPRENEURSHIPS]);
 
         // ************* Superadmin permissions ******************************
         // Entrepreneurships
         Permission::create(['name' => MyPermission::CAN_APPROVE_ENTREPRENEURSHIPS]);
 
         //Users
-        Permission::create(['name' => MyPermission::CAN_APPROVE_USERTOADMIN]);
+        Permission::create(['name' => MyPermission::CAN_UPDATE_USER_ROLE]);
 
 
         $userRole = Role::create(['name' => 'user']);
@@ -70,28 +75,32 @@ class RoleAndPermissionSeeder extends Seeder
             MyPermission::CAN_CREATE_ORDER_DETAIL,
             MyPermission::CAN_VIEW_ORDER_DETAIL,
 
+            // Entrepreneurships
+            MyPermission::CAN_VIEW_ENTREPRENEURSHIPS,
+
             // Comment Entrepreneurships
             MyPermission::CAN_CREATE_COMMENT,
         ]);
 
         $adminRole->givePermissionTo([
             $userRole,
-
             // Entrepreneurships
             MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
             MyPermission::CAN_UPDATE_ENTREPRENEURSHIP,
             MyPermission::CAN_DELETE_ENTREPRENEURSHIP,
-            MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
+            // MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
 
         ]);
 
         $superadminRole->givePermissionTo([
             $adminRole,
             // Roles
-            MyPermission::CAN_APPROVE_USERTOADMIN,
+            MyPermission::CAN_SHOW_USER_ROLE,
+            MyPermission::CAN_UPDATE_USER_ROLE,
 
             // Entrepreneurships
             MyPermission::CAN_APPROVE_ENTREPRENEURSHIPS,
+            MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
         ]);
     }
 }
