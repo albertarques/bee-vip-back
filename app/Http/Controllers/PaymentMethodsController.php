@@ -24,7 +24,7 @@ class PaymentMethodsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|bigInteger|max:255',
+            'user_id' => 'required|integer|max:255',
             'card_name' => 'required|string|max:255',
             'card_number' => 'required|string|max:255',
             'expire_date' => 'required|string|max:255',
