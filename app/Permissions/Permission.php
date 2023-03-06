@@ -48,6 +48,7 @@ class Permission {
     // *************** Superadmin Permissions ************************************
     // Users
     public const CAN_DELETE_USER = "delete-user";
+    public const CAN_UPGRADE_USER_ROLE = "upgrade-user-role";
 
     // Roles
     public const CAN_UPDATE_USER_ROLE = "update-user-role";
