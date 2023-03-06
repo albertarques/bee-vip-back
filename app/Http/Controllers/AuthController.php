@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Entrepreneurship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -46,7 +46,15 @@ class AuthController extends Controller
 
   public function me()
   {
-    return response()->json(auth()->user());
+    //TODO: Añadir rol del usuario.
+
+    $user_id = auth()->user()->id;
+    $entrepreneurships = Entrepreneurship::all()->where('user_id', '=', $user_id);
+
+    return response()->json([
+      auth()->user(),
+      'entrepreneurships' => $entrepreneurships,
+    ]);
   }
 
   public function register(Request $request)
@@ -56,17 +64,13 @@ class AuthController extends Controller
       'email' => 'required|string|email|max:255|unique:users',
       'password' => 'required|string|min:6',
       'phone' => 'required|string|max:12|unique:users',
-      // 'state' => 'required|integer|min:1|max:3'
     ]);
 
     $user = User::create([
       'username' => $request->username,
-      // 'name' => $request->name,
-      // 'surname' => $request->name,
       'email' => $request->email,
-      'password' => Hash::make($request->password),
+      'password' => $request->password,
       'phone' => $request->phone,
-      // 'state' => 1,
     ]);
 
     $user->assignRole('user');
