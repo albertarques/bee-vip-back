@@ -11,10 +11,9 @@ class RoleAndPermissionSeeder extends Seeder
 {
     public function run()
     {
-        // ************* User permissions seeder ********************************
+        // ************* User permissions Seeder ********************************
         // Roles
         Permission::create(['name' => MyPermission::CAN_SHOW_USER_ROLE]);
-        Permission::create(['name' => MyPermission::CAN_UPGRADE_USER_ROLE]);
 
         // User Profile
         Permission::create(['name' => MyPermission::CAN_UPDATE_USERPROFILE]);
@@ -97,7 +96,7 @@ class RoleAndPermissionSeeder extends Seeder
             $adminRole,
             // Roles
             MyPermission::CAN_SHOW_USER_ROLE,
-            MyPermission::CAN_UPGRADE_USER_ROLE,
+            MyPermission::CAN_UPDATE_USER_ROLE,
 
             // Entrepreneurships
             MyPermission::CAN_APPROVE_ENTREPRENEURSHIPS,
