@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::controller(UsersController::class)->group(function () {
         Route::patch('/user/{id}/update', 'update')->middleware('can:update-user-profile');
         Route::delete('/user/{id}/delete', 'destroy')->middleware('can:delete-user-profile');
+        Route::put('/user/update/{id}', 'updateRole')->middleware('can:upgrade-user-role');
     });
 
     Route::controller(PaymentMethodsController::class)->group(function () {
@@ -88,7 +89,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     Route::controller(ModelHasRolesController::class)->group(function () {
       Route::patch('/update/user/{id}', 'update')->middleware('can:update-user-role');
-      Route::patch('/showrole/user/{id}', 'update')->middleware('can:show-user-role');
+      Route::get('/showrole/user/{id}', 'show')->middleware('can:show-user-role');
     });
 Route::post('image',[ImageController::class, 'imageStore']);
 Route::post('payments',[PaymentController::class, 'process']);
