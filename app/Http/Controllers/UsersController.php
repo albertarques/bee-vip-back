@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entrepreneurship;
-use App\Models\Role;
+// use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -73,7 +74,6 @@ class UsersController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
-            // 'state' => 'required|integer|min:1|max:3',
         ]);
 
         $user = User::find($id);
@@ -101,6 +101,23 @@ class UsersController extends Controller
             'status' => 'success',
             'message' => 'user deleted successfully',
             'user' => $user,
+        ]);
+    }
+
+    public function updateRole(Request $request, User $id)
+    {
+        $this->validate($request, [
+            'role' => 'required|string|exists:roles,name',
+        ]);
+
+        $roleName = $request->input('role');
+        $role = Role::where('name', $roleName)->firstOrFail();
+
+        $id->syncRoles($role);
+
+        return response()->json([
+            'message' => 'User role updated successfully',
+            'user' => $id->load('roles'),
         ]);
     }
 }
