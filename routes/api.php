@@ -26,11 +26,13 @@ Route::controller(UsersController::class)->group(function () {
   Route::get('user/{id}', 'show');
 });
 
+//Categorías
 Route::controller(CategoriesController::class)->group(function () {
   Route::get('categories', 'index');
+  Route::post('category', 'store');
   Route::get('category/{id}', 'show');
+  Route::put('category/{id}', 'update');
 });
-
 
 // ** Rutas con Autenticación ******************************************************
 Route::controller(AuthController::class)->group(function () {
@@ -81,13 +83,5 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('/entrepreneurship/{id}/comment/create', 'store')->middleware('can:create-comment');
     // Route::patch('/comment/{id}/update', 'update')->middleware('can:update-comment');
     // Route::delete('/comment/{id}/delete', 'destroy')->middleware('can:delete-comment');
-  });
-
-  //Categorías
-  Route::controller(CategoriesController::class)->group(function () {
-    Route::get('categories', 'index');
-    Route::post('category', 'store');
-    Route::get('category/{id}', 'show');
-    Route::put('category/{id}', 'update');
   });
 });
