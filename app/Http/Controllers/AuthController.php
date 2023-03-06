@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Entrepreneurship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login','register']]);
+    }
 
   public function login(Request $request)
   {
@@ -38,6 +42,37 @@ class AuthController extends Controller
     ]);
   }
 
+  public function register(Request $request)
+  {
+    $request->validate([
+      'username' => 'required|string|max:255',
+      'email' => 'required|string|email|max:255|unique:users',
+      'password' => 'required|string|min:6',
+      'phone' => 'required|string|max:12|unique:users',
+    ]);
+
+    $user = User::create([
+      'username' => $request->username,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+      'phone' => $request->phone,
+    ]);
+
+    $user->assignRole('user');
+
+    $token = Auth::login($user);
+    return response()->json([
+      'code' => 200,
+      'status' => 'success',
+      'message' => 'User created successfully',
+      'user' => $user,
+      'authorisation' => [
+        'token' => $token,
+        'type' => 'bearer',
+      ]
+    ]);
+  }
+
   /**
    * Get the authenticated User.
    *
@@ -54,37 +89,6 @@ class AuthController extends Controller
     return response()->json([
       auth()->user(),
       'entrepreneurships' => $entrepreneurships,
-    ]);
-  }
-
-  public function register(Request $request)
-  {
-    $request->validate([
-      'username' => 'required|string|max:255',
-      'email' => 'required|string|email|max:255|unique:users',
-      'password' => 'required|string|min:6',
-      'phone' => 'required|string|max:12|unique:users',
-    ]);
-
-    $user = User::create([
-      'username' => $request->username,
-      'email' => $request->email,
-      'password' => $request->password,
-      'phone' => $request->phone,
-    ]);
-
-    $user->assignRole('user');
-
-    $token = Auth::login($user);
-    return response()->json([
-      'code' => 200,
-      'status' => 'success',
-      'message' => 'User created successfully',
-      'user' => $user,
-      'authorisation' => [
-        'token' => $token,
-        'type' => 'bearer',
-      ]
     ]);
   }
 
