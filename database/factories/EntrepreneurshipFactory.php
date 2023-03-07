@@ -41,7 +41,7 @@ class EntrepreneurshipFactory extends Factory
             'bizum_payment' => fake()->boolean(),
             'stock'=> fake()->numberBetween($int1 = 0, $int2 = 50),
             'availability_state'=> $availability->id,
-            'phone_number' => fake()->phoneNumber(),
+            'phone' => fake()->phoneNumber(),
             'email'=> fake()->email(),
             'location' => fake()->city(),
             'inspection_state' => $inspection->id,
