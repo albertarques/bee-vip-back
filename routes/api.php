@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsersController;
@@ -39,6 +39,8 @@ Route::controller(AuthController::class)->group(function () {
 
   // TODO: Añadir lista emprendimientos, estado de los emprendimientos y rol del usuario.
   Route::post('me', 'App\Http\Controllers\AuthController@me');
+  Route::put('/entrepreneurship/update/{id}', 'update-entrepreneurship');
+
 });
 
 // Rutas con Autorización y Permisos
@@ -71,10 +73,11 @@ Route::group(['middleware' => 'auth.jwt'], function () {
   });
 
   Route::controller(EntrepreneurshipsController::class)->group(function () {
-    Route::post('/entrepreneurship/create', 'store')->middleware('can:create-entrepreneurship');
-    Route::patch('/entrepreneurship/{id}/update', 'update')->middleware('can:update-entrepreneurship');
-    Route::delete('/entrepreneurship/{id}/delete', 'destroy')->middleware('can:delete-entrepreneurship');
-    Route::get('/entrepreneurships/pending', 'pendingIndex')->middleware('can:view-pending-entrepreneurships');
+    Route::post('entrepreneurship/create', 'store')->middleware('can:create-entrepreneurship');
+    Route::put('entrepreneurship/inspect/{id}', 'inspect')->middleware('can:inspect-entrepreneurship');
+    Route::delete('entrepreneurship/delete/{id}', 'destroy')->middleware('can:delete-entrepreneurship');
+    Route::get('entrepreneurships/pending', 'pending')->middleware('can:view-pending-entrepreneurships');
+    Route::patch('entrepreneurship/update/{id}', 'update')->middleware('can:update-entrepreneurships');
   });
 
   Route::controller(CommentsController::class)->group(function () {
@@ -85,9 +88,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
   //Categorías
   Route::controller(CategoriesController::class)->group(function () {
-    Route::get('categories', 'index');
     Route::post('category', 'store');
-    Route::get('category/{id}', 'show');
     Route::put('category/{id}', 'update');
   });
 });
