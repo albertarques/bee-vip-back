@@ -46,7 +46,7 @@ class RoleAndPermissionSeeder extends Seeder
 
         // ************* Superadmin permissions ******************************
         // Entrepreneurships
-        Permission::create(['name' => MyPermission::CAN_APPROVE_ENTREPRENEURSHIPS]);
+        Permission::create(['name' => MyPermission::CAN_INSPECT_ENTREPRENEURSHIP]);
 
         //Users
         Permission::create(['name' => MyPermission::CAN_UPDATE_USER_ROLE]);
@@ -88,8 +88,6 @@ class RoleAndPermissionSeeder extends Seeder
             MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
             MyPermission::CAN_UPDATE_ENTREPRENEURSHIP,
             MyPermission::CAN_DELETE_ENTREPRENEURSHIP,
-            // MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
-
         ]);
 
         $superadminRole->givePermissionTo([
@@ -99,7 +97,7 @@ class RoleAndPermissionSeeder extends Seeder
             MyPermission::CAN_UPDATE_USER_ROLE,
 
             // Entrepreneurships
-            MyPermission::CAN_APPROVE_ENTREPRENEURSHIPS,
+            MyPermission::CAN_INSPECT_ENTREPRENEURSHIP,
             MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
         ]);
     }
