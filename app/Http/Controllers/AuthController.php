@@ -6,14 +6,15 @@ use App\Models\Entrepreneurship;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class AuthController extends Controller
 {
-  public function __construct(){
-        $this->middleware('auth:api', ['except' => ['login','register', 'categories']]);
-  }
+  public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login','register']]);
+    }
 
   public function login(Request $request){
     $request->validate([
@@ -71,7 +72,7 @@ class AuthController extends Controller
     $user = User::create([
       'username' => $request->username,
       'email' => $request->email,
-      'password' => $request->password,
+      'password' => Hash::make($request->password),
       'phone' => $request->phone,
     ]);
 
@@ -89,8 +90,9 @@ class AuthController extends Controller
       ]
     ]);
   }
-
-  public function logout(){
+  
+  public function logout()
+  {
     Auth::logout();
     return response()->json([
       'status' => 'success',
