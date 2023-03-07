@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entrepreneurship;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Hash;
@@ -10,9 +11,11 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+  public function __construct(){
+        $this->middleware('auth:api', ['except' => ['login','register', 'categories']]);
+  }
 
-  public function login(Request $request)
-  {
+  public function login(Request $request){
     $request->validate([
       'email' => 'required|string|email',
       'password' => 'required|string',
@@ -28,6 +31,7 @@ class AuthController extends Controller
     }
 
     $user = Auth::user();
+
     return response()->json([
       'status' => 'success',
       'user' => $user,
@@ -44,8 +48,7 @@ class AuthController extends Controller
    * @return \Illuminate\Http\JsonResponse
    */
 
-  public function me()
-  {
+  public function me(){
     //TODO: Añadir rol del usuario.
 
     $user_id = auth()->user()->id;
@@ -57,8 +60,7 @@ class AuthController extends Controller
     ]);
   }
 
-  public function register(Request $request)
-  {
+  public function register(Request $request){
     $request->validate([
       'username' => 'required|string|max:255',
       'email' => 'required|string|email|max:255|unique:users',
@@ -88,8 +90,7 @@ class AuthController extends Controller
     ]);
   }
 
-  public function logout()
-  {
+  public function logout(){
     Auth::logout();
     return response()->json([
       'status' => 'success',
@@ -97,8 +98,7 @@ class AuthController extends Controller
     ]);
   }
 
-  public function refresh()
-  {
+  public function refresh(){
     return response()->json([
       'status' => 'success',
       'user' => Auth::user(),
