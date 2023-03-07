@@ -6,6 +6,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 // use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 // use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -25,7 +26,7 @@ class UserSeeder extends Seeder
             'username' => 'Albert',
             'email' => 'albertarques@gmail.com',
             'phone' => '666666666',
-            'password' => bcrypt('12345678'),
+            'password' => Hash::make('12345678'),
         ]);
 
         $superadminUser = User::find(1);
@@ -40,21 +41,21 @@ class UserSeeder extends Seeder
           "username" => "user",
           "email" => "user@example.com",
           "phone" => "111111111",
-          "password" => "12345678"
+          "password" => Hash::make("12345678")
         ]);
 
         User::factory()->create([
           "username" => "admin",
           "email" => "admin@example.com",
           "phone" => "222222222",
-          "password" => "12345678"
+          "password" => Hash::make("12345678")
         ]);
 
         User::factory()->create([
           "username" => "superadmin",
           "email" => "superadmin@example.com",
           "phone" => "333333333",
-          "password" => "12345678"
+          "password" => Hash::make("12345678")
         ]);
 
     }

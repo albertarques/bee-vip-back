@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entrepreneurship;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,8 +16,7 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
-  public function login(Request $request)
-  {
+  public function login(Request $request){
     $request->validate([
       'email' => 'required|string|email',
       'password' => 'required|string',
@@ -32,6 +32,7 @@ class AuthController extends Controller
     }
 
     $user = Auth::user();
+
     return response()->json([
       'status' => 'success',
       'user' => $user,
@@ -42,8 +43,25 @@ class AuthController extends Controller
     ]);
   }
 
-  public function register(Request $request)
-  {
+  /**
+   * Get the authenticated User.
+   *
+   * @return \Illuminate\Http\JsonResponse
+   */
+
+  public function me(){
+    //TODO: Añadir rol del usuario.
+
+    $user_id = auth()->user()->id;
+    $entrepreneurships = Entrepreneurship::all()->where('user_id', '=', $user_id);
+
+    return response()->json([
+      auth()->user(),
+      'entrepreneurships' => $entrepreneurships,
+    ]);
+  }
+
+  public function register(Request $request){
     $request->validate([
       'username' => 'required|string|max:255',
       'email' => 'required|string|email|max:255|unique:users',
@@ -72,26 +90,7 @@ class AuthController extends Controller
       ]
     ]);
   }
-
-  /**
-   * Get the authenticated User.
-   *
-   * @return \Illuminate\Http\JsonResponse
-   */
-
-  public function me()
-  {
-    //TODO: Añadir rol del usuario.
-
-    $user_id = auth()->user()->id;
-    $entrepreneurships = Entrepreneurship::all()->where('user_id', '=', $user_id);
-
-    return response()->json([
-      auth()->user(),
-      'entrepreneurships' => $entrepreneurships,
-    ]);
-  }
-
+  
   public function logout()
   {
     Auth::logout();
@@ -101,8 +100,7 @@ class AuthController extends Controller
     ]);
   }
 
-  public function refresh()
-  {
+  public function refresh(){
     return response()->json([
       'status' => 'success',
       'user' => Auth::user(),

@@ -60,7 +60,7 @@ class EntrepreneurshipTest extends TestCase{
                 'bizum_payment' =>'1',
                 'stock' => '100',
                 'availability_state' => 1,
-                'phone_number' => '12345789',
+                'phone' => '12345789',
                 'email' => 'holacafe@gamil.com',
                 'location' => 'Antioquia',
                 'inspection_state' => 1,
