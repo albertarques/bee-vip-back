@@ -29,9 +29,7 @@ Route::controller(UsersController::class)->group(function () {
 //Categorías
 Route::controller(CategoriesController::class)->group(function () {
   Route::get('categories', 'index');
-  Route::post('category', 'store');
   Route::get('category/{id}', 'show');
-  Route::put('category/{id}', 'update');
 });
 
 // ** Rutas con Autenticación ******************************************************
