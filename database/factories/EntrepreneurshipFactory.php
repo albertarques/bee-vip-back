@@ -22,10 +22,10 @@ class EntrepreneurshipFactory extends Factory
      */
     public function definition()
     {
-        $category = Category::all()->random();
-        $user = User::all()->random();
-        $availability = AvailabilityState::all()->random();
-        $inspection = InspectionState::all()->random();
+        $category = Category::factory()->create();
+        $user = User::factory()->create();
+        $availability = AvailabilityState::factory()->create();
+        $inspection = InspectionState::factory()->create();
         return [
             'user_id' => $user->id,
             'title'=> fake()->sentence($nbWords = 3, $variableNbWords = true),
