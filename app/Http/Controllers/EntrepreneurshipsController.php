@@ -60,23 +60,23 @@ class EntrepreneurshipsController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'user_id' => 'required|string|max:255',
+            'user_id' => 'required|integer|max:255',
             'title' => 'required|string|max:255',
             'logo' => 'required|string|max:255',
             'title' => 'required|string|max:255',
             'product_img' => 'required|string|max:255',
             'description' => 'required|string|max:500',
-            'price' => 'required|float',
-            'category_id' => 'required|string|max:255',
-            'avg_score' => 'required|float',
+            'price' => 'required|numeric',
+            'category_id' => 'required|integer|max:255',
+            'avg_score' => 'required|numeric',
             'cash_payment' => 'required|boolean',
             'card_payment' => 'required|boolean',
             'bizum_payment' => 'required|boolean',
             'stock' => 'required|integer|max:500',
-            'availability' => 'required|boolean',
-            'phone' => 'required|string|digits_between:9,15',
-            'email' => 'required|integer|max:255',
-            'location' => 'required|integer|max:255',
+            // 'availability' => 'required|boolean',
+            'phone_number' => 'required|string|digits_between:9,15',
+            'email' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
         ]);
 
         // dd($request);
@@ -95,11 +95,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => $request->card_payment,
             'bizum_payment' => $request->bizum_payment,
             'stock' => $request->stock,
-            'availability_state' => 1,
+            'availability_state' => $request->availability,
             'phone_number' => $request->phone_number,
             'email' => $request->email,
             'location' => $request->location,
-            'inspection_state' => 1,
+            'inspection_state' => $request->inspection_state,
         ]);
 
         return response()->json([
