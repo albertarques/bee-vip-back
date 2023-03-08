@@ -77,6 +77,46 @@ class EntrepreneurshipSeeder extends Seeder
         ]);
 
         Entrepreneurship::factory()->create([
+          'title' => 'Laravel PHP',
+          'name' => 'David Picó',
+          'logo' => '',
+          'product_img' => Storage::url('factory-img/laravel.jpeg'),
+          'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
+          'price' => '320',
+          'category_id' => '3',
+          'avg_score' => '4',
+          'cash_payment' => '0',
+          'card_payment' => '1',
+          'bizum_payment' => '0',
+          'stock' => '1',
+          'availability_state' => '2',
+          'phone' => '6666663366',
+          'email' => 'laravel@gmail.com',
+          'location' => 'Cartagena',
+          'inspection_state' => '2',
+        ]);
+
+        Entrepreneurship::factory()->create([
+          'title' => 'Restaurante El Buen Parcero',
+          'name' => 'Andrés Esteban',
+          'logo' => '',
+          'product_img' => Storage::url('factory-img/paisa.jpeg'),
+          'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
+          'price' => '50',
+          'category_id' => '3',
+          'avg_score' => '4',
+          'cash_payment' => '0',
+          'card_payment' => '1',
+          'bizum_payment' => '0',
+          'stock' => '1',
+          'availability_state' => '2',
+          'phone' => '6666663366',
+          'email' => 'paisa@gmail.com',
+          'location' => 'Cali',
+          'inspection_state' => '2',
+        ]);
+
+        Entrepreneurship::factory()->create([
           'title' => 'Quitamanchas Flash!',
           'name' => 'Francisca Rey',
           'logo' => '',

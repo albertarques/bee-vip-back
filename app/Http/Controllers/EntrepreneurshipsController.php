@@ -65,23 +65,12 @@ class EntrepreneurshipsController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            // 'user_id' => 'nullable',
-            // 'title' => 'nullable',
-            // 'logo' => 'nullable',
-            // 'product_img' => 'nullable',
-            // 'description' => 'nullable',
-            // 'price' => 'nullable',
-            // 'category_id' => 'nullable',
-            // 'avg_score' => 'nullable',
-            // 'cash_payment' => 'required|boolean',
-            // 'card_payment' => 'required|boolean',
-            // 'bizum_payment' => 'required|boolean',
-            // 'stock' => 'required|integer|max:500',
-            // 'availability_state' => 'required|integer|exists:availability_states,id|between:1, 2',
-            // 'phone' => 'required|string|digits_between:9,15',
-            // 'email' => 'required|email',
-            // 'location' => 'required|string|max:255',
-            // 'inspection_state' => 'required|integer|exists:inspection_states,id|between:1, 3',
+            'name' => 'required|string|max:100',
+            'title' => 'required|string|max:100',
+            'product_img' => 'image|max:2048',
+            'description' => 'required|string|max:100',
+            'price' => 'required|integer',
+
 
             // 'user_id' => 'required|integer|exists:users,id',
             // 'title' => 'required|string|max:255',
@@ -102,9 +91,13 @@ class EntrepreneurshipsController extends Controller
             // 'inspection_state' => 'required|integer|exists:inspection_states,id|between:1, 3',
         ]);
 
+        $imagePath = $request->file('image')->store('public/images');
+        $imageUrl = url('storage/' . str_replace('public/', '', $imagePath));
+
         $entrepreneurship = Entrepreneurship::create([
             'user_id' => $request->user_id,
             'title' => $request->title,
+            'name' => $request->name,
             'logo' => $request->logo,
             'product_img' => $request->product_img,
             'description' => $request->description,
@@ -115,18 +108,18 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => $request->card_payment,
             'bizum_payment' => $request->bizum_payment,
             'stock' => $request->stock,
-            'availability_state' => 1,
+            'availability_state' => 2,
             'phone' => $request->phone,
             'email' => $request->email,
             'location' => $request->location,
-            'inspection_state' => 1,
+            'inspection_state' => 2,
         ]);
 
         dd($entrepreneurship);
         return response()->json([
             'code' => 200,
             'status' => 'success',
-            'message' => 'entrepreneurship created successfully',
+            'message' => 'Entrepreneurship created successfully',
             'entrepreneurship' => $entrepreneurship,
         ]);
     }
