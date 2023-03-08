@@ -8,55 +8,52 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        $this->call([
-            UserSeeder::class
-        ]);
+  /**
+   * Seed the application's database.
+   *
+   * @return void
+   */
+  public function run()
+  {
 
-        $this->call([
-            CategorySeeder::class
-        ]);
-        
-        $this->call([
-            AvailabilityStatesSeeder::class
-        ]);
+    $this->call([
+      CategorySeeder::class
+    ]);
 
-        $this->call([
-            InspectionStatesSeeder::class
-        ]);
+    $this->call([
+      AvailabilityStatesSeeder::class
+    ]);
 
-        $this->call([
-            EntrepreneurshipSeeder::class
-        ]);
+    $this->call([
+      InspectionStatesSeeder::class
+    ]);
 
-        $this->call([
-            CommentsSeeder::class
-        ]);
+    $this->call([
+      RoleAndPermissionSeeder::class
+    ]);
 
-        $this->call([
-            OrderSeeder::class
-        ]);
+    $this->call([
+      UserSeeder::class
+    ]);
 
-        $this->call([
-            OrderDetailSeeder::class
-        ]);
+    $this->call([
+      EntrepreneurshipSeeder::class
+    ]);
 
-        $this->call([
-            PaymentMethodsSeeder::class
-        ]);
+    $this->call([
+      CommentsSeeder::class
+    ]);
 
-        $this->call([
-            RoleAndPermissionSeeder::class
-        ]);
+    $this->call([
+      OrderSeeder::class
+    ]);
 
-       
+    $this->call([
+      OrderDetailSeeder::class
+    ]);
 
-
-    }
+    $this->call([
+      PaymentMethodsSeeder::class
+    ]);
+  }
 }

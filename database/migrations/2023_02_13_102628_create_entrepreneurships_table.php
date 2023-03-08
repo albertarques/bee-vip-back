@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('entrepreneurships', function(Blueprint $table){
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
             $table->string('name');
             $table->string('logo')->nullable();
@@ -30,7 +29,7 @@ return new class extends Migration
             $table->boolean('bizum_payment');
             $table->integer('stock')->nullable();
             $table->foreignId('availability_state')->references('id')->on('availability_states');
-            $table->string('phone_number');
+            $table->string('phone');
             $table->string('email');
             $table->string('location');
             $table->foreignId('inspection_state')->references('id')->on('inspection_states');

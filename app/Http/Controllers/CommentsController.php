@@ -67,7 +67,6 @@ class CommentsController extends Controller
         $comment = Comment::find($id);
         $comment->entrepreneurship_id = $request->entrepreneurship_id;
         $comment->user_id = $request->user_id;
-        //$comment->score = $request->score;
         $comment->comment = $request->comment;
         $comment->save();
 

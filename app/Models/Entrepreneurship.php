@@ -26,7 +26,7 @@ class Entrepreneurship extends Model
         'bizum_payment',
         'stock',
         'availability_state',
-        'phone_number',
+        'phone',
         'email',
         'location',
         'inspection_state',

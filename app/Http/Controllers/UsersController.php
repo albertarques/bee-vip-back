@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entrepreneurship;
-use App\Models\Role;
+// use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -23,36 +24,31 @@ class UsersController extends Controller
         ]);
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'picture' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:8',
+            'phone' => 'required|string|digits_between:9,15',
+        ]);
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'username' => 'required|string|max:255',
-    //         'picture' => 'nullable|string|max:255',
-    //         'email' => 'required|string|max:255',
-    //         'password' => 'required|string|min:8',
-    //         'phone' => 'required|string|digits_between:9,15',
-    //         // 'state' => 'required|integer|min:1|max:3',
-    //     ]);
+        $user = User::create([
+            'username' => $request->username,
+            'picture' => $request->picture,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone' => $request->phone,
+        ]);
 
-    //     $user = User::create([
-    //         'username' => $request->username,
-    //         'picture' => $request->picture,
-    //         'email' => $request->email,
-    //         'password' => $request->password,
-    //         'phone' => $request->phone,
-    //         // 'state' => $request->state,
-    //     ]);
-
-       
-
-    //     return response()->json([
-    //         'code'=> 200,
-    //         'status' => 'success',
-    //         'message' => 'user created successfully',
-    //         'user' => $user,
-    //     ]);
-    // }
+        return response()->json([
+            'code'=> 200,
+            'status' => 'success',
+            'message' => 'user created successfully',
+            'user' => $user,
+        ]);
+    }
 
     public function show($id)
     {
@@ -74,10 +70,9 @@ class UsersController extends Controller
         $request->validate([
             'username' => 'required|string|max:255',
             'picture' => 'nullable|string|max:255',
-            'email' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
-            // 'state' => 'required|integer|min:1|max:3',
         ]);
 
         $user = User::find($id);
@@ -86,7 +81,6 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->phone = $request->phone;
-        // $user->state = $request->state;
         $user->save();
 
         return response()->json([
@@ -105,6 +99,23 @@ class UsersController extends Controller
             'status' => 'success',
             'message' => 'user deleted successfully',
             'user' => $user,
+        ]);
+    }
+
+    public function updateRole(Request $request, User $id)
+    {
+        $this->validate($request, [
+            'role' => 'required|string|exists:roles,name',
+        ]);
+
+        $roleName = $request->input('role');
+        $role = Role::where('name', $roleName)->firstOrFail();
+
+        $id->syncRoles($role);
+
+        return response()->json([
+            'message' => 'User role updated successfully',
+            'user' => $id->load('roles'),
         ]);
     }
 }
