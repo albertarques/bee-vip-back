@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('location');
             $table->foreignId('inspection_state')->references('id')->on('inspection_states');
-            $table->timestamps();
+            // $table->timestamps();
             });
     }
 

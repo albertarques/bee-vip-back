@@ -23,21 +23,23 @@ class CommentsController extends Controller
 
     public function store(Request $request)
     {
+      
         $request->validate([
-            'entrepreneurship_id' => 'required|string|max:255',
-            'user_id' => 'required|string|max:255',
+            'entrepreneurship_id' => 'required|integer|max:255',
+            'user_id' => 'required|integer|max:255',
             'score' => 'required|integer|max:1',
-            'comment' => 'required|longText|max:500',
+            'comment' => 'required|max:500',
         ]);
-
+        
         $comment = Comment::create([
             'entrepreneurship_id' => $request->entrepreneurship_id,
             'user_id' => $request->user_id,
             'score' => $request->score,
             'comment' => $request->comment,
         ]);
-
+       
         return response()->json([
+            'code' => 200,
             'status' => 'success',
             'message' => 'comment created successfully',
             'comment' => $comment,

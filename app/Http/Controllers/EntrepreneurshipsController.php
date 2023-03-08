@@ -115,11 +115,11 @@ class EntrepreneurshipsController extends Controller
             'card_payment' => $request->card_payment,
             'bizum_payment' => $request->bizum_payment,
             'stock' => $request->stock,
-            'availability_state' => 1,
+            'availability_state' => $request->availability,
             'phone' => $request->phone,
             'email' => $request->email,
             'location' => $request->location,
-            'inspection_state' => 1,
+            'inspection_state' => $request->inspection_state,
         ]);
 
         dd($entrepreneurship);

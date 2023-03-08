@@ -16,98 +16,98 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
-  public function login(Request $request){
-    $request->validate([
-      'email' => 'required|string|email',
-      'password' => 'required|string',
-    ]);
-    $credentials = $request->only('email', 'password');
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+        $credentials = $request->only('email', 'password');
 
-    $token = Auth::attempt($credentials);
-    if (!$token) {
-      return response()->json([
-        'status' => 'error',
-        'message' => 'Unauthorized',
-      ], 401);
+        $token = Auth::attempt($credentials);
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        $user = Auth::user();
+        return response()->json([
+                'status' => 'success',
+                'user' => $user,
+                'authorisation' => [
+                    'token' => $token,
+                    'type' => 'bearer',
+                ]
+            ]);
+
     }
 
-    $user = Auth::user();
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
 
-    return response()->json([
-      'status' => 'success',
-      'user' => $user,
-      'authorisation' => [
-        'token' => $token,
-        'type' => 'bearer',
-      ]
-    ]);
-  }
+    public function me()
+        {
+            return response()->json(auth()->user());
+        }
 
-  /**
-   * Get the authenticated User.
-   *
-   * @return \Illuminate\Http\JsonResponse
-   */
+    public function register(Request $request){
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+            'phone' => 'required|string|max:12',
+            // 'state' => 'required|integer|min:1|max:3'
+        ]);
+        
+        $user = User::create([
+            'username' => $request->username,
+            // 'name' => $request->name,
+            // 'surname' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            // 'state' => 1,
+        ]);
+        
+        $user->assignRole('user');
 
-  public function me(){
-    //TODO: Añadir rol del usuario.
+        $token = Auth::login($user);
 
-    $user_id = auth()->user()->id;
-    $entrepreneurships = Entrepreneurship::all()->where('user_id', '=', $user_id);
+        return response()->json([
+            'code'=>200,
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ]);
+    }
 
-    return response()->json([
-      auth()->user(),
-      'entrepreneurships' => $entrepreneurships,
-    ]);
-  }
+    public function logout()
+    {
+        Auth::logout();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully logged out',
+        ]);
+    }
 
-  public function register(Request $request){
-    $request->validate([
-      'username' => 'required|string|max:255',
-      'email' => 'required|string|email|max:255|unique:users',
-      'password' => 'required|string|min:6',
-      'phone' => 'required|string|max:12|unique:users',
-    ]);
-
-    $user = User::create([
-      'username' => $request->username,
-      'email' => $request->email,
-      'password' => Hash::make($request->password),
-      'phone' => $request->phone,
-    ]);
-
-    $user->assignRole('user');
-
-    $token = Auth::login($user);
-    return response()->json([
-      'code' => 200,
-      'status' => 'success',
-      'message' => 'User created successfully',
-      'user' => $user,
-      'authorisation' => [
-        'token' => $token,
-        'type' => 'bearer',
-      ]
-    ]);
-  }
-  
-  public function logout()
-  {
-    Auth::logout();
-    return response()->json([
-      'status' => 'success',
-      'message' => 'Successfully logged out',
-    ]);
-  }
-
-  public function refresh(){
-    return response()->json([
-      'status' => 'success',
-      'user' => Auth::user(),
-      'authorisation' => [
-        'token' => Auth::refresh(),
-        'type' => 'bearer',
-      ]
-    ]);
-  }
+    public function refresh()
+    {
+        return response()->json([
+            'status' => 'success',
+            'user' => Auth::user(),
+            'authorisation' => [
+                'token' => Auth::refresh(),
+                'type' => 'bearer',
+            ]
+        ]);
+    }
 }
