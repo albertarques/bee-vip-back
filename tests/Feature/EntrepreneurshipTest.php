@@ -43,8 +43,12 @@ class EntrepreneurshipTest extends TestCase{
      /** @test */
      public function test_admin_can_create_entrepreneurship()
      {
-         // dd($this->user);
-         $this->actingAs($this->admin)
+         $token = $this->user->createToken('my-app-token')->plainTextToken;
+
+    $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])
+        //  $this->actingAs($this->admin)
              ->post('/api/entrepreneurship/create', [
                 'user_id' => $this->admin->id,
                 'title' => 'Juan Valdez',
@@ -59,7 +63,7 @@ class EntrepreneurshipTest extends TestCase{
                 'card_payment' => '0',
                 'bizum_payment' =>'1',
                 'stock' => '100',
-                'availability_state' => 1,
+                'availability_state' => 2,
                 'phone_number' => '12345789',
                 'email' => 'holacafe@gamil.com',
                 'location' => 'Antioquia',
