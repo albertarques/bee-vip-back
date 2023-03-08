@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Entrepreneurship;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -19,7 +20,7 @@ class EntrepreneurshipSeeder extends Seeder
           'title' => 'Café Colombiano Black Toast',
           'name' => 'Rodrigo Suárez',
           'logo' => '',
-          'product_img' => 'storage/app/public/images/xDHxww0jNPLpPmBXWajUkdqeXf5jNl5KvaN6AXB3.png',
+          'product_img' => Storage::url('factory-img/cafe.jpeg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
           'price' => '100.5',
           'category_id' => '1',
@@ -39,7 +40,7 @@ class EntrepreneurshipSeeder extends Seeder
           'title' => 'Diseño Web',
           'name' => 'Alberto Arqueso',
           'logo' => '',
-          'product_img' => '/storage/app/public/image/ILuGC9WEwPae7DKhhxPnVRNVwCnOl0ZYI6utBcrL.png',
+          'product_img' => Storage::url('factory-img/diseno.png'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
           'price' => '100.5',
           'category_id' => '2',
@@ -59,7 +60,7 @@ class EntrepreneurshipSeeder extends Seeder
           'title' => 'Desarrollo Web React JS',
           'name' => 'Alejandra Buritoki',
           'logo' => '',
-          'product_img' => '/storage/app/public/image/VJSavwtbpWiv0tDc0WDnoNKuvp3jO9tst8TjsgFI.png',
+          'product_img' => Storage::url('factory-img/desarrollo.png'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
           'price' => '500',
           'category_id' => '3',
@@ -79,7 +80,7 @@ class EntrepreneurshipSeeder extends Seeder
           'title' => 'Quitamanchas Flash!',
           'name' => 'Francisca Rey',
           'logo' => '',
-          'product_img' => '/storage/app/public/image/z7h6gPM8FEzRRYJ8PVZgjb4a5gPjTIhb4a9RAz8H.jpg',
+          'product_img' => Storage::url('factory-img/quitamanchas.jpg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
           'price' => '23',
           'category_id' => '4',
@@ -99,7 +100,7 @@ class EntrepreneurshipSeeder extends Seeder
           'title' => 'Maquillaje Premium',
           'name' => 'Guillerma Martinita',
           'logo' => '',
-          'product_img' => '/storage/app/public/image/X2Bu7IzJPuKSox7Qgc0jBAO2JDDFUXabOXXzjQpJ.jpg',
+          'product_img' => Storage::url('factory-img/maquillaje.jpeg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
           'price' => '200',
           'category_id' => '5',
@@ -119,7 +120,7 @@ class EntrepreneurshipSeeder extends Seeder
           'title' => 'La Lenteja Álbum',
           'name' => 'Espantoso',
           'logo' => '',
-          'product_img' => '/storage/app/public/image/s52LfR9hrYce9nczNLQanc5WBuznV5NMBlyfcJC1.jpg',
+          'product_img' => Storage::url('factory-img/lenteja.jpeg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
           'price' => '30',
           'category_id' => '6',
@@ -135,6 +136,6 @@ class EntrepreneurshipSeeder extends Seeder
           'inspection_state' => '2',
         ]);
 
-        Entrepreneurship::factory(50)->create();
+        Entrepreneurship::factory(100)->create();
     }
 }

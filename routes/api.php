@@ -31,6 +31,7 @@ Route::controller(CategoriesController::class)->group(function () {
   Route::get('category/{id}', 'show');
 });
 
+Route::post('image', [ImageController::class, 'imageStore']);
 
 // ** Rutas con Autenticación ******************************************************
 Route::controller(AuthController::class)->group(function () {
@@ -46,7 +47,6 @@ Route::controller(AuthController::class)->group(function () {
 // Rutas con Autorización y Permisos
 Route::group(['middleware' => 'auth.jwt'], function () {
 
-  Route::post('image', [ImageController::class, 'imageStore']);
   Route::post('payments', [PaymentController::class, 'process']);
 
   Route::controller(UsersController::class)->group(function () {
