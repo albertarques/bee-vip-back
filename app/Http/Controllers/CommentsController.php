@@ -23,9 +23,10 @@ class CommentsController extends Controller
 
     public function store(Request $request)
     {
+        dd('controller');
         $request->validate([
-            'entrepreneurship_id' => 'required|string|max:255',
-            'user_id' => 'required|string|max:255',
+            'entrepreneurship_id' => 'required|integer|max:255',
+            'user_id' => 'required|integer|max:255',
             'score' => 'required|integer|max:1',
             'comment' => 'required|longText|max:500',
         ]);
