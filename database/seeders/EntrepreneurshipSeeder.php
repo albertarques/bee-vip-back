@@ -17,7 +17,7 @@ class EntrepreneurshipSeeder extends Seeder
     {
         Entrepreneurship::factory()->create([
           'title' => 'Café Colombiano Black Toast',
-          'name' => 'Rodrigo Suárez',
+          // 'name' => 'Rodrigo Suárez',
           'logo' => '',
           'product_img' => 'storage/app/public/images/xDHxww0jNPLpPmBXWajUkdqeXf5jNl5KvaN6AXB3.png',
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -37,7 +37,7 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Diseño Web',
-          'name' => 'Alberto Arqueso',
+          // 'name' => 'Alberto Arqueso',
           'logo' => '',
           'product_img' => '/storage/app/public/image/ILuGC9WEwPae7DKhhxPnVRNVwCnOl0ZYI6utBcrL.png',
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -57,7 +57,7 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Desarrollo Web React JS',
-          'name' => 'Alejandra Buritoki',
+          // 'name' => 'Alejandra Buritoki',
           'logo' => '',
           'product_img' => '/storage/app/public/image/VJSavwtbpWiv0tDc0WDnoNKuvp3jO9tst8TjsgFI.png',
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -77,7 +77,7 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Quitamanchas Flash!',
-          'name' => 'Francisca Rey',
+          // 'name' => 'Francisca Rey',
           'logo' => '',
           'product_img' => '/storage/app/public/image/z7h6gPM8FEzRRYJ8PVZgjb4a5gPjTIhb4a9RAz8H.jpg',
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -97,7 +97,7 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Maquillaje Premium',
-          'name' => 'Guillerma Martinita',
+          // 'name' => 'Guillerma Martinita',
           'logo' => '',
           'product_img' => '/storage/app/public/image/X2Bu7IzJPuKSox7Qgc0jBAO2JDDFUXabOXXzjQpJ.jpg',
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -117,7 +117,7 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'La Lenteja Álbum',
-          'name' => 'Espantoso',
+          // 'name' => 'Espantoso',
           'logo' => '',
           'product_img' => '/storage/app/public/image/s52LfR9hrYce9nczNLQanc5WBuznV5NMBlyfcJC1.jpg',
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',

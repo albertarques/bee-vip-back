@@ -65,19 +65,19 @@ class EntrepreneurshipsController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            // 'user_id' => 'nullable',
-            // 'title' => 'nullable',
-            // 'logo' => 'nullable',
-            // 'product_img' => 'nullable',
-            // 'description' => 'nullable',
-            // 'price' => 'nullable',
-            // 'category_id' => 'nullable',
-            // 'avg_score' => 'nullable',
+            // 'user_id' => 'required|integer|max:255',
+            // 'title' => 'required|string|max:255',
+            // 'logo' => 'required|string|max:255',
+            // 'product_img' => 'required|string|max:255',
+            // 'description' => 'required|string|max:255',
+            // 'price' => 'required|numeric',
+            // 'category_id' => 'required|integer|max:255',
+            // 'avg_score' => 'required|numeric',
             // 'cash_payment' => 'required|boolean',
             // 'card_payment' => 'required|boolean',
             // 'bizum_payment' => 'required|boolean',
             // 'stock' => 'required|integer|max:500',
-            // 'availability_state' => 'required|integer|exists:availability_states,id|between:1, 2',
+            // 'availability_state' => 'required|boolean',
             // 'phone' => 'required|string|digits_between:9,15',
             // 'email' => 'required|email',
             // 'location' => 'required|string|max:255',
@@ -122,7 +122,7 @@ class EntrepreneurshipsController extends Controller
             'inspection_state' => $request->inspection_state,
         ]);
 
-        dd($entrepreneurship);
+        
         return response()->json([
             'code' => 200,
             'status' => 'success',

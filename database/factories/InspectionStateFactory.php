@@ -17,7 +17,7 @@ class InspectionStateFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->sentence($nbWords = 1, $variableNbWords = true),
+            'name' => fake()->randomElement(['pending','approved', 'dennied']),
         ];
     }
 }

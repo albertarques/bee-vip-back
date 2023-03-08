@@ -24,12 +24,12 @@ class EntrepreneurshipFactory extends Factory
     {
         $category = Category::factory()->create();
         $user = User::factory()->create();
-        $availability = AvailabilityState::factory()->create();
-        $inspection = InspectionState::factory()->create();
+        $availability = AvailabilityState::all()->random();
+        $inspection = InspectionState::all()->random();
         return [
             'user_id' => $user->id,
             'title'=> fake()->sentence($nbWords = 3, $variableNbWords = true),
-            'name' => fake()->sentence($nbWords = 1),
+            // 'name' => fake()->sentence($nbWords = 1),
             'logo'=> fake()->image($dir = null, $width = 173, $height= 80),
             'product_img'=> fake()->image($dir = null, $width = 390, $height= 203),
             'description'=> fake()->text($maxNbChars = 150),

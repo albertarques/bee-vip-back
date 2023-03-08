@@ -53,7 +53,6 @@ class EntrepreneurshipTest extends TestCase{
        $response =  $this->post('/api/entrepreneurship/create', [
                'user_id' => $this->user->id,
                'title' => 'Juan Valdez cafe',
-               'name' => 'Juan Valdez',
                'logo' => 'cafe',
                'product_img' => 'file.jpg',
                'description' => 'El mejor cafe del mundo',
@@ -65,7 +64,7 @@ class EntrepreneurshipTest extends TestCase{
                'bizum_payment' =>1,
                'stock' => 100,
                'availability' => $this->availability->id,
-               'phone_number' => '123457891',
+               'phone' => '123457891',
                'email' => 'buri123456@bestcolombian.com',
                'location' => 'Antioquia',
                'inspection_state' => $this->inspection->id,
@@ -86,7 +85,6 @@ class EntrepreneurshipTest extends TestCase{
         $response =  $this->post('/api/entrepreneurship/create', [
                 'user_id' => $this->user->id,
                 'title' => 'Juan Valdez cafe',
-                'name' => 'Juan Valdez',
                 'logo' => 'cafe',
                 'product_img' => 'file.jpg',
                 'description' => 'El mejor cafe del mundo',
@@ -98,7 +96,7 @@ class EntrepreneurshipTest extends TestCase{
                 'bizum_payment' =>1,
                 'stock' => 100,
                 'availability' => $this->availability->id,
-                'phone_number' => '123457891',
+                'phone' => '123457891',
                 'email' => 'buri123456@bestcolombian.com',
                 'location' => 'Antioquia',
                 'inspection_state' => $this->inspection->id,
