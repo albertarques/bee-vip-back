@@ -28,11 +28,11 @@ class EntrepreneurshipSeeder extends Seeder
           'card_payment' => '1',
           'bizum_payment' => '0',
           'stock' => '34',
-          'availability_state' => '1',
-          'phone_number' => '777777777',
+          'availability_state' => '2',
+          'phone' => '777777777',
           'email' => 'cafecolombia@gmail.com',
           'location' => 'Medellín',
-          'inspection_state' => '1',
+          'inspection_state' => '2',
         ]);
 
         Entrepreneurship::factory()->create([
@@ -48,11 +48,11 @@ class EntrepreneurshipSeeder extends Seeder
           'card_payment' => '1',
           'bizum_payment' => '0',
           'stock' => '1',
-          'availability_state' => '1',
-          'phone_number' => '666666666',
+          'availability_state' => '2',
+          'phone' => '666666666',
           'email' => 'webdesign@gmail.com',
           'location' => 'Cali',
-          'inspection_state' => '1',
+          'inspection_state' => '2',
         ]);
 
         Entrepreneurship::factory()->create([
@@ -68,11 +68,11 @@ class EntrepreneurshipSeeder extends Seeder
           'card_payment' => '1',
           'bizum_payment' => '0',
           'stock' => '1',
-          'availability_state' => '1',
-          'phone_number' => '666666666',
+          'availability_state' => '2',
+          'phone' => '666666666',
           'email' => 'webdesign@gmail.com',
           'location' => 'Cartagena',
-          'inspection_state' => '1',
+          'inspection_state' => '2',
         ]);
 
         Entrepreneurship::factory()->create([
@@ -88,11 +88,11 @@ class EntrepreneurshipSeeder extends Seeder
           'card_payment' => '1',
           'bizum_payment' => '0',
           'stock' => '1',
-          'availability_state' => '1',
-          'phone_number' => '222222222',
+          'availability_state' => '2',
+          'phone' => '222222222',
           'email' => 'quitamanchas@gmail.com',
           'location' => 'Cartagena',
-          'inspection_state' => '1',
+          'inspection_state' => '2',
         ]);
 
         Entrepreneurship::factory()->create([
@@ -108,11 +108,11 @@ class EntrepreneurshipSeeder extends Seeder
           'card_payment' => '1',
           'bizum_payment' => '0',
           'stock' => '1',
-          'availability_state' => '1',
-          'phone_number' => '111111111',
+          'availability_state' => '2',
+          'phone' => '111111111',
           'email' => 'belleza@gmail.com',
           'location' => 'Barranquilla',
-          'inspection_state' => '1',
+          'inspection_state' => '2',
         ]);
 
         Entrepreneurship::factory()->create([
@@ -128,13 +128,13 @@ class EntrepreneurshipSeeder extends Seeder
           'card_payment' => '1',
           'bizum_payment' => '0',
           'stock' => '120',
-          'availability_state' => '1',
-          'phone_number' => '888888888',
+          'availability_state' => '2',
+          'phone' => '888888888',
           'email' => 'lalenteja@gmail.com',
           'location' => 'Bogotá',
-          'inspection_state' => '1',
+          'inspection_state' => '2',
         ]);
 
-        Entrepreneurship::factory(10)->create();
+        Entrepreneurship::factory(50)->create();
     }
 }

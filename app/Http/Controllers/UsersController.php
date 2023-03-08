@@ -30,7 +30,7 @@ class UsersController extends Controller
         $request->validate([
             'username' => 'required|string|max:255',
             'picture' => 'nullable|string|max:255',
-            'email' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
         ]);
@@ -71,7 +71,7 @@ class UsersController extends Controller
         $request->validate([
             'username' => 'required|string|max:255',
             'picture' => 'nullable|string|max:255',
-            'email' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|digits_between:9,15',
         ]);
@@ -82,7 +82,6 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->phone = $request->phone;
-        // $user->state = $request->state;
         $user->save();
 
         return response()->json([
