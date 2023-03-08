@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Entrepreneurship extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    public $timestamps = false;
     protected $fillable = [
         'user_id',
         'title',
@@ -30,8 +30,8 @@ class Entrepreneurship extends Model
         'email',
         'location',
         'inspection_state',
-        'created_at',
-        'updated_at',
+        // 'created_at',
+        // 'updated_at',
     ];
 
     // Relation between Entrepreneurships and Categories Table
