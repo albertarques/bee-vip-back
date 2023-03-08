@@ -82,7 +82,6 @@ class UsersController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->phone = $request->phone;
-        // $user->state = $request->state;
         $user->save();
 
         return response()->json([
