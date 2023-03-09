@@ -26,8 +26,7 @@ class EntrepreneurshipsController extends Controller
       ]);
     }
 
-    public function approvedIndex()
-    {
+    public function approvedIndex(){
         // TODO: Obtiene todos los emprendimientos aprovados y todas las categorías.
         $entrepreneurships = Entrepreneurship::all();
         $category = Category::all();
@@ -40,10 +39,9 @@ class EntrepreneurshipsController extends Controller
         ]);
     }
 
-    public function pendingIndex()
-    {
+    public function pendingIndex(){
         // TODO: Obtiene todos los emprendimientos pendientes de aprovación.
-        $entrepreneurships = Entrepreneurship::all();
+        $entrepreneurships = Entrepreneurship::all()->where('inspection_state', '=', 1);
 
         return response()->json([
             'status' => 'success',
@@ -51,8 +49,7 @@ class EntrepreneurshipsController extends Controller
         ]);
     }
 
-    public function availableIndex()
-    {
+    public function availableIndex(){
         // TODO: Obtiene todos los emprendimientos aprovados y disponibles, y todas las categorías.
         $entrepreneurships = Entrepreneurship::all()->where('inspection_state', '=', 2)->where('availability_state', '=', 2);
         // $category = Category::all();
@@ -61,6 +58,17 @@ class EntrepreneurshipsController extends Controller
             'status' => 'success',
             'entrepreneurships' => [...$entrepreneurships],
         ]);
+    }
+
+    public function myEntrepreneurships(){
+      // Obtener el usuario autenticado
+      $user = auth()->user();
+
+      // Obtener los emprendimientos asociados al usuario
+      $emprendimientos = $user->emprendimientos;
+
+      // Retornar los emprendimientos en formato JSON
+      return response()->json($emprendimientos);
     }
 
     public function store(Request $request){

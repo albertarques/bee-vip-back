@@ -76,10 +76,12 @@ Route::group(['middleware' => 'auth.jwt'], function () {
   });
 
   Route::controller(EntrepreneurshipsController::class)->group(function () {
+    Route::get('my/entrepreneurships', 'myEntrepreneurships')->middleware('can:view-my-entrepreneurships');
+
     // Route::post('entrepreneurship/create', 'store')->middleware('can:create-entrepreneurship');
     Route::put('entrepreneurship/inspect/{id}', 'inspect')->middleware('can:inspect-entrepreneurship');
     Route::delete('entrepreneurship/delete/{id}', 'destroy')->middleware('can:delete-entrepreneurship');
-    Route::get('entrepreneurships/pending', 'pending')->middleware('can:view-pending-entrepreneurships');
+    Route::get('entrepreneurships/pending', 'pendingIndex')->middleware('can:view-pending-entrepreneurships');
     Route::patch('entrepreneurship/update/{id}', 'update')->middleware('can:update-entrepreneurships');
   });
 

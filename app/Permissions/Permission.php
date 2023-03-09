@@ -31,6 +31,7 @@ class Permission {
 
     // *************** Admin Permissions ************************************
     // Entrepreneurships
+    public const CAN_VIEW_MY_ENTREPRENEURSHIPS = "view-my-entrepreneurship";
     public const CAN_UPDATE_ENTREPRENEURSHIP = "update-entrepreneurship";
     public const CAN_CREATE_ENTREPRENEURSHIP = "create-entrepreneurship";
     public const CAN_DELETE_ENTREPRENEURSHIP = "delete-entrepreneurship";

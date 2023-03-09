@@ -38,6 +38,7 @@ class RoleAndPermissionSeeder extends Seeder
 
         // ************* Admin permissions ***********************************
         // Entrepreneurships
+        Permission::create(['name' => MyPermission::CAN_VIEW_MY_ENTREPRENEURSHIPS]);
         Permission::create(['name' => MyPermission::CAN_CREATE_ENTREPRENEURSHIP]);
         Permission::create(['name' => MyPermission::CAN_UPDATE_ENTREPRENEURSHIP]);
         Permission::create(['name' => MyPermission::CAN_DELETE_ENTREPRENEURSHIP]);
