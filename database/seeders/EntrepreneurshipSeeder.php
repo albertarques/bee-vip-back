@@ -18,7 +18,6 @@ class EntrepreneurshipSeeder extends Seeder
     {
         Entrepreneurship::factory()->create([
           'title' => 'Café Colombiano Black Toast',
-          'name' => 'Rodrigo Suárez',
           'logo' => '',
           'product_img' => Storage::url('factory-img/cafe.jpg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -38,7 +37,6 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Diseño Web',
-          'name' => 'Alberto Arqueso',
           'logo' => '',
           'product_img' => Storage::url('factory-img/diseno.png'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -58,7 +56,6 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Desarrollo Web React JS',
-          'name' => 'Alejandra Buritoki',
           'logo' => '',
           'product_img' => Storage::url('factory-img/desarrollo.png'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -78,7 +75,6 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Laravel PHP',
-          'name' => 'David Picó',
           'logo' => '',
           'product_img' => Storage::url('factory-img/laravel.jpeg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -98,7 +94,6 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Restaurante El Buen Parcero',
-          'name' => 'Andrés Esteban',
           'logo' => '',
           'product_img' => Storage::url('factory-img/paisa.jpeg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -118,7 +113,6 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Quitamanchas Flash!',
-          'name' => 'Francisca Rey',
           'logo' => '',
           'product_img' => Storage::url('factory-img/quitamanchas.jpg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -138,7 +132,6 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'Maquillaje Premium',
-          'name' => 'Guillerma Martinita',
           'logo' => '',
           'product_img' => Storage::url('factory-img/maquillaje.jpeg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',
@@ -158,7 +151,6 @@ class EntrepreneurshipSeeder extends Seeder
 
         Entrepreneurship::factory()->create([
           'title' => 'La Lenteja Álbum',
-          'name' => 'Espantoso',
           'logo' => '',
           'product_img' => Storage::url('factory-img/lenteja.jpeg'),
           'description' => 'Lorem ipsum dolor sit amet. Qui dicta minus molestiae vel beatae natus eveniet ratione temporibus aperiam harum alias officiis assumenda officia quibusdam deleniti eos cupiditate dolore doloribus!',

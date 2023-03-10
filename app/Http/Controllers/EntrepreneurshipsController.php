@@ -8,12 +8,12 @@ use App\Models\Comment;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\InspectionState;
+use Illuminate\Support\Facades\Auth;
 
 class EntrepreneurshipsController extends Controller
 {
     //
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('api');
     }
 
@@ -65,15 +65,14 @@ class EntrepreneurshipsController extends Controller
       $user = auth()->user();
 
       // Obtener los emprendimientos asociados al usuario
-      $emprendimientos = $user->emprendimientos;
+      $entrepreneurships = $user->entrepreneurships;
 
       // Retornar los emprendimientos en formato JSON
-      return response()->json($emprendimientos);
+      return response()->json($entrepreneurships);
     }
 
     public function store(Request $request){
         $request->validate([
-            'name' => 'required|string|max:100',
             'title' => 'required|string|max:100',
             'product_img' => 'image|max:2048',
             'description' => 'required|string|max:100',
@@ -105,7 +104,6 @@ class EntrepreneurshipsController extends Controller
         $entrepreneurship = Entrepreneurship::create([
             'user_id' => $request->user_id,
             'title' => $request->title,
-            'name' => $request->name,
             'logo' => $request->logo,
             'product_img' => $request->product_img,
             'description' => $request->description,
@@ -123,7 +121,6 @@ class EntrepreneurshipsController extends Controller
             'inspection_state' => 2,
         ]);
 
-        dd($entrepreneurship);
         return response()->json([
             'code' => 200,
             'status' => 'success',
@@ -151,9 +148,64 @@ class EntrepreneurshipsController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
-        $request->validate([
+    public function updateMyEntrepreneurship(Request $request, $entrepreneurship_id){
 
+      $entrepreneurship = Entrepreneurship::find($entrepreneurship_id);
+      $user = User::find($entrepreneurship->user_id);
+
+      // $validatedData = $request->validate([
+      //   'title' => 'required|max:255',
+      //   'logo' => 'nullable|image|max:1024',
+      //   'product_img' => 'nullable|image|max:1024',
+      //   'description' => 'required',
+      //   'price' => 'required|numeric',
+      //   'category_id' => 'required|exists:categories,id',
+      //   'avg_score' => 'nullable|numeric|min:0|max:5',
+      //   'cash_payment' => 'required|boolean',
+      //   'card_payment' => 'required|boolean',
+      //   'bizum_payment' => 'required|boolean',
+      //   'stock' => 'required|integer|min:0',
+      //   'availability_state' => 'required|in:disponible,no_disponible',
+      //   'phone' => 'nullable|string|max:20',
+      //   'email' => 'nullable|email|max:255',
+      //   'location' => 'nullable|max:255',
+      //   'id' => '$entrepreneurship->id',
+      //   'user_id' => 'prohibited',
+      //   'inspection_state' => 'prohibited',
+      //   'created_at' => 'prohibited',
+      //   'updated_at' => 'prohibited'
+      // ]);
+
+
+      if (!$entrepreneurship) {
+          return response()->json(['message' => 'El emprendimiento no existe'], 404);
+      }
+
+      if ($entrepreneurship->user_id != $user->id) {
+          return response()->json(['message' => 'No tienes permiso para actualizar este emprendimiento'], 403);
+      }
+
+      // if ($request->hasFile('logo')) {
+      //     $logo = $request->file('logo');
+      //     $logoName = time() . '_' . $logo->getClientOriginalName();
+      //     $logo->move(public_path('images'), $logoName);
+      //     $validatedData['logo'] = $logoName;
+      // }
+
+      // if ($request->hasFile('product_img')) {
+      //     $productImg = $request->file('product_img');
+      //     $productImgName = time() . '_' . $productImg->getClientOriginalName();
+      //     $productImg->move(public_path('images'), $productImgName);
+      //     $validatedData['product_img'] = $productImgName;
+      // }
+
+      // $entrepreneurship->update($validatedData);
+
+      return response()->json(['message' => 'Emprendimiento actualizado correctamente'], 200);
+    }
+
+    public function update(Request $request, $id){
+    //     $request->validate([
           // 'user_id' => 'required|integer|exists:users,id',
           // 'title' => 'required|string|max:255',
           // 'logo' => 'nullable|url',
@@ -171,27 +223,28 @@ class EntrepreneurshipsController extends Controller
           // 'email' => 'required|email',
           // 'location' => 'required|string|max:255',
           // 'inspection_state' => 'required|integer|exists:inspection_states,id|between:1, 3',
-        ]);
+        // ]);
 
         $entrepreneurship = Entrepreneurship::find($id);
-        $entrepreneurship->user_id = $entrepreneurship->user_id;
-        $entrepreneurship->title = $request->title;
-        $entrepreneurship->logo = $request->logo;
-        $entrepreneurship->product_img = $request->product_img;
-        $entrepreneurship->description = $request->description;
-        $entrepreneurship->price = $request->price;
-        $entrepreneurship->category_id = $request->category_id;
-        $entrepreneurship->avg_score = $entrepreneurship->avg_score;
-        $entrepreneurship->cash_payment = $request->cash_payment;
-        $entrepreneurship->card_payment = $request->card_payment;
-        $entrepreneurship->bizum_payment = $request->bizum_payment;
-        $entrepreneurship->stock = $request->stock;
-        $entrepreneurship->availability_state = $request->availability_state;
-        $entrepreneurship->phone = $request->phone;
-        $entrepreneurship->email = $request->email;
-        $entrepreneurship->location = $request->location;
-        $entrepreneurship->inspection_state = $entrepreneurship->inspection_state;
-        $entrepreneurship->save();
+        // $entrepreneurship->id = $entrepreneurship->id;
+        // $entrepreneurship->user_id = $entrepreneurship->user_id;
+        // $entrepreneurship->title = $request->title;
+        // $entrepreneurship->logo = $request->logo;
+        // $entrepreneurship->product_img = $request->product_img;
+        // $entrepreneurship->description = $request->description;
+        // $entrepreneurship->price = $request->price;
+        // $entrepreneurship->category_id = $request->category_id;
+        // $entrepreneurship->avg_score = $entrepreneurship->avg_score;
+        // $entrepreneurship->cash_payment = $request->cash_payment;
+        // $entrepreneurship->card_payment = $request->card_payment;
+        // $entrepreneurship->bizum_payment = $request->bizum_payment;
+        // $entrepreneurship->stock = $request->stock;
+        // $entrepreneurship->availability_state = $request->availability_state;
+        // $entrepreneurship->phone = $request->phone;
+        // $entrepreneurship->email = $request->email;
+        // $entrepreneurship->location = $request->location;
+        // $entrepreneurship->inspection_state = $entrepreneurship->inspection_state;
+        // $entrepreneurship->save();
 
         return response()->json([
             'code' => 200,
