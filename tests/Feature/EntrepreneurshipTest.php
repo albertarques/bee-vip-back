@@ -48,22 +48,19 @@ class EntrepreneurshipTest extends TestCase{
              ->post('/api/entrepreneurship/create', [
                 'user_id' => $this->admin->id,
                 'title' => 'Juan Valdez',
-                'name' => 'Juan Valdez',
                 'logo' => 'cafe',
                 'product_img' => 'file.jpg',
                 'description' => 'El mejor cafe del mundo',
-                'price' => 'lo que diga jacobo',
-                'category_id' => 'polvo marron',
-                'avg_score' => '5',
+                'price' => 100,
+                'category_id' => 1,
                 'cash_payment' => '0',
                 'card_payment' => '0',
                 'bizum_payment' =>'1',
-                'stock' => '100',
+                'stock' => 100,
                 'availability_state' => 1,
                 'phone' => '12345789',
                 'email' => 'holacafe@gamil.com',
                 'location' => 'Antioquia',
-                'inspection_state' => 1,
              ])
              ->assertStatus(200);
      }
