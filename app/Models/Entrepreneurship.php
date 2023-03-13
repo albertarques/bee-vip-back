@@ -14,7 +14,6 @@ class Entrepreneurship extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'name',
         'logo',
         'product_img',
         'description',

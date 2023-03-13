@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
-            $table->string('name');
             $table->string('logo')->nullable();
             $table->string('product_img')->nullable();
             $table->longText('description');

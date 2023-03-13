@@ -12,18 +12,21 @@ use App\Models\User;
 class AuthController extends Controller
 {
   public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
-    }
+  {
+    $this->middleware('auth:api', ['except' => ['login', 'register']]);
+  }
 
-  public function login(Request $request){
+  public function login(Request $request)
+  {
     $request->validate([
       'email' => 'required|string|email',
       'password' => 'required|string',
     ]);
+
     $credentials = $request->only('email', 'password');
 
     $token = Auth::attempt($credentials);
+
     if (!$token) {
       return response()->json([
         'status' => 'error',
@@ -49,19 +52,22 @@ class AuthController extends Controller
    * @return \Illuminate\Http\JsonResponse
    */
 
-  public function me(){
-    //TODO: Añadir rol del usuario.
-
+  public function me()
+  {
     $user_id = auth()->user()->id;
-    $entrepreneurships = Entrepreneurship::all()->where('user_id', '=', $user_id);
+    $role = Role::find($user_id);
+    $entrepreneurships = Entrepreneurship::find($user_id);
 
     return response()->json([
-      auth()->user(),
+      'status' => 'success',
+      'user' => auth()->user(),
+      'role' => $role,
       'entrepreneurships' => $entrepreneurships,
     ]);
   }
 
-  public function register(Request $request){
+  public function register(Request $request)
+  {
     $request->validate([
       'username' => 'required|string|max:255',
       'email' => 'required|string|email|max:255|unique:users',
@@ -80,7 +86,6 @@ class AuthController extends Controller
 
     $token = Auth::login($user);
     return response()->json([
-      'code' => 200,
       'status' => 'success',
       'message' => 'User created successfully',
       'user' => $user,
@@ -88,9 +93,9 @@ class AuthController extends Controller
         'token' => $token,
         'type' => 'bearer',
       ]
-    ]);
+    ], 200);
   }
-  
+
   public function logout()
   {
     Auth::logout();
@@ -100,7 +105,8 @@ class AuthController extends Controller
     ]);
   }
 
-  public function refresh(){
+  public function refresh()
+  {
     return response()->json([
       'status' => 'success',
       'user' => Auth::user(),
