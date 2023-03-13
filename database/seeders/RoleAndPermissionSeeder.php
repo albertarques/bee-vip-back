@@ -9,103 +9,157 @@ use App\Permissions\Permission as MyPermission;
 
 class RoleAndPermissionSeeder extends Seeder
 {
-    public function run()
-    {
-        // ************* User permissions Seeder ********************************
-        // Roles
-        Permission::create(['name' => MyPermission::CAN_SHOW_USER_ROLE]);
+  public function run(){
+    // Users Permissions Seeder
 
+      // User
+      Permission::create(['name' => MyPermission::CAN_UPDATE_MY_USER_PROFILE]);
+      Permission::create(['name' => MyPermission::CAN_DELETE_MY_USER_PROFILE]);
+
+      //Superadmin
+      Permission::create(['name' => MyPermission::CAN_DELETE_USER]);
+      Permission::create(['name' => MyPermission::CAN_UPDATE_USER_ROLE]);
+
+    // Payment Methods Permissions Seeder
+      Permission::create(['name' => MyPermission::CAN_CREATE_PAYMENT_METHOD]);
+      Permission::create(['name' => MyPermission::CAN_DELETE_PAYMENT_METHOD]);
+      Permission::create(['name' => MyPermission::CAN_VIEW_PAYMENT_METHOD]);
+      Permission::create(['name' => MyPermission::CAN_UPDATE_PAYMENT_METHOD]);
+
+    // Orders Permissions Seeder
+      Permission::create(['name' => MyPermission::CAN_CREATE_ORDER]);
+      Permission::create(['name' => MyPermission::CAN_VIEW_ORDER]);
+      Permission::create(['name' => MyPermission::CAN_UPDATE_ORDER]);
+      Permission::create(['name' => MyPermission::CAN_DELETE_ORDER]);
+
+    // Order details Permissions Seeder
+      Permission::create(['name' => MyPermission::CAN_CREATE_ORDER_DETAIL]);
+
+    // Entrepreneurships Permissions Seeder
+      Permission::create(['name' => MyPermission::CAN_CREATE_ENTREPRENEURSHIP]);
+      Permission::create(['name' => MyPermission::CAN_DELETE_MY_ENTREPRENEURSHIP]);
+      Permission::create(['name' => MyPermission::CAN_UPDATE_MY_ENTREPRENEURSHIP]);
+      Permission::create(['name' => MyPermission::CAN_VIEW_MY_ENTREPRENEURSHIPS]);
+
+      Permission::create(['name' => MyPermission::CAN_DELETE_ENTREPRENEURSHIP]);
+      Permission::create(['name' => MyPermission::CAN_INSPECT_ENTREPRENEURSHIP]);
+      Permission::create(['name' => MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS]);
+
+    // Comments Permissions Seeder
+      Permission::create(['name' => MyPermission::CAN_CREATE_COMMENT]);
+      Permission::create(['name' => MyPermission::CAN_UPDATE_MY_COMMENT]);
+      Permission::create(['name' => MyPermission::CAN_DELETE_MY_COMMENT]);
+      Permission::create(['name' => MyPermission::CAN_DELETE_COMMENT]);
+
+    // Categories
+      Permission::create(['name' => MyPermission::CAN_CREATE_CATEGORY]);
+      Permission::create(['name' => MyPermission::CAN_UPDATE_CATEGORY]);
+      Permission::create(['name' => MyPermission::CAN_DELETE_CATEGORY]);
+
+    // *****************************************************************
+    // Role Names Seeder
+      $userRole = Role::create(['name' => 'user']);
+      $adminRole = Role::create(['name' => 'admin']);
+      $superadminRole = Role::create(['name' => 'superadmin']);
+
+    // *****************************************************************
+    // Assign Permissions to Roles
+      $userRole->givePermissionTo([
         // User Profile
-        Permission::create(['name' => MyPermission::CAN_UPDATE_USERPROFILE]);
-        Permission::create(['name' => MyPermission::CAN_DELETE_USERPROFILE]);
+          MyPermission::CAN_UPDATE_MY_USER_PROFILE,
+          MyPermission::CAN_DELETE_MY_USER_PROFILE,
 
         // Payment Methods
-        Permission::create(['name' => MyPermission::CAN_CREATE_PAYMENTMETHOD]);
-        Permission::create(['name' => MyPermission::CAN_VIEW_PAYMENTMETHOD]);
-        Permission::create(['name' => MyPermission::CAN_UPDATE_PAYMENTMETHOD]);
-        Permission::create(['name' => MyPermission::CAN_DELETE_PAYMENTMETHOD]);
+          MyPermission::CAN_CREATE_PAYMENT_METHOD,
+          MyPermission::CAN_DELETE_PAYMENT_METHOD,
+          MyPermission::CAN_VIEW_PAYMENT_METHOD,
+          MyPermission::CAN_UPDATE_PAYMENT_METHOD,
 
         // Orders
-        Permission::create(['name' => MyPermission::CAN_CREATE_ORDER]);
-        Permission::create(['name' => MyPermission::CAN_VIEW_ORDER]);
+          MyPermission::CAN_CREATE_ORDER,
+          MyPermission::CAN_VIEW_ORDER,
 
         // Order details
-        Permission::create(['name' => MyPermission::CAN_CREATE_ORDER_DETAIL]);
-        Permission::create(['name' => MyPermission::CAN_VIEW_ORDER_DETAIL]);
+          MyPermission::CAN_CREATE_ORDER_DETAIL,
 
-        // Comment Entrepreneurships
-        Permission::create(['name' => MyPermission::CAN_CREATE_COMMENT]);
+        // Comments
+          MyPermission::CAN_CREATE_COMMENT,
+          MyPermission::CAN_UPDATE_MY_COMMENT,
+          MyPermission::CAN_DELETE_MY_COMMENT,
+      ]);
 
-        // ************* Admin permissions ***********************************
+      $adminRole->givePermissionTo([
+        // User Profile
+          MyPermission::CAN_UPDATE_MY_USER_PROFILE,
+          MyPermission::CAN_DELETE_MY_USER_PROFILE,
+
+        // Payment Methods
+          MyPermission::CAN_CREATE_PAYMENT_METHOD,
+          MyPermission::CAN_DELETE_PAYMENT_METHOD,
+          MyPermission::CAN_VIEW_PAYMENT_METHOD,
+          MyPermission::CAN_UPDATE_PAYMENT_METHOD,
+
         // Entrepreneurships
-        Permission::create(['name' => MyPermission::CAN_VIEW_MY_ENTREPRENEURSHIPS]);
-        Permission::create(['name' => MyPermission::CAN_UPDATE_MY_ENTREPRENEURSHIP]);
+          MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
+          MyPermission::CAN_DELETE_MY_ENTREPRENEURSHIP,
+          MyPermission::CAN_UPDATE_MY_ENTREPRENEURSHIP,
+          MyPermission::CAN_VIEW_MY_ENTREPRENEURSHIPS,
+        // Orders
+          MyPermission::CAN_CREATE_ORDER,
+          MyPermission::CAN_VIEW_ORDER,
+        // Order details
+          MyPermission::CAN_CREATE_ORDER_DETAIL,
+        // Comments
+          MyPermission::CAN_CREATE_COMMENT,
+          MyPermission::CAN_UPDATE_MY_COMMENT,
+          MyPermission::CAN_DELETE_MY_COMMENT,
 
-        Permission::create(['name' => MyPermission::CAN_CREATE_ENTREPRENEURSHIP]);
-        Permission::create(['name' => MyPermission::CAN_UPDATE_ENTREPRENEURSHIP]);
-        Permission::create(['name' => MyPermission::CAN_DELETE_ENTREPRENEURSHIP]);
-        Permission::create(['name' => MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS]);
-        Permission::create(['name' => MyPermission::CAN_VIEW_ENTREPRENEURSHIPS]);
+      ]);
 
-        // ************* Superadmin permissions ******************************
+      $superadminRole->givePermissionTo([
+        // User Profile
+          MyPermission::CAN_UPDATE_MY_USER_PROFILE,
+          MyPermission::CAN_DELETE_MY_USER_PROFILE,
+
+        // Users
+          MyPermission::CAN_DELETE_USER,
+          MyPermission::CAN_UPDATE_USER_ROLE,
+
+        // Payment Methods
+          MyPermission::CAN_CREATE_PAYMENT_METHOD,
+          MyPermission::CAN_DELETE_PAYMENT_METHOD,
+          MyPermission::CAN_VIEW_PAYMENT_METHOD,
+          MyPermission::CAN_UPDATE_PAYMENT_METHOD,
+
+
         // Entrepreneurships
-        Permission::create(['name' => MyPermission::CAN_INSPECT_ENTREPRENEURSHIP]);
+          MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
+          MyPermission::CAN_DELETE_MY_ENTREPRENEURSHIP,
+          MyPermission::CAN_UPDATE_MY_ENTREPRENEURSHIP,
+          MyPermission::CAN_VIEW_MY_ENTREPRENEURSHIPS,
 
-        //Users
-        Permission::create(['name' => MyPermission::CAN_UPDATE_USER_ROLE]);
+          MyPermission::CAN_DELETE_ENTREPRENEURSHIP,
+          MyPermission::CAN_INSPECT_ENTREPRENEURSHIP,
+          MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
 
+        // Orders
+          MyPermission::CAN_CREATE_ORDER,
+          MyPermission::CAN_VIEW_ORDER,
 
-        $userRole = Role::create(['name' => 'user']);
-        $adminRole = Role::create(['name' => 'admin']);
-        $superadminRole = Role::create(['name' => 'superadmin']);
+        // Order details
+          MyPermission::CAN_CREATE_ORDER_DETAIL,
 
-        $userRole->givePermissionTo([
-            // User Profile
-            MyPermission::CAN_UPDATE_USERPROFILE,
-            MyPermission::CAN_DELETE_USERPROFILE,
+        // Comments
+          MyPermission::CAN_CREATE_COMMENT,
+          MyPermission::CAN_UPDATE_MY_COMMENT,
+          MyPermission::CAN_DELETE_MY_COMMENT,
 
-            // Payment Methods
-            MyPermission::CAN_CREATE_PAYMENTMETHOD,
-            MyPermission::CAN_VIEW_PAYMENTMETHOD,
-            MyPermission::CAN_UPDATE_PAYMENTMETHOD,
-            MyPermission::CAN_DELETE_PAYMENTMETHOD,
+          MyPermission::CAN_DELETE_COMMENT,
 
-            // Orders
-            MyPermission::CAN_CREATE_ORDER,
-            MyPermission::CAN_VIEW_ORDER,
-
-            // Order details
-            MyPermission::CAN_CREATE_ORDER_DETAIL,
-            MyPermission::CAN_VIEW_ORDER_DETAIL,
-
-            // Entrepreneurships
-
-            MyPermission::CAN_VIEW_ENTREPRENEURSHIPS,
-
-            // Comment Entrepreneurships
-            MyPermission::CAN_CREATE_COMMENT,
-        ]);
-
-        $adminRole->givePermissionTo([
-            $userRole,
-            // Entrepreneurships
-            MyPermission::CAN_VIEW_MY_ENTREPRENEURSHIPS,
-            MyPermission::CAN_UPDATE_MY_ENTREPRENEURSHIP,
-
-            MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
-            MyPermission::CAN_UPDATE_ENTREPRENEURSHIP,
-            MyPermission::CAN_DELETE_ENTREPRENEURSHIP,
-        ]);
-
-        $superadminRole->givePermissionTo([
-            $adminRole,
-            // Roles
-            MyPermission::CAN_SHOW_USER_ROLE,
-            MyPermission::CAN_UPDATE_USER_ROLE,
-
-            // Entrepreneurships
-            MyPermission::CAN_INSPECT_ENTREPRENEURSHIP,
-            MyPermission::CAN_VIEW_PENDING_ENTREPRENEURSHIPS,
-        ]);
-    }
+        // Categories
+          MyPermission::CAN_CREATE_CATEGORY,
+          MyPermission::CAN_UPDATE_CATEGORY,
+          MyPermission::CAN_DELETE_CATEGORY,
+      ]);
+  }
 }

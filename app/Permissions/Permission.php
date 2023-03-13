@@ -6,53 +6,53 @@ class Permission
 {
 
   // Users Permissions =====================================================
-  // User, Admin, Superadmin
-  public const CAN_UPDATE_MY_USER_PROFILE = "update-my-profile";
-  public const CAN_DELETE_MY_USER_PROFILE = "delete-my-profile";
+    // User, Admin, Superadmin
+    public const CAN_UPDATE_MY_USER_PROFILE = "user-update-my-profile";
+    public const CAN_DELETE_MY_USER_PROFILE = "user-delete-my-profile";
 
-  // Superadmin
-  public const CAN_DELETE_USER = "delete-user";
-  public const CAN_UPDATE_USER_ROLE = "update-user-role";
+    // Superadmin
+    public const CAN_DELETE_USER = "user-delete";
+    public const CAN_UPDATE_USER_ROLE = "user-role-update";
 
 
   // Payment Methods Permissions ===========================================
-  public const CAN_CREATE_PAYMENT_METHOD = "create-payment-method";
-  public const CAN_DELETE_PAYMENT_METHOD = "delete-payment-method";
-  public const CAN_VIEW_PAYMENT_METHOD = "show-payment-method";
-  public const CAN_UPDATE_PAYMENT_METHOD = "update-payment-method";
+  public const CAN_CREATE_PAYMENT_METHOD = "payment-method-create";
+  public const CAN_DELETE_PAYMENT_METHOD = "payment-method-delete";
+  public const CAN_VIEW_PAYMENT_METHOD = "payment-method-show";
+  public const CAN_UPDATE_PAYMENT_METHOD = "payment-method-update";
 
   // Orders Permissions ====================================================
-  public const CAN_CREATE_ORDER = "create-order";
-  public const CAN_VIEW_ORDER = "show-order";
-  public const CAN_UPDATE_ORDER = "update-order";
-  public const CAN_DELETE_ORDER = "delete-order";
+  public const CAN_CREATE_ORDER = "order-create";
+  public const CAN_VIEW_ORDER = "order-show";
+  public const CAN_UPDATE_ORDER = "order-update";
+  public const CAN_DELETE_ORDER = "order-delete";
 
   // Order details =========================================================
-  public const CAN_CREATE_ORDER_DETAIL = "create-order-detail";
+  public const CAN_CREATE_ORDER_DETAIL = "order-detail-create";
 
   // Entrepreneurships Permissions =========================================
-  // Admin user
-  public const CAN_CREATE_ENTREPRENEURSHIP = "create-entrepreneurship";
-  public const CAN_DELETE_MY_ENTREPRENEURSHIP = "delete-my-entrepreneurship";
-  public const CAN_UPDATE_MY_ENTREPRENEURSHIP = "update-my-entrepreneurship";
-  public const CAN_VIEW_MY_ENTREPRENEURSHIPS = "view-my-entrepreneurships";
+    // Admin user
+      public const CAN_CREATE_ENTREPRENEURSHIP = "entrepreneurship-create";
+      public const CAN_DELETE_MY_ENTREPRENEURSHIP = "entrepreneurship-delete-my";
+      public const CAN_UPDATE_MY_ENTREPRENEURSHIP = "entrepreneurship-update-my";
+      public const CAN_VIEW_MY_ENTREPRENEURSHIPS = "entrepreneurships-view-my";
 
-  // Superadmin user
-  public const CAN_DELETE_ENTREPRENEURSHIP = "delete-entrepreneurship";
-  public const CAN_INSPECT_ENTREPRENEURSHIP = "inspect-entrepreneurship";
-  public const CAN_VIEW_PENDING_ENTREPRENEURSHIPS = "view-pending-entrepreneurships";
+    // Superadmin user
+      public const CAN_DELETE_ENTREPRENEURSHIP = "entrepreneurship-delete";
+      public const CAN_INSPECT_ENTREPRENEURSHIP = "entrepreneurship-inspect";
+      public const CAN_VIEW_PENDING_ENTREPRENEURSHIPS = "entrepreneurships-view-pending";
 
   // Comments Permissions =================================
-  // Users
-  public const CAN_CREATE_COMMENT = "create-comment";
-  public const CAN_UPDATE_MY_COMMENT = "update-my-comment";
-  public const CAN_DELETE_MY_COMMENT = "delete-my-comment";
+    // Users
+    public const CAN_CREATE_COMMENT = "comment-create";
+    public const CAN_UPDATE_MY_COMMENT = "comment-update-my";
+    public const CAN_DELETE_MY_COMMENT = "comment-delete-my";
 
-  // Superadmin
-  public const CAN_DELETE_COMMENT = "delete-comment";
+    // Superadmin
+      public const CAN_DELETE_COMMENT = "comment-delete";
 
   // Categories Permissions ================================================
-  public const CAN_CREATE_CATEGORY = "create";
-  public const CAN_UPDATE_CATEGORY = "update";
-  public const CAN_DELETE_CATEGORY = "delete";
+  public const CAN_CREATE_CATEGORY = "category-create";
+  public const CAN_UPDATE_CATEGORY = "category-update";
+  public const CAN_DELETE_CATEGORY = "category-delete";
 }
