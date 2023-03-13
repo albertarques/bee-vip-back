@@ -2,50 +2,57 @@
 
 namespace App\Permissions;
 
-class Permission {
+class Permission
+{
 
-    // ************** Users Permissions ************************************
-    // User Profile
-    public const CAN_UPDATE_USERPROFILE = "update-user-profile";
-    public const CAN_DELETE_USERPROFILE = "delete-user-profile";
+  // Users Permissions =====================================================
+  // User, Admin, Superadmin
+  public const CAN_UPDATE_MY_USER_PROFILE = "update-my-profile";
+  public const CAN_DELETE_MY_USER_PROFILE = "delete-my-profile";
 
-    // Payment Methods
-    public const CAN_CREATE_PAYMENTMETHOD = "create-payment-method";
-    public const CAN_VIEW_PAYMENTMETHOD = "view-payment-method";
-    public const CAN_UPDATE_PAYMENTMETHOD = "update-payment-method";
-    public const CAN_DELETE_PAYMENTMETHOD = "delete-payment-method";
+  // Superadmin
+  public const CAN_DELETE_USER = "delete-user";
+  public const CAN_UPDATE_USER_ROLE = "update-user-role";
 
-    // Orders
-    public const CAN_CREATE_ORDER = "create-order";
-    public const CAN_VIEW_ORDER = "view-order";
 
-    // Order details
-    public const CAN_CREATE_ORDER_DETAIL = "create-order-detail";
-    public const CAN_VIEW_ORDER_DETAIL = "view-order-detail";
+  // Payment Methods Permissions ===========================================
+  public const CAN_CREATE_PAYMENT_METHOD = "create-payment-method";
+  public const CAN_DELETE_PAYMENT_METHOD = "delete-payment-method";
+  public const CAN_VIEW_PAYMENT_METHOD = "show-payment-method";
+  public const CAN_UPDATE_PAYMENT_METHOD = "update-payment-method";
 
-    // Comment Entrepreneurships
-    public const CAN_CREATE_COMMENT = "create-comment";
+  // Orders Permissions ====================================================
+  public const CAN_CREATE_ORDER = "create-order";
+  public const CAN_VIEW_ORDER = "show-order";
+  public const CAN_UPDATE_ORDER = "update-order";
+  public const CAN_DELETE_ORDER = "delete-order";
 
-    // Entrepreneurships
-    public const CAN_VIEW_ENTREPRENEURSHIPS = "view-entrepreneurships";
+  // Order details =========================================================
+  public const CAN_CREATE_ORDER_DETAIL = "create-order-detail";
 
-    // *************** Admin Permissions ************************************
-    // Entrepreneurships
-    public const CAN_VIEW_MY_ENTREPRENEURSHIPS = "view-my-entrepreneurship";
-    public const CAN_UPDATE_MY_ENTREPRENEURSHIP = "update-my-entrepreneurship";
-    public const CAN_UPDATE_ENTREPRENEURSHIP = "update-entrepreneurship";
-    public const CAN_CREATE_ENTREPRENEURSHIP = "create-entrepreneurship";
-    public const CAN_DELETE_ENTREPRENEURSHIP = "delete-entrepreneurship";
+  // Entrepreneurships Permissions =========================================
+  // Admin user
+  public const CAN_CREATE_ENTREPRENEURSHIP = "create-entrepreneurship";
+  public const CAN_DELETE_MY_ENTREPRENEURSHIP = "delete-my-entrepreneurship";
+  public const CAN_UPDATE_MY_ENTREPRENEURSHIP = "update-my-entrepreneurship";
+  public const CAN_VIEW_MY_ENTREPRENEURSHIPS = "view-my-entrepreneurships";
 
-    // *************** Superadmin Permissions ********************************
-    // Users
-    public const CAN_DELETE_USER = "delete-user";
-    public const CAN_UPDATE_USER_ROLE = "update-user-role";
+  // Superadmin user
+  public const CAN_DELETE_ENTREPRENEURSHIP = "delete-entrepreneurship";
+  public const CAN_INSPECT_ENTREPRENEURSHIP = "inspect-entrepreneurship";
+  public const CAN_VIEW_PENDING_ENTREPRENEURSHIPS = "view-pending-entrepreneurships";
 
-    // Roles
-    public const CAN_SHOW_USER_ROLE = "show-user-role";
+  // Comments Permissions =================================
+  // Users
+  public const CAN_CREATE_COMMENT = "create-comment";
+  public const CAN_UPDATE_MY_COMMENT = "update-my-comment";
+  public const CAN_DELETE_MY_COMMENT = "delete-my-comment";
 
-    // Entrepreneurships
-    public const CAN_INSPECT_ENTREPRENEURSHIP = "inspect-entrepreneurship";
-    public const CAN_VIEW_PENDING_ENTREPRENEURSHIPS = "view-pending-entrepreneurships";
+  // Superadmin
+  public const CAN_DELETE_COMMENT = "delete-comment";
+
+  // Categories Permissions ================================================
+  public const CAN_CREATE_CATEGORY = "create";
+  public const CAN_UPDATE_CATEGORY = "update";
+  public const CAN_DELETE_CATEGORY = "delete";
 }
