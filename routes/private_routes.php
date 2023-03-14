@@ -16,65 +16,61 @@ Route::middleware(['middleware' => 'auth.jwt'])->group(function () {
 
   Route::controller(UsersController::class)->group(function () {
     // User, Admin, Superadmin **********************************************
-    Route::patch('me/update', 'update_me')->middleware('can:user-update-my-profile');
-    Route::delete('me/delete', 'destroy_me')->middleware('can:user-delete-my-profile');
+    Route::patch('me/update', 'update_me')->middleware('can:user-update-my-profile');                                //OK
+    Route::delete('me/delete', 'destroy_me')->middleware('can:user-delete-my-profile');                              //OK
+    Route::patch('user/update/{id}', 'update')->middleware('can:user-update');                                       //OK
 
     // Superadmin ***********************************************************
-    Route::delete('user/delete/{id}', 'destroy')->middleware('can:user-delete');
-
-    // TODO: Is this route necessary?
-    Route::patch('user/update/{id}', 'update_role')->middleware('can:user-role-update');
+    Route::delete('user/delete/{id}', 'destroy')->middleware('can:user-delete');                                     //OK
+    Route::patch('user/update/{id}', 'update_role')->middleware('can:user-role-update');                             //OK
   });
-  // Rutas con Autorización y Permisos
+// Rutas con Autorización y Permisos
   Route::controller(PaymentMethodsController::class)->group(function () {
-
-    // TODO: Add Payment Methods list
-    // TODO: Add user authentication on all payment methods
-    Route::post('paymentmethod/create', 'create')->middleware('can:payment-method-create');
-    Route::delete('paymentmethod/delete/{id}', 'destroy')->middleware('can:payment-method-delete');
-    Route::get('paymentmethod/show/{id}', 'show')->middleware('can:payment-method-show');
-    Route::patch('paymentmethod/update/{id}', 'update')->middleware('can:payment-method-update');
+    Route::post('paymentmethod/create', 'create')->middleware('can:payment-method-create');                         //OK
+    Route::get('paymentmethods', 'index')->middleware('can:payment-method-view');                                   //OK
+    Route::delete('paymentmethod/delete/{id}', 'destroy')->middleware('can:payment-method-delete');                 //OK
+    Route::get('paymentmethod/show/{id}', 'show')->middleware('can:payment-method-show');                           //OK
+    Route::patch('paymentmethod/update/{id}', 'update')->middleware('can:payment-method-update');                   //OK
   });
   Route::controller(OrdersController::class)->group(function () {
-    // User, Admin, Superadmin **********************************************
-    Route::post('order/create', 'create')->middleware('can:order-create');
-    Route::get('order/show/{id}', 'show')->middleware('can:order-show');
-    Route::patch('order/update/{id}', 'update')->middleware('can:order-update');
+    // User, Admin, Superadmin ************************************************************************
+    Route::post('order/create', 'create')->middleware('can:order-create');                                          //OK
+    Route::get('orders_my', 'index')->middleware('can:orders-view-my');                                             //OK
+    Route::get('order/{id}', 'show')->middleware('can:order-show');                                                 //OK
+    // Route::patch('order/update/{id}', 'update')->middleware('can:order-update'); //
 
     // TODO: Is this route necessary?
-    Route::delete('order/delete/{id}', 'delete')->middleware('can:order-delete');
+    // Route::delete('order/delete/{id}', 'delete')->middleware('can:order-delete'); //
   });
   Route::controller(OrderDetailsController::class)->group(function () {
-    // User, Admin, Superadmin **********************************************
-    Route::post('orderdetail/create', 'create')->middleware('can:order-detail-create');
+    // User, Admin, Superadmin *************************************************************************
+    Route::post('orderdetail/create', 'create')->middleware('can:order-detail-create');                              //OK
   });
   Route::controller(EntrepreneurshipsController::class)->group(function () {
-
     // Admin user *************************************************************************************
-      Route::post('entrepreneurship/create', 'create')->middleware('can:entrepreneurship-create');
-      Route::delete('delete/my/entrepreneurship', 'destroy_my')->middleware('can:entrepreneurship-delete-my');
-      Route::patch('update/my/entrepreneurship', 'update_my')->middleware('can:entrepreneurship-update-my');
-      Route::get('view/my/entrepreneurships', 'index_my')->middleware('can:entrepreneurships-view-my');
+      Route::post('entrepreneurship/create', 'create')->middleware('can:entrepreneurship-create');                   //OK
+      Route::delete('entrepreneurship/delete_my/{id}', 'destroy_my')->middleware('can:entrepreneurship-delete-my');  //OK
+      Route::patch('entrepreneurship/update_my/{id}', 'update_my')->middleware('can:entrepreneurship-update');       //OK
+      Route::get('entrepreneurships/view_my', 'index_my')->middleware('can:entrepreneurships-view-my');              //OK
 
     // Superadmin user ********************************************************************************
-      Route::delete('delete/entrepreneurship/{id}', 'destroy')->middleware('can:entrepreneurship-delete');
-      Route::patch('inspect/entrepreneurship/{id}', 'inspect')->middleware('can:entrepreneurship-inspect');
-      Route::get('entrepreneurships/pending', 'pending')->middleware('can:entrepreneurships-view-pending');
+      Route::delete('entrepreneurship/delete/{id}', 'destroy')->middleware('can:entrepreneurship-delete');           //OK
+      Route::patch('entrepreneurship/inspect/{id}', 'inspect')->middleware('can:entrepreneurship-inspect');          //OK
+      Route::get('entrepreneurships/pending', 'index_pending')->middleware('can:entrepreneurships-view-pending');    //OK
   });
   Route::controller(CommentsController::class)->group(function () {
-    // User, Admin, Superadmin **********************************************
-      Route::post('create/comment/{entrepreneurship_id}', 'create')->middleware('can:comment-create');
-      Route::patch('update/my_comment/{id}', 'update')->middleware('can:comment-update-my');
-      Route::delete('delete/my_comment/{id}', 'delete_mine')->middleware('can:comment-delete-my');
+    // User, Admin, Superadmin *************************************************************************
+      Route::post('comment/create/{entrepreneurship_id}', 'create')->middleware('can:comment-create');               //
+      Route::patch('comment/update_my/{id}', 'update')->middleware('can:comment-update-my');                         //
+      Route::delete('comment/delete_my/{id}', 'delete_mine')->middleware('can:comment-delete-my');                   //
 
-    // Superadmin ***********************************************************
-      Route::delete('delete/comment/{id}', 'delete')->middleware('can:comment-delete');
+    // Superadmin **************************************************************************************
+      Route::delete('comment/delete/{id}', 'delete')->middleware('can:comment-delete');                              //
   });
   Route::controller(CategoriesController::class)->group(function () {
-    // Superadmin **********************************************
+    // Superadmin **************************************************************************************
       Route::post('category', 'create')->middleware('can:category-create');
       Route::patch('update/category/{id}', 'update')->middleware('can:category-update');
       Route::delete('delete/category/{id}', 'destroy')->middleware('can:category-delete');
   });
-
 });
