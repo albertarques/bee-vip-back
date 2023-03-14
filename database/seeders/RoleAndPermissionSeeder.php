@@ -15,6 +15,7 @@ class RoleAndPermissionSeeder extends Seeder
       // User
       Permission::create(['name' => MyPermission::CAN_UPDATE_MY_USER_PROFILE]);
       Permission::create(['name' => MyPermission::CAN_DELETE_MY_USER_PROFILE]);
+      Permission::create(['name' => MyPermission::CAN_UPDATE_USER_PROFILE]);
 
       //Superadmin
       Permission::create(['name' => MyPermission::CAN_DELETE_USER]);
@@ -23,12 +24,14 @@ class RoleAndPermissionSeeder extends Seeder
     // Payment Methods Permissions Seeder
       Permission::create(['name' => MyPermission::CAN_CREATE_PAYMENT_METHOD]);
       Permission::create(['name' => MyPermission::CAN_DELETE_PAYMENT_METHOD]);
-      Permission::create(['name' => MyPermission::CAN_VIEW_PAYMENT_METHOD]);
+      Permission::create(['name' => MyPermission::CAN_SHOW_PAYMENT_METHOD]);
+      Permission::create(['name' => MyPermission::CAN_VIEW_PAYMENT_METHODS]);
       Permission::create(['name' => MyPermission::CAN_UPDATE_PAYMENT_METHOD]);
 
     // Orders Permissions Seeder
       Permission::create(['name' => MyPermission::CAN_CREATE_ORDER]);
-      Permission::create(['name' => MyPermission::CAN_VIEW_ORDER]);
+      Permission::create(['name' => MyPermission::CAN_VIEW_ORDERS]);
+      Permission::create(['name' => MyPermission::CAN_SHOW_ORDER]);
       Permission::create(['name' => MyPermission::CAN_UPDATE_ORDER]);
       Permission::create(['name' => MyPermission::CAN_DELETE_ORDER]);
 
@@ -68,16 +71,19 @@ class RoleAndPermissionSeeder extends Seeder
         // User Profile
           MyPermission::CAN_UPDATE_MY_USER_PROFILE,
           MyPermission::CAN_DELETE_MY_USER_PROFILE,
+          // MyPermission::CAN_UPDATE_USER_PROFILE,
 
         // Payment Methods
           MyPermission::CAN_CREATE_PAYMENT_METHOD,
           MyPermission::CAN_DELETE_PAYMENT_METHOD,
-          MyPermission::CAN_VIEW_PAYMENT_METHOD,
+          MyPermission::CAN_SHOW_PAYMENT_METHOD,
+          MyPermission::CAN_VIEW_PAYMENT_METHODS,
           MyPermission::CAN_UPDATE_PAYMENT_METHOD,
 
         // Orders
           MyPermission::CAN_CREATE_ORDER,
-          MyPermission::CAN_VIEW_ORDER,
+          MyPermission::CAN_SHOW_ORDER,
+          MyPermission::CAN_VIEW_ORDERS,
 
         // Order details
           MyPermission::CAN_CREATE_ORDER_DETAIL,
@@ -92,11 +98,13 @@ class RoleAndPermissionSeeder extends Seeder
         // User Profile
           MyPermission::CAN_UPDATE_MY_USER_PROFILE,
           MyPermission::CAN_DELETE_MY_USER_PROFILE,
+          MyPermission::CAN_UPDATE_USER_PROFILE,
 
         // Payment Methods
           MyPermission::CAN_CREATE_PAYMENT_METHOD,
           MyPermission::CAN_DELETE_PAYMENT_METHOD,
-          MyPermission::CAN_VIEW_PAYMENT_METHOD,
+          MyPermission::CAN_SHOW_PAYMENT_METHOD,
+          MyPermission::CAN_VIEW_PAYMENT_METHODS,
           MyPermission::CAN_UPDATE_PAYMENT_METHOD,
 
         // Entrepreneurships
@@ -106,7 +114,8 @@ class RoleAndPermissionSeeder extends Seeder
           MyPermission::CAN_VIEW_MY_ENTREPRENEURSHIPS,
         // Orders
           MyPermission::CAN_CREATE_ORDER,
-          MyPermission::CAN_VIEW_ORDER,
+          MyPermission::CAN_SHOW_ORDER,
+          MyPermission::CAN_VIEW_ORDERS,
         // Order details
           MyPermission::CAN_CREATE_ORDER_DETAIL,
         // Comments
@@ -120,6 +129,7 @@ class RoleAndPermissionSeeder extends Seeder
         // User Profile
           MyPermission::CAN_UPDATE_MY_USER_PROFILE,
           MyPermission::CAN_DELETE_MY_USER_PROFILE,
+          MyPermission::CAN_UPDATE_USER_PROFILE,
 
         // Users
           MyPermission::CAN_DELETE_USER,
@@ -128,9 +138,9 @@ class RoleAndPermissionSeeder extends Seeder
         // Payment Methods
           MyPermission::CAN_CREATE_PAYMENT_METHOD,
           MyPermission::CAN_DELETE_PAYMENT_METHOD,
-          MyPermission::CAN_VIEW_PAYMENT_METHOD,
+          MyPermission::CAN_SHOW_PAYMENT_METHOD,
+          MyPermission::CAN_VIEW_PAYMENT_METHODS,
           MyPermission::CAN_UPDATE_PAYMENT_METHOD,
-
 
         // Entrepreneurships
           MyPermission::CAN_CREATE_ENTREPRENEURSHIP,
@@ -144,7 +154,8 @@ class RoleAndPermissionSeeder extends Seeder
 
         // Orders
           MyPermission::CAN_CREATE_ORDER,
-          MyPermission::CAN_VIEW_ORDER,
+          MyPermission::CAN_SHOW_ORDER,
+          MyPermission::CAN_VIEW_ORDERS,
 
         // Order details
           MyPermission::CAN_CREATE_ORDER_DETAIL,
