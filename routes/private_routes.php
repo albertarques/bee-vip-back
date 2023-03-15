@@ -60,17 +60,19 @@ Route::middleware(['middleware' => 'auth.jwt'])->group(function () {
   });
   Route::controller(CommentsController::class)->group(function () {
     // User, Admin, Superadmin *************************************************************************
-      Route::post('comment/create/{entrepreneurship_id}', 'create')->middleware('can:comment-create');               //
-      Route::patch('comment/update_my/{id}', 'update')->middleware('can:comment-update-my');                         //
-      Route::delete('comment/delete_my/{id}', 'delete_mine')->middleware('can:comment-delete-my');                   //
+      // TODO: Add condition that user need to be bought the service would comment.
+      Route::post('comment/create/{entrepreneurship_id}', 'create')->middleware('can:comment-create');        //OK
+      Route::get('comments', 'index_my')->middleware('can:comments-view');                                    //OK
+      Route::patch('comment/update_my/{id}', 'update_my')->middleware('can:comment-update-my');               //OK
+      Route::delete('comment/delete_my/{id}', 'delete_my')->middleware('can:comment-delete-my');              //OK
 
     // Superadmin **************************************************************************************
-      Route::delete('comment/delete/{id}', 'delete')->middleware('can:comment-delete');                              //
+      Route::delete('comment/delete/{id}', 'delete')->middleware('can:comment-delete');                       //OK
   });
   Route::controller(CategoriesController::class)->group(function () {
     // Superadmin **************************************************************************************
-      Route::post('category', 'create')->middleware('can:category-create');
-      Route::patch('update/category/{id}', 'update')->middleware('can:category-update');
-      Route::delete('delete/category/{id}', 'destroy')->middleware('can:category-delete');
+      Route::post('category', 'create')->middleware('can:category-create');                                 //
+      Route::patch('update/category/{id}', 'update')->middleware('can:category-update');                    //
+      Route::delete('delete/category/{id}', 'destroy')->middleware('can:category-delete');                  //
   });
 });

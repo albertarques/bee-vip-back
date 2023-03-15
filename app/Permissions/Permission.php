@@ -48,6 +48,7 @@ class Permission
   // Comments Permissions =================================
     // Users
     public const CAN_CREATE_COMMENT = "comment-create";
+    public const CAN_VIEW_MY_COMMENTS = "comments-view";
     public const CAN_UPDATE_MY_COMMENT = "comment-update-my";
     public const CAN_DELETE_MY_COMMENT = "comment-delete-my";
 
