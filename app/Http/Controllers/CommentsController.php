@@ -21,8 +21,10 @@ class CommentsController extends Controller
   //     ]);
   // }
 
-  public function store(Request $request)
+  public function create(Request $request, $entrepreneurship_id)
   {
+    $user = auth()->user()->id;
+
     $request->validate([
       'entrepreneurship_id' => 'required|string|max:255',
       'user_id' => 'required|string|max:255',
@@ -49,7 +51,7 @@ class CommentsController extends Controller
     $comment = Comment::find($id);
     return response()->json([
       'status' => 'success',
-      'comments' => $comment,
+      'comments' => $comment
     ]);
   }
 

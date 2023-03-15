@@ -62,17 +62,17 @@ class AuthController extends Controller
       'status' => 'success',
       'user' => auth()->user(),
       'role' => $role,
-      'entrepreneurships' => $entrepreneurships,
+      'entrepreneurships' => [$entrepreneurships],
     ]);
   }
 
   public function register(Request $request)
   {
     $request->validate([
-      'username' => 'required|string|max:255',
+      'username' => 'required|string|max:255|unique:users',
       'email' => 'required|string|email|max:255|unique:users',
       'password' => 'required|string|min:6',
-      'phone' => 'required|string|max:12|unique:users',
+      'phone' => 'required|string|unique:users|max:12',
     ]);
 
     $user = User::create([
@@ -85,6 +85,7 @@ class AuthController extends Controller
     $user->assignRole('user');
 
     $token = Auth::login($user);
+
     return response()->json([
       'status' => 'success',
       'message' => 'User created successfully',

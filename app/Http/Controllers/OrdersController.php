@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderDetail;
+use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
@@ -14,21 +16,28 @@ class OrdersController extends Controller
 
   public function index()
   {
-    $orders = Order::all();
+    $user_id = auth()->user()->id;
+    $orders = Order::all()->where('customer_id', '=', $user_id);
+
+    // Verificar que la orden existe
+    if (!$orders) {
+      return response()->json([
+          'message' => 'Usuario sin órdenes de compra'
+      ], 404);
+    }
+
     return response()->json([
       'status' => 'success',
-      'orders' => $orders,
+      'orders' => [...$orders],
     ]);
   }
 
-  public function store(Request $request)
+  public function create()
   {
-    $request->validate([
-      'customer_id' => 'required|string|max:255',
-    ]);
+    $user_id = auth()->user()->id;
 
     $order = Order::create([
-      'customer_id' => $request->customer_id,
+      'customer_id' => $user_id,
     ]);
 
     return response()->json([
@@ -41,9 +50,26 @@ class OrdersController extends Controller
   public function show($id)
   {
     $order = Order::find($id);
+    $order_details = OrderDetail::all()->where('order_id', '=', $order->id);
+
+    // Verificar que la orden existe
+    if (!$order) {
+      return response()->json([
+          'message' => 'Usuario sin órdenes de compra.'
+      ], 404);
+    }
+
+    // Verificar que el usuario está autorizado para ver la orden
+    if (Auth::user()->id !== $order->customer_id) {
+      return response()->json([
+        'message' => 'No autorizado para ver esta órden de compra.'
+      ], 401);
+    }
+
     return response()->json([
       'status' => 'success',
-      'orders' => $order,
+      'order' => $order,
+      'order details' => [...$order_details]
     ]);
   }
 

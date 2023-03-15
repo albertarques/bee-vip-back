@@ -16,13 +16,21 @@ class EntrepreneurshipsController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index_my()
   {
-    $entrepreneurships = Entrepreneurship::all();
+    $user_id = auth()->user()->id;
+    $entrepreneurships = Entrepreneurship::all()->where("user_id", "=", $user_id);
+
+    // Verificar que el emprendimiento existe
+    if (!$entrepreneurships) {
+      return response()->json([
+          'message' => 'No tienes ningún emprendimiento'
+      ], 404);
+    }
 
     return response()->json([
       'status' => 'success',
-      'entrepreneurships' => $entrepreneurships,
+      'entrepreneurships' => [...$entrepreneurships],
     ], 200);
   }
 
@@ -68,9 +76,8 @@ class EntrepreneurshipsController extends Controller
    */
   public function index_available()
   {
-    // TODO: Obtiene todos los emprendimientos aprovados y disponibles, y todas las categorías.
+    // Obtiene todos los emprendimientos aprovados y disponibles.
     $entrepreneurships = Entrepreneurship::all()->where('inspection_state', '=', 2)->where('availability_state', '=', 2);
-    // $category = Category::all();
 
     return response()->json([
       'status' => 'success',
@@ -79,17 +86,15 @@ class EntrepreneurshipsController extends Controller
   }
 
   /**
-   * Show the form for creating a new resource.
+   * Create the specified resource.
    *
    * @return \Illuminate\Http\Response
    */
   public function create(Request $request)
   {
-
     $user_id = auth()->user()->id;
 
     $request->validate([
-      // 'user_id' // Unnecessary to validate
       'title' => 'required|max:255',
       'description' => 'required|max:1000',
       'price' => 'required|numeric|min:0',
@@ -98,8 +103,6 @@ class EntrepreneurshipsController extends Controller
       'card_payment' => 'required|boolean',
       'bizum_payment' => 'required|boolean',
       'stock' => 'nullable|integer|min:0',
-      // 'availability_state' // Unnecessary to validate, default value
-      // 'inspection_state' // Unnecessary to validate, default value
       'phone' => 'nullable',
       'email' => 'nullable|email',
       'location' => 'required'
@@ -137,7 +140,7 @@ class EntrepreneurshipsController extends Controller
    */
   public function show($id)
   {
-    // Obtiene el emprendimiento con su categoria, sus comentarios y el usuario propietário.
+    // Obtiene el emprendimiento con su categoria, sus comentarios, categoria y el usuario propietário.
     $entrepreneurship = Entrepreneurship::find($id);
     $comments = Comment::all()->where('entrepreneurship_id', '=', $id);
     $user_id = $entrepreneurship->user_id;
@@ -155,26 +158,118 @@ class EntrepreneurshipsController extends Controller
   }
 
   /**
-   * Show the form for editing the specified resource.
+   * Update the entrepreneurship that user has it's property.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function update(Request $request, $entrepreneurship_id)
   {
-    //
+    $entrepreneurship = Entrepreneurship::find($entrepreneurship_id);
+    // $user = Auth::user();
+
+    $request->validate([
+      'inspection_state' => 'required|integer|min:1|max:3',
+    ]);
+
+    $entrepreneurship = Entrepreneurship::find($entrepreneurship_id);
+    $newState = $request->inspection_state;
+
+    $entrepreneurship->inspection_state = $newState;
+    $entrepreneurship->save();
+
+    return response()->json([
+      'code' => 200,
+      'message' => 'Entrepreneurship inspection state updated successfully',
+      'entrepreneurship' => $entrepreneurship,
+    ]);
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
+  public function update_my(Request $request, $id)
   {
-    //
+    $entrepreneurship = Entrepreneurship::find($id);
+
+    // Verificar que el emprendimiento existe
+    if (!$entrepreneurship) {
+      return response()->json([
+          'message' => 'Emprendimiento no encontrado'
+      ], 404);
+    }
+
+    // Verificar que el usuario está autorizado para actualizar el emprendimiento
+    if (Auth::user()->id !== $entrepreneurship->user_id) {
+      return response()->json([
+        'message' => 'Usuario no autorizado para editar este emprendimiento'
+      ], 401);
+    }
+
+    $request->validate([
+      'title' => 'required|unique:entrepreneurships',
+      'logo' => 'nullable',
+      'product_img' => 'nullable',
+      'description' => 'required',
+      'price' => 'required|numeric',
+      'category_id' => 'required|exists:categories,id',
+      'cash_payment' => 'required|boolean',
+      'card_payment' => 'required|boolean',
+      'bizum_payment' => 'required|boolean',
+      'stock' => 'required|integer|min:0',
+      'availability_state' => 'required|exists:availability_states,id',
+      'phone' => 'nullable|string|max:20',
+      'email' => 'nullable|email|max:255',
+      'location' => 'nullable|max:255',
+    ]);
+
+    $entrepreneurship->id = $entrepreneurship->id;
+    $entrepreneurship->user_id = $entrepreneurship->user_id;
+    $entrepreneurship->title = $request->title;
+    $entrepreneurship->logo = $request->logo;
+    $entrepreneurship->product_img = $request->product_img;
+    $entrepreneurship->description = $request->description;
+    $entrepreneurship->price = $request->price;
+    $entrepreneurship->category_id = $request->category_id;
+    $entrepreneurship->avg_score = $entrepreneurship->avg_score;
+    $entrepreneurship->cash_payment = $request->cash_payment;
+    $entrepreneurship->card_payment = $request->card_payment;
+    $entrepreneurship->bizum_payment = $request->bizum_payment;
+    $entrepreneurship->stock = $request->stock;
+    $entrepreneurship->inspection_state = $entrepreneurship->inspection_state;
+    $entrepreneurship->availability_state = $request->availability_state;
+    $entrepreneurship->phone = $request->phone;
+    $entrepreneurship->email = $request->email;
+    $entrepreneurship->location = $request->location;
+    $entrepreneurship->update();
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Entrepreneurship updated successfully',
+      'entrepreneurship' => $entrepreneurship
+    ]);
+  }
+
+  public function inspect(Request $request, $id)
+  {
+    $entrepreneurship = Entrepreneurship::find($id);
+
+    // Verificar que el emprendimiento existe
+    if (!$entrepreneurship) {
+      return response()->json([
+          'message' => 'Emprendimiento no encontrado'
+      ], 404);
+    }
+
+    $request->validate([
+      'inspection_state' => 'required|integer|exists:inspection_states,id|between:1, 3'
+    ]);
+
+    $entrepreneurship->inspection_state = $request->inspection_state;
+    $entrepreneurship->update();
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Entrepreneurship inspection state updated successfully',
+      'entrepreneurship' => $entrepreneurship
+    ]);
   }
 
   /**
@@ -185,6 +280,48 @@ class EntrepreneurshipsController extends Controller
    */
   public function destroy($id)
   {
-    //
+    $entrepreneurship = Entrepreneurship::find($id);
+
+    // Verificar que el emprendimiento existe
+    if (!$entrepreneurship) {
+      return response()->json([
+          'message' => 'Emprendimiento no encontrado'
+      ], 404);
+    }
+
+    $entrepreneurship->delete();
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Entrepreneurship deleted successfully',
+      'entrepreneurship' => $entrepreneurship
+    ]);
+  }
+
+  public function destroy_my($id)
+  {
+    $entrepreneurship = Entrepreneurship::find($id);
+
+    // Verificar que el emprendimiento existe
+    if (!$entrepreneurship) {
+      return response()->json([
+          'message' => 'Emprendimiento no encontrado'
+      ], 404);
+    }
+
+    // Verificar que el usuario está autorizado para borrar el emprendimiento
+    if (Auth::user()->id !== $entrepreneurship->user_id) {
+      return response()->json([
+        'message' => 'No autorizado para borrar este emprendimiento'
+      ], 401);
+    }
+
+    $entrepreneurship->delete();
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Entrepreneurship deleted successfully',
+      'entrepreneurship' => $entrepreneurship
+    ]);
   }
 }
