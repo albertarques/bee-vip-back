@@ -19,9 +19,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $superadminRole = Role::where('name', 'superadmin')->first();
 
-        // Crear un usuario administrador
+        // Crear un usuario administrador, id 1
         User::create([
             'username' => 'Albert',
             'email' => 'albertarques@gmail.com',
@@ -29,14 +28,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
         ]);
 
-        $superadminUser = User::find(1);
-
-        // Asignar el rol de administrador al usuario
-        $superadminUser->assignRole($superadminRole);
-        $superadminUser->syncRoles($superadminRole);
-
-        \App\Models\User::factory(10)->create();
-
+        // Crear un usuario administrador, id 2
         User::factory()->create([
           "username" => "user",
           "email" => "user@example.com",
@@ -44,6 +36,7 @@ class UserSeeder extends Seeder
           "password" => Hash::make("12345678")
         ]);
 
+        // Crear un usuario administrador, id 3
         User::factory()->create([
           "username" => "admin",
           "email" => "admin@example.com",
@@ -51,12 +44,37 @@ class UserSeeder extends Seeder
           "password" => Hash::make("12345678")
         ]);
 
+        // Crear un usuario administrador, id 4
         User::factory()->create([
           "username" => "superadmin",
           "email" => "superadmin@example.com",
           "phone" => "333333333",
           "password" => Hash::make("12345678")
         ]);
+
+        $userRole = Role::where('name', 'user')->first();
+        $adminRole = Role::where('name', 'admin')->first();
+        $superadminRole = Role::where('name', 'superadmin')->first();
+
+        $albertUser = User::find(1);
+        $userUser = User::find(2);
+        $adminUser = User::find(3);
+        $superadminUser = User::find(4);
+
+        // Asignar el rol de administrador al usuario Albert
+        $albertUser->assignRole($superadminRole);
+        $albertUser->syncRoles($superadminRole);
+
+        $userUser->assignRole($userRole);
+        $userUser->syncRoles($userRole);
+
+        $adminUser->assignRole($adminRole);
+        $adminUser->syncRoles($adminRole);
+
+        $superadminUser->assignRole($superadminRole);
+        $superadminUser->syncRoles($superadminRole);
+
+        \App\Models\User::factory(10)->create();
 
     }
 }

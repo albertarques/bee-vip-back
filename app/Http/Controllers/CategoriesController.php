@@ -8,75 +8,73 @@ use App\Models\Category;
 
 class CategoriesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('api');
-    }
+  public function __construct()
+  {
+    $this->middleware('api');
+  }
 
-    public function index()
-    {
-        $categories = Category::all();
-        
-        return response()->json([
-            'status' => 'success',
-            'categories' => $categories,
-        ]);
-    }
+  public function index()
+  {
+    $categories = Category::all();
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+    return response()->json([
+      'status' => 'success',
+      'categories' => $categories,
+    ]);
+  }
 
-        $category = Category::create([
-            'name' => $request->name,
-        ]);
+  public function create(Request $request)
+  {
+    $request->validate([
+      'name' => 'required|string|max:255',
+    ]);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'category created successfully',
-            'category' => $category,
-        ]);
-    }
+    $category = new Category;
+    $category->name = $request->name;
+    $category->save();
 
-    public function show($id)
-    {
-        $category = Category::find($id);
-        return response()->json([
-            'status' => 'success',
-            'category' => $category,
-        ]);
-    }
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Category created successfully.',
+      'category' => $category,
+    ]);
+  }
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+  public function show($id)
+  {
+    $category = Category::find($id);
+    return response()->json([
+      'status' => 'success',
+      'category' => $category,
+    ]);
+  }
 
-        $category = Category::find($id);
-        $category->title = $request->title;
-        $category->description = $request->description;
-        $category->save();
+  public function update(Request $request, $id)
+  {
+    $request->validate([
+      'name' => 'required|string|max:255',
+    ]);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'category updated successfully',
-            'category' => $category,
-        ]);
-    }
+    $category = Category::find($id);
+    $category->name = $request->name;
+    $category->save();
 
-    public function destroy($id)
-    {
-        $category = Category::find($id);
-        $category->delete();
+    return response()->json([
+      'status' => 'success',
+      'message' => 'category updated successfully',
+      'category' => $category,
+    ]);
+  }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'category deleted successfully',
-            'category' => $category,
-        ]);
-    }
+  public function destroy($id)
+  {
+    $category = Category::find($id);
+    $category->delete();
 
+    return response()->json([
+      'status' => 'success',
+      'message' => 'category deleted successfully',
+      'category' => $category,
+    ]);
+  }
 }
