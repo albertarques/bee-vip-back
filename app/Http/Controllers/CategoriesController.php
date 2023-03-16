@@ -23,19 +23,19 @@ class CategoriesController extends Controller
     ]);
   }
 
-  public function store(Request $request)
+  public function create(Request $request)
   {
     $request->validate([
       'name' => 'required|string|max:255',
     ]);
 
-    $category = Category::create([
-      'name' => $request->name,
-    ]);
+    $category = new Category;
+    $category->name = $request->name;
+    $category->save();
 
     return response()->json([
       'status' => 'success',
-      'message' => 'category created successfully',
+      'message' => 'Category created successfully.',
       'category' => $category,
     ]);
   }
@@ -56,8 +56,7 @@ class CategoriesController extends Controller
     ]);
 
     $category = Category::find($id);
-    $category->title = $request->title;
-    $category->description = $request->description;
+    $category->name = $request->name;
     $category->save();
 
     return response()->json([
