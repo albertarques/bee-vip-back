@@ -16,11 +16,11 @@ class PaymentMethodsController extends Controller
   public function index()
   {
     $user_id = auth()->user()->id;
-    $paymentMethods = PaymentMethod::all()->where("user_id", "=", $user_id);
+    $payment_methods = PaymentMethod::all()->where("user_id", "=", $user_id);
 
     return response()->json([
       'status' => 'success',
-      'paymentMethods' => [$paymentMethods],
+      'paymentMethods' => [$payment_methods],
     ]);
   }
 

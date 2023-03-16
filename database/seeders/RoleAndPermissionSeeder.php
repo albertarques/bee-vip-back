@@ -50,6 +50,7 @@ class RoleAndPermissionSeeder extends Seeder
 
     // Comments Permissions Seeder
       Permission::create(['name' => MyPermission::CAN_CREATE_COMMENT]);
+      Permission::create(['name' => MyPermission::CAN_VIEW_MY_COMMENTS]);
       Permission::create(['name' => MyPermission::CAN_UPDATE_MY_COMMENT]);
       Permission::create(['name' => MyPermission::CAN_DELETE_MY_COMMENT]);
       Permission::create(['name' => MyPermission::CAN_DELETE_COMMENT]);
@@ -90,6 +91,7 @@ class RoleAndPermissionSeeder extends Seeder
 
         // Comments
           MyPermission::CAN_CREATE_COMMENT,
+          MyPermission::CAN_VIEW_MY_COMMENTS,
           MyPermission::CAN_UPDATE_MY_COMMENT,
           MyPermission::CAN_DELETE_MY_COMMENT,
       ]);
@@ -120,6 +122,7 @@ class RoleAndPermissionSeeder extends Seeder
           MyPermission::CAN_CREATE_ORDER_DETAIL,
         // Comments
           MyPermission::CAN_CREATE_COMMENT,
+          MyPermission::CAN_VIEW_MY_COMMENTS,
           MyPermission::CAN_UPDATE_MY_COMMENT,
           MyPermission::CAN_DELETE_MY_COMMENT,
 
@@ -162,11 +165,10 @@ class RoleAndPermissionSeeder extends Seeder
 
         // Comments
           MyPermission::CAN_CREATE_COMMENT,
+          MyPermission::CAN_VIEW_MY_COMMENTS,
           MyPermission::CAN_UPDATE_MY_COMMENT,
           MyPermission::CAN_DELETE_MY_COMMENT,
-
           MyPermission::CAN_DELETE_COMMENT,
-
         // Categories
           MyPermission::CAN_CREATE_CATEGORY,
           MyPermission::CAN_UPDATE_CATEGORY,

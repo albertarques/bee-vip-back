@@ -28,4 +28,5 @@ Route::controller(CommentsController::class)->group(function () {
   Route::get('comment/{id}', 'show');                                       //OK
 });
 
+//TODO: Refactor this
 Route::post('image', [ImageController::class, 'imageStore']);
