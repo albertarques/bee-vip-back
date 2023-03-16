@@ -48,7 +48,7 @@ Route::middleware(['middleware' => 'auth.jwt'])->group(function () {
   });
   Route::controller(EntrepreneurshipsController::class)->group(function () {
     // Admin user *************************************************************************************
-      Route::post('entrepreneurship/create', 'create')->middleware('can:entrepreneurship-create');                   //OK
+      Route::post('entrepreneurship/create', 'create');                   //OK
       Route::delete('entrepreneurship/delete_my/{id}', 'destroy_my')->middleware('can:entrepreneurship-delete-my');  //OK
       Route::patch('entrepreneurship/update_my/{id}', 'update_my')->middleware('can:entrepreneurship-update');       //OK
       Route::get('entrepreneurships/view_my', 'index_my')->middleware('can:entrepreneurships-view-my');              //OK
