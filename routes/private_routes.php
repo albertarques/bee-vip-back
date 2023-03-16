@@ -71,8 +71,8 @@ Route::middleware(['middleware' => 'auth.jwt'])->group(function () {
   });
   Route::controller(CategoriesController::class)->group(function () {
     // Superadmin **************************************************************************************
-      Route::post('category', 'create')->middleware('can:category-create');                                 //
-      Route::patch('update/category/{id}', 'update')->middleware('can:category-update');                    //
-      Route::delete('delete/category/{id}', 'destroy')->middleware('can:category-delete');                  //
+      Route::post('category/create', 'create')->middleware('can:category-create');                              //OK
+      Route::patch('category/update/{id}', 'update')->middleware('can:category-update');                        //OK
+      Route::delete('category/delete/{id}', 'destroy')->middleware('can:category-delete');                      //OK
   });
 });
