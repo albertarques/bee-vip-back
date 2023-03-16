@@ -65,12 +65,11 @@ class EntrepreneurshipsController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'name' => 'required|string|max:100',
-            'title' => 'required|string|max:100',
-            'product_img' => 'image|max:2048',
-            'description' => 'required|string|max:100',
-            'price' => 'required|integer',
-
+          'name' => 'required',
+          'title' => 'required',
+          'product_img' => 'required|image',
+          'description' => 'required',
+          'price' => 'required',
 
             // 'user_id' => 'required|integer|exists:users,id',
             // 'title' => 'required|string|max:255',
@@ -91,38 +90,24 @@ class EntrepreneurshipsController extends Controller
             // 'inspection_state' => 'required|integer|exists:inspection_states,id|between:1, 3',
         ]);
 
-        $imagePath = $request->file('image')->store('public/images');
-        $imageUrl = url('storage/' . str_replace('public/', '', $imagePath));
+        // Subida y almacenamiento de la imagen
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $imagePath = 'images/entrepreneurships/';
+        $image->move(public_path($imagePath), $imageName);
 
-        $entrepreneurship = Entrepreneurship::create([
-            'user_id' => $request->user_id,
-            'title' => $request->title,
-            'name' => $request->name,
-            'logo' => $request->logo,
-            'product_img' => $request->product_img,
-            'description' => $request->description,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'avg_score' => $request->avg_score,
-            'cash_payment' => $request->cash_payment,
-            'card_payment' => $request->card_payment,
-            'bizum_payment' => $request->bizum_payment,
-            'stock' => $request->stock,
-            'availability_state' => 2,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'location' => $request->location,
-            'inspection_state' => 2,
-        ]);
+        // Creación y almacenamiento del emprendimiento
+        $entrepreneurship = new Entrepreneurship();
+        $entrepreneurship->name = $request->name;
+        $entrepreneurship->title = $request->title;
+        $entrepreneurship->user_id = auth()->id();
+        $entrepreneurship->image = $imagePath . $imageName;
+        $entrepreneurship->description = $request->description;
+        $entrepreneurship->price = $request->price;
+        $entrepreneurship->save();
 
-        dd($entrepreneurship);
-        return response()->json([
-            'code' => 200,
-            'status' => 'success',
-            'message' => 'Entrepreneurship created successfully',
-            'entrepreneurship' => $entrepreneurship,
-        ]);
-    }
+        return response()->json($entrepreneurship, 201);
+        }
 
     public function show($id){
         // Obtiene el emprendimiento con su categoria, sus comentarios y el usuario propietário.

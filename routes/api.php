@@ -20,9 +20,6 @@ Route::post('register', 'App\Http\Controllers\AuthController@register');
 Route::controller(EntrepreneurshipsController::class)->group(function () {
   Route::get('entrepreneurships', 'availableIndex');
   Route::get('entrepreneurship/{id}', 'show');
-  Route::post('entrepreneurship', 'store');
-  Route::put('entrepreneurship/{id}', 'update');
-  Route::delete('entrepreneurship/{id}', 'destroy');
 });
 
 Route::controller(UsersController::class)->group(function () {
@@ -76,7 +73,9 @@ Route::group(['middleware' => 'auth.jwt'], function () {
   });
 
   Route::controller(EntrepreneurshipsController::class)->group(function () {
-    // Route::post('entrepreneurship/create', 'store')->middleware('can:create-entrepreneurship');
+    Route::post('entrepreneurships', 'store');
+    Route::put('entrepreneurship/{id}', 'update');
+    Route::delete('entrepreneurship/{id}', 'destroy');
     Route::put('entrepreneurship/inspect/{id}', 'inspect')->middleware('can:inspect-entrepreneurship');
     Route::delete('entrepreneurship/delete/{id}', 'destroy')->middleware('can:delete-entrepreneurship');
     Route::get('entrepreneurships/pending', 'pending')->middleware('can:view-pending-entrepreneurships');
