@@ -237,57 +237,52 @@ class UserTest extends TestCase
   // }
 
   // //api/me/delete
-  // /** @test*/
-  // public function ok_is_returned_if_user_superadmin_can_delete_his_profile(){
-  //   $response = $this->post('api/login', [
-  //     'email' => 'usersuperadmin@example.com',
-  //     'password' => '12345678'
-  //   ]);
+  /** @test*/
+  public function ok_is_returned_if_user_superadmin_can_delete_his_profile(){
+    $response = $this->post('api/login', [
+      'email' => 'usersuperadmin@example.com',
+      'password' => '12345678'
+    ]);
 
-  //   $token = $response->original['authorisation']['token'];
+    // $token = $response->original['authorisation']['token'];
 
-  //   $response = $this->delete('api/me/delete', [
-  //     'token' => $token
-  //   ]);
+    $response = $this->delete('api/me/delete', [
+      // 'token' => $token
+    ]);
 
-  //   $response->assertStatus(200);
-  // }
+    $response->assertStatus(200);
+  }
 
   //api/user/update/{id}
   /** @test*/
-  // public function ok_is_returned_if_user_superadmin_can_update_user_role(){
-  //   $response = $this->post('api/login', [
-  //     'email' => 'usersuperadmin@example.com',
-  //     'password' => '12345678'
-  //   ]);
+  public function ok_is_returned_if_user_superadmin_can_update_user_role(){
+    $response = $this->post('api/login', [
+      'email' => 'usersuperadmin@example.com',
+      'password' => '12345678'
+    ]);
 
-  //   // Verifica que el código de respuesta HTTP sea 200
-  //   $response->assertStatus(200);
+    $response->assertStatus(200);
 
-  //   $token = $response->original['authorisation']['token'];
-  //   $userToUpgrade = User::where('email', 'testuser@example.com')->first();
-  //   $userToUpgradeId = $userToUpgrade->id;
-  //   // dd($userToUpgradeId);
+    // $token = $response->original['authorisation']['token'];
+    $userToUpgrade = User::where('email', 'testuser@example.com')->first();
+    $userToUpgradeId = $userToUpgrade->id;
 
-  //   $response = $this->patch('api/user/update/' . $userToUpgradeId, [
-  //     'Bearer' => $token,
-  //     'role' => "admin"
-  //   ]);
+    $response = $this->patch('api/user/update/' . $userToUpgradeId, [
+      // 'Bearer' => $token,
+      'role' => "admin"
+    ]);
 
-  //   // Verifica que el código de respuesta HTTP sea 200
-  //   $response->assertStatus(200);
-  //   // dd($response);
+    $response->assertStatus(200);
 
-  //   $response = $this->post('api/login', [
-  //     'email' => 'testuser@example.com',
-  //     'password' => '12345678'
-  //   ]);
+    $response = $this->post('api/login', [
+      'email' => 'testuser@example.com',
+      'password' => '12345678'
+    ]);
 
-  //   $token = $response->original['authorisation']['token'];
+    $token = $response->original['authorisation']['token'];
 
-  //   $response = $this->post('api/me', [
-  //     'token' => $token,
-  //   ]);
-  //   dd($response);
-  // }
+    $response = $this->post('api/me', [
+      'token' => $token,
+    ]);
+  }
 }
