@@ -95,34 +95,47 @@ class EntrepreneurshipsController extends Controller
     $user_id = auth()->user()->id;
 
     $request->validate([
+      'name' => 'required',
       'title' => 'required|max:255',
       'description' => 'required|max:1000',
+      'product_img' => 'required',
       'price' => 'required|numeric|min:0',
       'category_id' => 'required|exists:categories,id',
-      'cash_payment' => 'required|boolean',
-      'card_payment' => 'required|boolean',
-      'bizum_payment' => 'required|boolean',
-      'stock' => 'nullable|integer|min:0',
-      'phone' => 'nullable',
-      'email' => 'nullable|email',
-      'location' => 'required'
+      // 'cash_payment' => 'required|boolean',
+      // 'card_payment' => 'required|boolean',
+      // 'bizum_payment' => 'required|boolean',
+      // 'stock' => 'nullable|integer|min:0',
+      // 'phone' => 'nullable',
+      // 'email' => 'nullable|email',
+      // 'location' => 'required'
     ]);
 
+    // handle image
+    $image = $request->file('product_img');
+    $imageName = time() . '.' . $image->getClientOriginalExtension();
+    $imagePath = 'images/entrepreneurships/';
+    $image->move(public_path($imagePath), $imageName);
+
     $entrepreneurship = new Entrepreneurship;
-    $entrepreneurship->user_id = $user_id;
+    //handle store image
+    $entrepreneurship->product_img = $imagePath . $imageName;
+    //
+    if($user_id) $entrepreneurship->user_id = $user_id;
+    $entrepreneurship->name = $request->name;
     $entrepreneurship->title = $request->title;
     $entrepreneurship->description = $request->description;
+    $entrepreneurship->product_img = $request->product_img;
     $entrepreneurship->price = $request->price;
     $entrepreneurship->category_id = $request->category_id;
-    $entrepreneurship->cash_payment = $request->cash_payment;
-    $entrepreneurship->card_payment = $request->card_payment;
-    $entrepreneurship->bizum_payment = $request->bizum_payment;
-    $entrepreneurship->stock = $request->stock;
+    // $entrepreneurship->cash_payment = $request->cash_payment;
+    // $entrepreneurship->card_payment = $request->card_payment;
+    // $entrepreneurship->bizum_payment = $request->bizum_payment;
+    // $entrepreneurship->stock = $request->stock;
     $entrepreneurship->availability_state = 1;
     $entrepreneurship->inspection_state = 1;
-    $entrepreneurship->phone = $request->phone;
-    $entrepreneurship->email = $request->email;
-    $entrepreneurship->location = $request->location;
+    // $entrepreneurship->phone = $request->phone;
+    // $entrepreneurship->email = $request->email;
+    // $entrepreneurship->location = $request->location;
     $entrepreneurship->save();
 
     return response()->json([
