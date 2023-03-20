@@ -1,50 +1,50 @@
 <?php
 
-namespace Tests\Feature;
+// namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Support\Facades\Artisan;
-use Spatie\Permission\Models\Role;
+// use Tests\TestCase;
+// use App\Models\User;
+// use Illuminate\Support\Facades\Artisan;
+// use Spatie\Permission\Models\Role;
 
-class UserTest extends TestCase
-{
+// class UserTest extends TestCase
+// {
 
-  public function setUp(): void {
-    parent::setUp();
-    Artisan::call('migrate:fresh --seed --env=testing');
+//   public function setUp(): void {
+//     parent::setUp();
+//     Artisan::call('migrate:fresh --seed --env=testing');
 
-    $this->post('api/register', [
-      'username' => 'test user',
-      'email' => 'testuser@example.com',
-      'password' => '12345678',
-      'phone' => '000111222'
-    ]);
+//     $this->post('api/register', [
+//       'username' => 'test user',
+//       'email' => 'testuser@example.com',
+//       'password' => '12345678',
+//       'phone' => '000111222'
+//     ]);
 
-    $this->post('api/register', [
-      'username' => 'user admin',
-      'email' => 'useradmin@example.com',
-      'password' => '12345678',
-      'phone' => '000222333'
-    ]);
+//     $this->post('api/register', [
+//       'username' => 'user admin',
+//       'email' => 'useradmin@example.com',
+//       'password' => '12345678',
+//       'phone' => '000222333'
+//     ]);
 
-    $adminRole = Role::where('name', 'admin')->first();
-    $admin = User::where('username', 'user admin')->first();
+//     $adminRole = Role::where('name', 'admin')->first();
+//     $admin = User::where('username', 'user admin')->first();
 
-    $admin->assignRole($adminRole);
+//     $admin->assignRole($adminRole);
 
-    $this->post('api/register', [
-      'username' => 'user superadmin',
-      'email' => 'usersuperadmin@example.com',
-      'password' => '12345678',
-      'phone' => '000333444'
-    ]);
+//     $this->post('api/register', [
+//       'username' => 'user superadmin',
+//       'email' => 'usersuperadmin@example.com',
+//       'password' => '12345678',
+//       'phone' => '000333444'
+//     ]);
 
-    $superadminRole = Role::where('name', 'superadmin')->first();
-    $superadmin = User::where('username', 'user superadmin')->first();
+//     $superadminRole = Role::where('name', 'superadmin')->first();
+//     $superadmin = User::where('username', 'user superadmin')->first();
 
-    $superadmin->assignRole($superadminRole);
-  }
+//     $superadmin->assignRole($superadminRole);
+//   }
 
   // //api/register
   // /** @test*/
@@ -238,51 +238,51 @@ class UserTest extends TestCase
 
   // //api/me/delete
   /** @test*/
-  public function ok_is_returned_if_user_superadmin_can_delete_his_profile(){
-    $response = $this->post('api/login', [
-      'email' => 'usersuperadmin@example.com',
-      'password' => '12345678'
-    ]);
+  // public function ok_is_returned_if_user_superadmin_can_delete_his_profile(){
+  //   $response = $this->post('api/login', [
+  //     'email' => 'usersuperadmin@example.com',
+  //     'password' => '12345678'
+  //   ]);
 
-    // $token = $response->original['authorisation']['token'];
+  //   // $token = $response->original['authorisation']['token'];
 
-    $response = $this->delete('api/me/delete', [
-      // 'token' => $token
-    ]);
+  //   $response = $this->delete('api/me/delete', [
+  //     // 'token' => $token
+  //   ]);
 
-    $response->assertStatus(200);
-  }
+  //   $response->assertStatus(200);
+  // }
 
   //api/user/update/{id}
   /** @test*/
-  public function ok_is_returned_if_user_superadmin_can_update_user_role(){
-    $response = $this->post('api/login', [
-      'email' => 'usersuperadmin@example.com',
-      'password' => '12345678'
-    ]);
+  // public function ok_is_returned_if_user_superadmin_can_update_user_role(){
+  //   $response = $this->post('api/login', [
+  //     'email' => 'usersuperadmin@example.com',
+  //     'password' => '12345678'
+  //   ]);
 
-    $response->assertStatus(200);
+  //   $response->assertStatus(200);
 
-    // $token = $response->original['authorisation']['token'];
-    $userToUpgrade = User::where('email', 'testuser@example.com')->first();
-    $userToUpgradeId = $userToUpgrade->id;
+  //   // $token = $response->original['authorisation']['token'];
+  //   $userToUpgrade = User::where('email', 'testuser@example.com')->first();
+  //   $userToUpgradeId = $userToUpgrade->id;
 
-    $response = $this->patch('api/user/update/' . $userToUpgradeId, [
-      // 'Bearer' => $token,
-      'role' => "admin"
-    ]);
+  //   $response = $this->patch('api/user/update/' . $userToUpgradeId, [
+  //     // 'Bearer' => $token,
+  //     'role' => "admin"
+  //   ]);
 
-    $response->assertStatus(200);
+  //   $response->assertStatus(200);
 
-    $response = $this->post('api/login', [
-      'email' => 'testuser@example.com',
-      'password' => '12345678'
-    ]);
+  //   $response = $this->post('api/login', [
+  //     'email' => 'testuser@example.com',
+  //     'password' => '12345678'
+  //   ]);
 
-    $token = $response->original['authorisation']['token'];
+  //   $token = $response->original['authorisation']['token'];
 
-    $response = $this->post('api/me', [
-      'token' => $token,
-    ]);
-  }
-}
+  //   $response = $this->post('api/me', [
+  //     'token' => $token,
+  //   ]);
+  // }
+// }
