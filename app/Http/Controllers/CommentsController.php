@@ -43,6 +43,29 @@ class CommentsController extends Controller
 
   }
 
+  public function create(Request $request, $entrepreneurship_id){
+
+    $user_id = auth()->user()->id;
+
+    $request->validate([
+      'comment' => 'nullable|string|max:500',
+      'score' => 'required'
+    ]);
+
+    $comment = new Comment;
+    $comment->user_id = $user_id;
+    $comment->entrepreneurship_id = $entrepreneurship_id;
+    $comment->comment = $request->comment;
+    $comment->score = $request->score;
+    $comment->save();
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Comment created successfully.',
+      'comment' => $comment,
+    ]);
+  }
+
   public function show($id)
   {
     $comment = Comment::find($id);
