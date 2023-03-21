@@ -29,9 +29,8 @@ class EntrepreneurshipFactory extends Factory
         return [
             'user_id' => $user->id,
             'title'=> fake()->sentence($nbWords = 3, $variableNbWords = true),
-            'name' => fake()->sentence($nbWords = 1),
-            'logo'=> fake()->imageUrl($dir = null, $width = 173, $height= 80),
-            'product_img'=> fake()->imageUrl(),
+            'logo'=> 'default/default-logo.png',
+            'product_img'=> 'default/default-product-img.png',
             'description'=> fake()->text($maxNbChars = 150),
             'price' => fake()->randomFloat($nbMaxDecimals = 2, $min = 0.50, $max = 1000),
             'category_id' => $category->id,
