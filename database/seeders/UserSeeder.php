@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
         // Crear un usuario administrador, id 1
         User::create([
             'username' => 'Albert',
+            'picture' => 'images/default/default-user.png',
             'email' => 'albertarques@gmail.com',
             'phone' => '666666666',
             'password' => Hash::make('12345678'),
@@ -30,26 +31,29 @@ class UserSeeder extends Seeder
 
         // Crear un usuario administrador, id 2
         User::factory()->create([
-          "username" => "user",
-          "email" => "user@example.com",
-          "phone" => "111111111",
-          "password" => Hash::make("12345678")
+          'username' => 'user',
+          'picture' => 'images/default/default-user.png',
+          'email' => 'user@example.com',
+          'phone' => '111111111',
+          'password' => Hash::make('12345678')
         ]);
 
         // Crear un usuario administrador, id 3
         User::factory()->create([
-          "username" => "admin",
-          "email" => "admin@example.com",
-          "phone" => "222222222",
-          "password" => Hash::make("12345678")
+          'username' => 'admin',
+          'picture' => 'images/default/default-user.png',
+          'email' => 'admin@example.com',
+          'phone' => '222222222',
+          'password' => Hash::make('12345678')
         ]);
 
         // Crear un usuario administrador, id 4
         User::factory()->create([
-          "username" => "superadmin",
-          "email" => "superadmin@example.com",
-          "phone" => "333333333",
-          "password" => Hash::make("12345678")
+          'username' => 'superadmin',
+          'picture' => 'images/default/default-user.png',
+          'email' => 'superadmin@example.com',
+          'phone' => '333333333',
+          'password' => Hash::make('12345678')
         ]);
 
         $userRole = Role::where('name', 'user')->first();
