@@ -1,105 +1,103 @@
 <?php
 
-// namespace Tests\Feature;
+namespace Tests\Feature;
 
-// use Tests\TestCase;
-// use App\Models\OrderDetail;
-// use Illuminate\Support\Facades\Artisan;
+use App\Models\Order;
+use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 
 
-// class OrderTest extends TestCase
-// {
+class OrderTest extends TestCase
+{
 
-//     public function setUp(): void
-//     {
-//         parent::setUp();
-//         Artisan::call('migrate:fresh --seed --env=testing');
+    public function setUp(): void
+    {
+        parent::setUp();
+        Artisan::call('migrate:fresh --seed --env=testing');
 
-//         $this->post('api/register', [
-//             'username' => 'test user',
-//             'email' => 'testuser@example.com',
-//             'password' => '12345678',
-//             'phone' => '000111222'
-//         ]);
+    }
+    /** @test*/
+    //   api/order/create
+    public function ok_is_returned_if_user_user_can_create_order()
+    {
+        // Crear un usuario utilizando el Factory
+        $user = User::factory()->create();
+        $user->assignRole('user');
 
-//         $this->post('api/order/create', [
-//             'customer_id' => 15,
-//         ]);
-//         $this->post('api/orderdetail/create', [
-//             'id' => 11,
-//             'entrepreneurship_id' => 33,
-//             'quantity' => 3,
-//         ]);
-//     }
-//       /** @test*/
-//     //   api/order/create
-//       public function ok_is_returned_if_user_user_can_create_order(){
-//         $response = $this->post('api/login', [
-//                 'email' => 'testuser@example.com',
-//                 'password' => '12345678'
-//               ]);
+        $this->actingAs($user);
 
-//         $response->assertStatus(200);
-//         $token = $response->original['authorisation']['token'];
+        // Crear una orden utilizando el Factory
+        $order = Order::factory()->create([
+            'customer_id' => $user->id,
+        ]);
+        $response = $this->post('api/order/create', [
+            'customer_id' => $order->customer_id,
+        ]);
 
-//           $response = $this->post('api/order/create', [
-//             'token' => $token
-//           ]);
+        $response->assertStatus(200);
+    }
+    /** @test*/
+    //   api/orders_my
+    public function ok_is_returned_if_user_user_can_view_order_index()
+    {
+        // Crear un usuario utilizando el Factory
+        $user = User::factory()->create();
+        $user->assignRole('user');
 
-//           $response->assertStatus(200);
-//       }
-//       /** @test*/
-//     //   api/orders_my
-//       public function ok_is_returned_if_user_user_can_view_order_index(){
-//         $response = $this->post('api/login', [
-//                 'email' => 'testuser@example.com',
-//                 'password' => '12345678'
-//               ]);
+        $this->actingAs($user);
 
-//         $response->assertStatus(200);
-//         $token = $response->original['authorisation']['token'];
+        // Crear una orden utilizando el Factory
+        Order::factory(5)->create([
+            'customer_id' => $user->id,
+        ]);
 
-//           $response = $this->get('api/orders_my', [
-//             'token' => $token
-//           ]);
+        $response = $this->get('api/orders_my');
+        $response->assertStatus(200);
+        $response = $response->json();
+        $this->assertIsArray($response);
+        $ordersArray = $response['orders'];
+        $this->assertCount(5, $ordersArray);
+    }
+    /** @test*/
+    //    api/order/{id}
+    public function ok_is_returned_if_user_user_can_view_an_order()
+    {
 
-//           $response->assertStatus(200);
-//       }
-//        /** @test*/
-//     //    api/order/{id}
-//        public function ok_is_returned_if_user_user_can_view_an_order(){
-//         $response = $this->post('api/login', [
-//                 'email' => 'testuser@example.com',
-//                 'password' => '12345678'
-//               ]);
-//         $response->assertStatus(200);
+        // Crear un usuario utilizando el Factory
+        $user = User::factory()->create();
+        $user->assignRole('user');
 
-//           $response = $this->get('api/order/11');
+        $this->actingAs($user);
 
-//           $response->assertStatus(200);
+        // Crear una orden utilizando el Factory
+        $order = Order::factory()->create([
+            'customer_id' => $user->id,
+        ]);
 
-//       }
-//     /** @test*/
-//     //    api/orderdetail/create
-//     public function ok_is_returned_if_user_user_can_view_an_order_detail()
-//     {
-//         $response = $this->post('api/login', [
-//             'email' => 'testuser@example.com',
-//             'password' => '12345678'
-//         ]);
-//         $response->assertStatus(200);
-
-//         $orderDetailView = OrderDetail::factory()->create();
+        $response = $this->get('api/order/' . $order->id);
+        $response->assertStatus(200);
+    }
+    /** @test*/
+    //    api/orderdetail/create
+    public function ok_is_returned_if_user_user_can_create_an_order_detail()
+    {
+        // Crear un usuario utilizando el Factory
+        $user = User::factory()->create();
+        $user->assignRole('user');
         
-//         $token = $response->original['authorisation']['token'];
+        $this->actingAs($user);
+        $this->assertAuthenticatedAs($user);
 
-//         $response = $this->post('api/orderdetail/create', [
-//             'token'=> $token,
-//             'order_id' => $orderDetailView->order_id,
-//             'entrepreneurship_id' => $orderDetailView->entrepreneurship_id,
-//             'quantity' => $orderDetailView->quantity,
-           
-//         ]);
-//         $response->assertStatus(200);
-//     }
-// }
+        $order = Order::factory()->create([
+            'customer_id' => $user->id,
+        ]);
+
+        $response = $this->post('api/orderdetail/create', [
+            "order_id" => $order->id,
+            "entrepreneurship_id" => 33,
+            "quantity" => 3
+        ]);
+        $response->assertStatus(200);
+    }
+}
