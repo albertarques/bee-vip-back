@@ -87,14 +87,24 @@ class UsersController extends Controller
 
     $request->validate([
       'username' => 'required|string|max:255|unique:users,username,'.$user_id,
-      'picture' => 'nullable|string|max:255',
+      'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       'email' => 'required|email|max:255',
       'password' => 'required|string|min:8',
       'phone' => 'required|string|digits_between:9,15|unique:users,phone,'.$user_id,
     ]);
 
     $user->username = $request->username;
-    $user->picture = $request->picture;
+    if ($request->hasFile('picture')) {
+      $picture = $request->file('picture');
+      $picture_name = time() . '.' . $picture->getClientOriginalExtension();
+      $picture_path = $picture->store('public/images');
+      $picture->move(public_path($picture_path), $picture_name);
+      $user->picture = $picture_path . $picture_name;
+    } else {
+      $user->picture = 'public/images/default/default-user.png';
+    }
+
+    // $user->picture = $request->picture;
     $user->email = $request->email;
     $user->password = Hash::make($request->password);
     $user->phone = $request->phone;

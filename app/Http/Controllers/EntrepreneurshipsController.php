@@ -92,22 +92,23 @@ class EntrepreneurshipsController extends Controller
    */
   public function create(Request $request)
   {
-    $user_id = auth()->user()->id;
+    $user = auth()->user();
+
+    $user_phone = $user->phone;
+    $user_email = $user->email;
 
     $request->validate([
-      'name' => 'required',
+      'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       'title' => 'required|max:255',
       'description' => 'required|max:1000',
-      'product_img' => 'required',
+      'product_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       'price' => 'required|numeric|min:0',
       'category_id' => 'required|exists:categories,id',
-      // 'cash_payment' => 'required|boolean',
-      // 'card_payment' => 'required|boolean',
-      // 'bizum_payment' => 'required|boolean',
-      // 'stock' => 'nullable|integer|min:0',
-      // 'phone' => 'nullable',
-      // 'email' => 'nullable|email',
-      // 'location' => 'required'
+      'cash_payment' => 'required|boolean',
+      'card_payment' => 'required|boolean',
+      'bizum_payment' => 'required|boolean',
+      'stock' => 'nullable|integer|min:0',
+      'location' => 'required'
     ]);
 
     // handle image
@@ -117,11 +118,28 @@ class EntrepreneurshipsController extends Controller
     $image->move(public_path($imagePath), $imageName);
 
     $entrepreneurship = new Entrepreneurship;
-    //handle store image
-    $entrepreneurship->product_img = $imagePath . $imageName;
-    //
-    if($user_id) $entrepreneurship->user_id = $user_id;
-    $entrepreneurship->name = $request->name;
+    $entrepreneurship->user_id = $user->id;
+
+    if ($request->hasFile('logo')) {
+      $logo = $request->file('logo');
+      $logo_name = time() . '.' . $logo->getClientOriginalExtension();
+      $logo_path = $logo->store('public/images');
+      $logo->move(public_path($logo_path), $logo_name);
+      $entrepreneurship->logo = $logo_path . $logo_name;
+    } else {
+      $entrepreneurship->logo = 'public/images/default/default-logo.png';
+    }
+
+    if ($request->hasFile('product_img')) {
+      $product_img = $request->file('product_img');
+      $product_img_name = time() . '.' . $product_img->getClientOriginalExtension();
+      $product_img_path = $product_img->store('public/images');
+      $product_img->move(public_path($product_img_path), $product_img_name);
+      $entrepreneurship->product_img = $product_img_path . $product_img_name;
+    } else {
+      $entrepreneurship->product_img = 'public/images/deafult/default-product-img.png';
+    }
+
     $entrepreneurship->title = $request->title;
     $entrepreneurship->description = $request->description;
     $entrepreneurship->product_img = $request->product_img;
@@ -133,9 +151,15 @@ class EntrepreneurshipsController extends Controller
     // $entrepreneurship->stock = $request->stock;
     $entrepreneurship->availability_state = 1;
     $entrepreneurship->inspection_state = 1;
-    // $entrepreneurship->phone = $request->phone;
-    // $entrepreneurship->email = $request->email;
-    // $entrepreneurship->location = $request->location;
+
+    if($request->phone == null) {
+      $entrepreneurship->phone = $user_phone;
+    }
+    if($request->email == null) {
+      $entrepreneurship->email = $user_email;
+    }
+
+    $entrepreneurship->location = $request->location;
     $entrepreneurship->save();
 
     return response()->json([
@@ -218,8 +242,8 @@ class EntrepreneurshipsController extends Controller
 
     $request->validate([
       'title' => 'required|unique:entrepreneurships',
-      'logo' => 'nullable',
-      'product_img' => 'nullable',
+      'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+      'product_img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
       'description' => 'required',
       'price' => 'required|numeric',
       'category_id' => 'required|exists:categories,id',
@@ -236,8 +260,17 @@ class EntrepreneurshipsController extends Controller
     $entrepreneurship->id = $entrepreneurship->id;
     $entrepreneurship->user_id = $entrepreneurship->user_id;
     $entrepreneurship->title = $request->title;
-    $entrepreneurship->logo = $request->logo;
-    $entrepreneurship->product_img = $request->product_img;
+    if ($request->hasFile('logo')) {
+      $logo = $request->file('logo');
+      $logo_path = $logo->store('public/images');
+      $entrepreneurship->logo = asset(str_replace('public/', 'storage/', $logo_path));
+    };
+
+    if ($request->hasFile('product_img')) {
+      $product_img = $request->file('product_img');
+      $product_img_path = $product_img->store('public/images');
+      $entrepreneurship->product_img = asset(str_replace('public/', 'storage/', $product_img_path));
+    };
     $entrepreneurship->description = $request->description;
     $entrepreneurship->price = $request->price;
     $entrepreneurship->category_id = $request->category_id;
