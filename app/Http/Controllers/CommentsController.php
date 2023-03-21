@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Termwind\Components\Dd;
 
 class CommentsController extends Controller
 {
@@ -26,38 +27,13 @@ class CommentsController extends Controller
   {
 
     $user_id = auth()->user()->id;
-    $comments = Comment::find($user_id);
+    $comments = Comment::all()->where('user_id','=', $user_id);
 
-    // Verificar que el emprendimiento existe
-    if (!$comments) {
-      return response()->json([
-        'message' => 'Emprendimiento no encontrado'
-      ], 404);
-    }
-
+    // Verificar que el comentario existe
     return response()->json([
       'status' => 'success',
-      'message' => 'List of your comments',
+      'message' => 'comentarios encontrados',
       'comments' => $comments
-    ]);
-  }
-
-  public function create(Request $request, $entrepreneurship_id)
-  {
-    $user_id = auth()->user()->id;
-    $request->validate([
-      'comment' => 'nullable|string|max:500',       'score' => 'required'
-    ]);
-    $comment = new Comment;
-    $comment->user_id = $user_id;
-    $comment->entrepreneurship_id = $entrepreneurship_id;
-    $comment->comment = $request->comment;
-    $comment->score = $request->score;
-    $comment->save();
-    return response()->json([
-      'status' => 'success',
-      'message' => 'Comment created successfully.',
-      'comment' => $comment,
     ]);
   }
 
