@@ -2,66 +2,195 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use App\Models\Entrepreneurship;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
-use App\Permissions\Permission as MyPermissions;
+use Tests\TestCase;
+use Illuminate\Support\Facades\Artisan;
 
-class EntrepreneurshipTest extends TestCase{
+class EntrepreneurshipTest extends TestCase
+{
+  public function setUp(): void {
+    parent::setUp();
+    Artisan::call('migrate:fresh --seed --env=testing');
+  }
 
-    use RefreshDatabase;
+  /** @test */
+  // api/entrepreneurship/create
+  public function ok_is_returned_if_admin_create_entrepreneurship(){
+    // Crear un usuario admin utilizando el Factory
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
 
-    private User $user;
-    private Role $role;
-    private User $admin;
-    private Role $roleAdmin;
+    // Loguearse con el usuario admin
+    $this->actingAs($admin);
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
-        $this->user = User::factory()->create();
-        $this->admin = User::factory()->create();
-        // $testPermission = 'create-entrepreneurship';
-        // Permission::create(['guard_name' => 'api', 'name' => $testPermission]);
-        $this->role = Role::create(['name' => 'user']);
-        $this->roleAdmin = Role::create(['name' => 'admin']);
-        $this->user->assignRole($this->role);
-        $this->admin->assignRole($this->roleAdmin);
-        // $this->role->givePermissionTo($testPermission);
-    }
+    // Crear un emprendimiento utilizando el Factory
+    $emprendimiento = Entrepreneurship::factory()->create([
+        'user_id' => $admin->id,
+    ]);
 
-    /** @test*/
-    public function test_user_can_not_create_entrepreneirship(){
-        $this->actingAs($this->user)
-            ->post('/api/entrepreneurship/create')
-            ->assertStatus(403);
-    }
+    // Verificar que el emprendimiento fue creado exitosamente
+    $this->assertDatabaseHas('entrepreneurships', [
+        'id' => $emprendimiento->id,
+        'title' => $emprendimiento->title,
+        'user_id' => $admin->id,
+    ]);
+  }
 
-     /** @test */
-     public function test_admin_can_create_entrepreneurship()
-     {
-         // dd($this->user);
-         $this->actingAs($this->admin)
-             ->post('/api/entrepreneurship/create', [
-                'user_id' => $this->admin->id,
-                'title' => 'Juan Valdez',
-                'logo' => 'cafe',
-                'product_img' => 'file.jpg',
-                'description' => 'El mejor cafe del mundo',
-                'price' => 100,
-                'category_id' => 1,
-                'cash_payment' => '0',
-                'card_payment' => '0',
-                'bizum_payment' =>'1',
-                'stock' => 100,
-                'availability_state' => 1,
-                'phone' => '12345789',
-                'email' => 'holacafe@gamil.com',
-                'location' => 'Antioquia',
-             ])
-             ->assertStatus(200);
-     }
+  /** @test */
+  // api/entrepreneurship/delete_my/{id}
+  public function ok_is_returned_if_admin_can_delete_his_entrepreneurship(){
+    // Crear un usuario admin utilizando el Factory
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+
+    // Loguearse con el usuario admin
+    $this->actingAs($admin);
+
+    // Crear un emprendimiento utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create([
+      'user_id' => $admin->id,
+    ]);
+
+    $response = $this->delete('api/entrepreneurship/delete_my/' . $entrepreneurship->id);
+
+    $response->assertStatus(200);
+
+  }
+
+  /** @test */
+  // api/entrepreneurship/update_my/{id}
+  public function ok_is_returned_if_admin_can_update_his_entrepreneurship(){
+    // Crear un usuario admin utilizando el Factory
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+
+    // Loguearse con el usuario admin
+    $this->actingAs($admin);
+
+    // Crear un emprendimiento utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create([
+      'user_id' => $admin->id,
+    ]);
+
+    $response = $this->patch('api/entrepreneurship/update_my/' . $entrepreneurship->id, [
+      'title' => 'Nuevo titulo',
+      'logo' => '',
+      'product_img' => '',
+      'description' => 'Nueva descripcion',
+      'user_id' => $admin->id,
+      'price' => 100,
+      'category_id' => 1,
+      'cash_payment' => 1,
+      'card_payment' => 1,
+      'bizum_payment' => 1,
+      'stock' => 25,
+      'phone' => '666666666',
+      'email' => 'entrepreneurshipTest@example.com',
+      'location' => 'Calle falsa 123',
+      'availability_state' => 1,
+    ]);
+
+    $response->assertStatus(200);
+
+  }
+
+  /** @test */
+  // api/entrepreneurships/view_my
+  public function ok_is_returned_if_admin_view_a_list_of_his_entrepreneurships(){
+    // Crear un usuario admin utilizando el Factory
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+
+    // Loguearse con el usuario admin
+    $this->actingAs($admin);
+
+    // Crear un emprendimiento utilizando el Factory
+    $entrepreneurships = Entrepreneurship::factory(5)->create([
+      'user_id' => $admin->id,
+    ]);
+
+    // Verificar que devuelve la lista de emprendimientos del usuario
+    $response = $this->get('api/entrepreneurships/view_my');
+    $response->assertStatus(200);
+    $response = $response->json();
+
+    $this->assertIsArray($response);
+
+    $entrepreneurshipArray = $response['entrepreneurships'];
+    $this->assertCount(5, $entrepreneurshipArray);
+  }
+
+  /** @test */
+  // api/entrepreneurship/delete/{id}
+  public function ok_is_returned_if_superadmin_can_delete_entrepreneurship(){
+
+    // Crear un usuario superadmin utilizando el Factory
+    $superadmin = User::factory()->create();
+    $superadmin->assignRole('superadmin');
+
+    $token = $superadmin->createToken('Test Token')->accessToken;
+    $headers = ['Authorization' => "Bearer $token"];
+
+    // Loguearse con el usuario superadmin
+    $this->actingAs($superadmin);
+    $this->assertAuthenticatedAs($superadmin);
+
+    // Crear un emprendimiento utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create([
+      'user_id' => $superadmin->id,
+    ]);
+
+    $this->assertDatabaseHas('entrepreneurships', [
+      'id' => $entrepreneurship->id,
+    ]);
+
+    $deletedEntrepreneurship = $this->delete('api/entrepreneurship/delete/' . $entrepreneurship->id, $headers);
+    $deletedEntrepreneurship->assertStatus(200);
+
+    $this->assertDatabaseMissing('entrepreneurships', [
+        'id' => $entrepreneurship->id,
+    ]);
+  }
+
+  /** @test */
+  // api/entrepreneurship/inspect/{id}
+  public function ok_is_returned_if_superadmin_can_inspect_entreprenenurship(){
+    // Crear un usuario admin utilizando el Factory
+    $superadmin = User::factory()->create();
+    $superadmin->assignRole('superadmin');
+
+    // Loguearse con el usuario admin
+    $this->actingAs($superadmin);
+
+    // Crear un emprendimiento utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create();
+
+    $response = $this->patch('api/entrepreneurship/inspect/' . $entrepreneurship->id, [
+      'inspection_state' => 3
+    ]);
+
+    $response->assertStatus(200);
+  }
+
+  /** @test */
+  // api/entrepreneurships/pending
+  public function ok_is_returned_if_admin_can_view_pending_entrepreneurships(){
+    // Crear un usuario admin utilizando el Factory
+    $superadmin = User::factory()->create();
+    $superadmin->assignRole('superadmin');
+
+    // Loguearse con el usuario admin
+    $this->actingAs($superadmin);
+
+    // Crear un emprendimiento utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create([
+      'inspection_state' => 1
+    ]);
+
+    $response = $this->get('api/entrepreneurships/pending');
+
+    $response->assertStatus(200);
+  }
+
 }
