@@ -16,6 +16,9 @@ Route::middleware(['middleware' => 'auth.jwt'])->group(function () {
   Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
   Route::post('me', 'App\Http\Controllers\AuthController@me');
 
+  // TODO: WHAT'S HAPPENS WITH THIS ROUTE?
+  Route::post('payments', [PaymentController::class, 'process']);
+
   Route::controller(UsersController::class)->group(function () {
     // User, Admin, Superadmin **********************************************
     Route::patch('me/update', 'update_me')->middleware('can:user-update-my-profile');
@@ -26,9 +29,6 @@ Route::middleware(['middleware' => 'auth.jwt'])->group(function () {
     Route::delete('user/delete/{id}', 'destroy')->middleware('can:user-delete');
     Route::patch('user/update/{id}', 'update_role')->middleware('can:user-role-update');
   });
-
-  // TODO: WHAT'S HAPPENS WITH THIS ROUTE?
-  Route::post('payments', [PaymentController::class, 'process']);
 
 // Rutas con Autorización y Permisos
   Route::controller(PaymentMethodsController::class)->group(function () {
