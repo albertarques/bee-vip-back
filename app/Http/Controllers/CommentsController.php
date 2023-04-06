@@ -25,13 +25,13 @@ class CommentsController extends Controller
   public function index_my()
   {
 
-    $user_id = auth()->user()->id;
-    $comments = Comment::find($user_id);
+    $user_id = Auth::user()->id;
+    $comments = Comment::where('user_id', $user_id)->get();
 
-    // Verificar que el emprendimiento existe
+    // Verificar que el comentario existe
     if (!$comments) {
       return response()->json([
-          'message' => 'Emprendimiento no encontrado'
+          'message' => 'Comentario no encontrado'
       ], 404);
     }
 
@@ -43,9 +43,10 @@ class CommentsController extends Controller
 
   }
 
-  public function create(Request $request, $entrepreneurship_id){
+  public function create(Request $request, $entrepreneurship_id)
+  {
 
-    $user_id = auth()->user()->id;
+    $user_id = Auth::user()->id;
 
     $request->validate([
       'comment' => 'nullable|string|max:500',
@@ -79,82 +80,87 @@ class CommentsController extends Controller
   {
     $comment = Comment::find($id);
 
-    // Verificar que el emprendimiento existe
-    if (!$comment) {
-      return response()->json([
-          'message' => 'Comentario no encontrado.'
-      ], 404);
-    }
+    // Verificar que el comentario existe
+      if (!$comment) {
+        return response()->json([
+            'message' => 'Comentario no encontrado.'
+        ], 404);
+      }
 
     // Verificar que el usuario está autorizado para borrar el emprendimiento
-    if (Auth::user()->id !== $comment->user_id) {
-      return response()->json([
-        'message' => 'No autorizado para editar este comentario.'
-      ], 401);
-    }
+      if (Auth::user()->id !== $comment->user_id) {
+        return response()->json([
+          'message' => 'No autorizado para editar este comentario.'
+        ], 401);
+      }
 
-    $request->validate([
-      'score' => 'required|integer|max:5',
+    // Validar los datos de entrada
+      $request->validate([
+      'score' => 'required|integer|max:5|min:1',
       'comment' => 'required|string|max:500',
-    ]);
+      ]);
 
-    $comment = Comment::find($id);
-    $comment->entrepreneurship_id = $comment->entrepreneurship_id;
-    $comment->user_id = $comment->user_id;
-    $comment->comment = $request->comment;
-    $comment->score = $request->score;
-    $comment->save();
+    // Actualizar el emprendimiento
+      $comment = Comment::find($id);
+      $comment->entrepreneurship_id = $comment->entrepreneurship_id;
+      $comment->user_id = $comment->user_id;
+      $comment->comment = $request->comment;
+      $comment->score = $request->score;
+      $comment->save();
 
-    return response()->json([
-      'status' => 'success',
-      'message' => 'Comment updated successfully.',
-      'comment' => $comment,
-    ]);
+    // Devolver la respuesta
+      return response()->json([
+        'status' => 'success',
+        'message' => 'Comment updated successfully.',
+        'comment' => $comment,
+      ]);
   }
 
   public function delete_my($id)
   {
     $comment = Comment::find($id);
 
-    // Verificar que el emprendimiento existe
-    if (!$comment) {
+    // Verificar que el comentario existe
+      if (!$comment) {
+        return response()->json([
+            'message' => 'Comentario no encontrado.'
+        ], 404);
+      }
+
+    // Verificar que el usuario está autorizado para borrar el comentario
+      if (Auth::user()->id !== $comment->user_id) {
+        return response()->json([
+          'message' => 'No autorizado para editar este comentario.'
+        ], 401);
+      }
+
+      $comment = Comment::find($id);
+      $comment->delete();
+
+    // Devolver la respuesta
       return response()->json([
-          'message' => 'Comentario no encontrado.'
-      ], 404);
-    }
-
-    // Verificar que el usuario está autorizado para borrar el emprendimiento
-    if (Auth::user()->id !== $comment->user_id) {
-      return response()->json([
-        'message' => 'No autorizado para editar este comentario.'
-      ], 401);
-    }
-
-    $comment = Comment::find($id);
-    $comment->delete();
-
-    return response()->json([
-      'status' => 'success',
-      'message' => 'Comment deleted successfully.',
-      'comment' => $comment,
-    ]);
+        'status' => 'success',
+        'message' => 'Comment deleted successfully.',
+        'comment' => $comment,
+      ]);
   }
 
   public function delete($id)
   {
     $comment = Comment::find($id);
 
-    // Verificar que el emprendimiento existe
-    if (!$comment) {
+    // Verificar que el comentario existe
+      if (!$comment) {
+        return response()->json([
+            'message' => 'Comentario no encontrado.'
+        ], 404);
+      }
+
+      $comment = Comment::find($id);
+      $comment->delete();
+
+    // Devolver la respuesta
       return response()->json([
-          'message' => 'Comentario no encontrado.'
-      ], 404);
-    }
-
-    $comment = Comment::find($id);
-    $comment->delete();
-
-    return response()->json([
       'status' => 'success',
       'message' => 'Comment deleted successfully.',
       'comment' => $comment,
