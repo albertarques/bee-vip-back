@@ -96,6 +96,36 @@ class CommentsTest extends TestCase
       $response->assertStatus(200);
   }
 
+  /** @test */
+  // comment/delete/{id}
+  public function ok_is_returned_if_superadmin_can_delete_a_comment() {
+    // Crear un usuario superadmin utilizando el Factory
+      $superadmin = User::factory()->create();
+      $superadmin->assignRole('superadmin');
+
+    // Loguearse con el usuario superadmin
+      $this->actingAs($superadmin);
+
+    // Crear un entrepreneurship utilizando el Factory
+      $entrepreneurship = Entrepreneurship::factory()->create();
+
+    // Crear un usuario user utilizando el Factory
+      $user = User::factory()->create();
+      $user->assignRole('user');
+
+    // Crear un comentario utilizando el Factory
+      $comment = Comment::factory()->create([
+        'entrepreneurship_id' => $entrepreneurship->id,
+        'user_id' => $user->id,
+        "score" => 1,
+        "comment" => "Initial comment"
+      ]);
+
+    // Eliminar el comentario
+      $response = $this->delete('api/comment/delete/' . $comment->id);
+
+      $response->assertStatus(200);
+  }
 
   /** @test */
   // comment/index_my
