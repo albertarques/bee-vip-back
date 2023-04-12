@@ -40,6 +40,52 @@ class CommentsTest extends TestCase
   }
 
   /** @test */
+  // comment/create/{entrepreneurship_id}
+  public function ok_is_returned_if_admin_can_create_coment_on_entrepreneurship(){
+    // Crear un usuario admin utilizando el Factory
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+
+    // Crear un entrepreneurship utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create();
+    $entrepreneurship_id = $entrepreneurship->id;
+
+    // Loguearse con el usuario admin
+    $this->actingAs($admin);
+
+    // Crear un comentario con comentario y puntuación utilizando el Factory
+    $response = $this->post('api/comment/create/' . $entrepreneurship_id, [
+      "score" => 5,
+      "comment" => "Me parece un gran servicio y producto."
+    ]);
+
+    $response->assertStatus(200);
+  }
+
+  /** @test */
+  // comment/create/{entrepreneurship_id}
+  public function ok_is_returned_if_superadmin_can_create_coment_on_entrepreneurship(){
+    // Crear un usuario superadmin utilizando el Factory
+    $superadmin = User::factory()->create();
+    $superadmin->assignRole('superadmin');
+
+    // Crear un entrepreneurship utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create();
+    $entrepreneurship_id = $entrepreneurship->id;
+
+    // Loguearse con el usuario superadmin
+    $this->actingAs($superadmin);
+
+    // Crear un comentario con comentario y puntuación utilizando el Factory
+    $response = $this->post('api/comment/create/' . $entrepreneurship_id, [
+      "score" => 5,
+      "comment" => "Me parece un gran servicio y producto."
+    ]);
+
+    $response->assertStatus(200);
+  }
+
+  /** @test */
   // comment/update_my/{id}
   public function ok_is_returned_if_user_update_his_comment(){
     // Crear un usuario superadmin utilizando el Factory
@@ -70,6 +116,40 @@ class CommentsTest extends TestCase
   }
 
   /** @test */
+  // comment/update_my/{id}
+  public function ko_is_returned_if_user_update_other_comment(){
+    // Crear un usuario user utilizando el Factory
+    $user = User::factory()->create();
+    $user->assignRole('user');
+
+    // Loguearse con el usuario user
+    $this->actingAs($user);
+
+    // Crear un usuario admin utilizando el Factory
+    $admin = User::factory()->create();
+    $admin->assignRole('admin');
+
+    // Crear un entrepreneurship utilizando el Factory
+    $entrepreneurship = Entrepreneurship::factory()->create();
+
+    // Crear un comentario utilizando el Factory
+    $comment = Comment::factory()->create([
+      'entrepreneurship_id' => $entrepreneurship->id,
+      'user_id' => $admin->id,
+      "score" => 1,
+      "comment" => "Initial comment"
+    ]);
+
+    // Actualizar el comentario
+    $response = $this->patch('api/comment/update_my/' . $comment->id, [
+      "score" => 5,
+      "comment" => "Updated Comment"
+    ]);
+
+    $response->assertStatus(401);
+  }
+
+  /** @test */
   // comment/delete_my/{id}
   public function ok_is_returned_if_superadmin_delete_his_comment(){
     // Crear un usuario user utilizando el Factory
@@ -94,6 +174,91 @@ class CommentsTest extends TestCase
       $response = $this->delete('api/comment/delete_my/' . $comment->id);
 
       $response->assertStatus(200);
+  }
+
+  /** @test */
+  // comment/delete_my/{id}
+  public function ok_is_returned_if_admin_delete_his_comment(){
+    // Crear un usuario user utilizando el Factory
+      $admin = User::factory()->create();
+      $admin->assignRole('admin');
+
+    // Loguearse con el usuario user
+      $this->actingAs($admin);
+
+    // Crear un entrepreneurship utilizando el Factory
+      $entrepreneurship = Entrepreneurship::factory()->create();
+
+    // Crear un comentario utilizando el Factory
+      $comment = Comment::factory()->create([
+        'entrepreneurship_id' => $entrepreneurship->id,
+        'user_id' => $admin->id,
+        "score" => 1,
+        "comment" => "Initial comment"
+      ]);
+
+    // Eliminar el comentario
+      $response = $this->delete('api/comment/delete_my/' . $comment->id);
+
+      $response->assertStatus(200);
+  }
+
+  /** @test */
+  // comment/delete_my/{id}
+  public function ok_is_returned_if_user_delete_his_comment(){
+    // Crear un usuario user utilizando el Factory
+      $user = User::factory()->create();
+      $user->assignRole('user');
+
+    // Loguearse con el usuario user
+      $this->actingAs($user);
+
+    // Crear un entrepreneurship utilizando el Factory
+      $entrepreneurship = Entrepreneurship::factory()->create();
+
+    // Crear un comentario utilizando el Factory
+      $comment = Comment::factory()->create([
+        'entrepreneurship_id' => $entrepreneurship->id,
+        'user_id' => $user->id,
+        "score" => 1,
+        "comment" => "Initial comment"
+      ]);
+
+    // Eliminar el comentario
+      $response = $this->delete('api/comment/delete_my/' . $comment->id);
+
+      $response->assertStatus(200);
+  }
+
+    /** @test */
+  // comment/delete_my/{id}
+  public function ko_is_returned_if_user_delete_other_users_comment() {
+    // Crear un usuario user utilizando el Factory
+      $user = User::factory()->create();
+      $user->assignRole('user');
+
+    // Loguearse con el usuario user
+      $this->actingAs($user);
+
+    // Crear un usuario admin utilizando el Factory
+      $admin = User::factory()->create();
+      $admin->assignRole('admin');
+
+    // Crear un entrepreneurship utilizando el Factory
+      $entrepreneurship = Entrepreneurship::factory()->create();
+
+    // Crear un comentario utilizando el Factory
+      $comment = Comment::factory()->create([
+        'entrepreneurship_id' => $entrepreneurship->id,
+        'user_id' => $admin->id,
+        "score" => 1,
+        "comment" => "Initial comment"
+      ]);
+
+    // Eliminar el comentario
+      $response = $this->delete('api/comment/delete_my/' . $comment->id);
+
+      $response->assertStatus(401);
   }
 
   /** @test */
@@ -125,6 +290,68 @@ class CommentsTest extends TestCase
       $response = $this->delete('api/comment/delete/' . $comment->id);
 
       $response->assertStatus(200);
+  }
+
+  /** @test */
+  // comment/delete/{id}
+  public function ko_is_returned_if_admin_can_delete_a_comment(){
+    // Crear un usuario admin utilizando el Factory
+      $admin = User::factory()->create();
+      $admin->assignRole('admin');
+
+    // Loguearse con el usuario admin
+      $this->actingAs($admin);
+
+    // Crear un entrepreneurship utilizando el Factory
+      $entrepreneurship = Entrepreneurship::factory()->create();
+
+    // Crear un usuario user utilizando el Factory
+      $user = User::factory()->create();
+      $user->assignRole('user');
+
+    // Crear un comentario utilizando el Factory
+      $comment = Comment::factory()->create([
+        'entrepreneurship_id' => $entrepreneurship->id,
+        'user_id' => $user->id,
+        "score" => 1,
+        "comment" => "Initial comment"
+      ]);
+
+    // Eliminar el comentario
+      $response = $this->delete('api/comment/delete/' . $comment->id);
+
+      $response->assertStatus(403);
+  }
+
+  /** @test */
+  // comment/delete/{id}
+  public function ko_is_returned_if_user_can_delete_a_comment(){
+    // Crear un usuario user utilizando el Factory
+      $user = User::factory()->create();
+      $user->assignRole('user');
+
+    // Loguearse con el usuario user
+      $this->actingAs($user);
+
+    // Crear un entrepreneurship utilizando el Factory
+      $entrepreneurship = Entrepreneurship::factory()->create();
+
+    // Crear un usuario admin utilizando el Factory
+      $admin = User::factory()->create();
+      $admin->assignRole('admin');
+
+    // Crear un comentario utilizando el Factory
+      $comment = Comment::factory()->create([
+        'entrepreneurship_id' => $entrepreneurship->id,
+        'user_id' => $admin->id,
+        "score" => 1,
+        "comment" => "Initial comment"
+      ]);
+
+    // Eliminar el comentario
+      $response = $this->delete('api/comment/delete/' . $comment->id);
+
+      $response->assertStatus(403);
   }
 
   /** @test */
@@ -162,5 +389,4 @@ class CommentsTest extends TestCase
 
       $response->assertStatus(200);
   }
-
 }
