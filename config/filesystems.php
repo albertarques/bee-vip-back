@@ -32,13 +32,37 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('storage/app/public'),
+            'throw' => false,
+        ],
+
+        'logos' => [
+            'driver' => 'local',
+            'root' => storage_path('storage/app/public/logos'),
+            'url' => env('APP_URL').'/logos',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'entrepreneurships' => [
+            'driver' => 'local',
+            'root' => storage_path('storage/app/public/entrepreneurships'),
+            'url' => env('APP_URL').'/entrepreneurships',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'users' => [
+            'driver' => 'local',
+            'root' => storage_path('storage/app/public/users'),
+            'url' => env('APP_URL').'/users',
+            'visibility' => 'public',
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('storage/app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
@@ -70,7 +94,11 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('storage/app/public'),
+        public_path('logos') => storage_path('storage/app/public/logos'),
+        public_path('entrepreneurships') => storage_path('storage/app/public/entrepreneurships'),
+        public_path('users') => storage_path('storage/app/public/users')
+
     ],
 
 ];
