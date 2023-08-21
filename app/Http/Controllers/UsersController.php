@@ -97,14 +97,14 @@ class UsersController extends Controller
     if ($request->hasFile('picture')) {
       $picture = $request->file('picture');
       $picture_name = time() . '.' . $picture->getClientOriginalExtension();
-      $picture_path = $picture->store('public/images');
+      $picture_path = $picture->store('users');
       $picture->move(public_path($picture_path), $picture_name);
       $user->picture = $picture_path . $picture_name;
     } else {
       $user->picture = 'public/images/default/default-user.png';
     }
 
-    // $user->picture = $request->picture;
+    $user->picture = $request->picture;
     $user->email = $request->email;
     $user->password = Hash::make($request->password);
     $user->phone = $request->phone;
