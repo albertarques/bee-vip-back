@@ -16,6 +16,28 @@ class EntrepreneurshipTest extends TestCase
 
   /** @test */
   // api/entrepreneurship/create
+  public function ko_is_returned_if_user_create_entrepreneurship(){
+    // Crear un usuario admin utilizando el Factory
+    $user = User::factory()->create();
+    $user->assignRole('user');
+
+    // Loguearse con el usuario admin
+    $this->actingAs($user);
+
+    // Crear un emprendimiento utilizando el Factory y observar la respuesta del servidor
+    $entrepreneurship = Entrepreneurship::factory()->create([
+        'user_id' => $user->id,
+    ]);
+
+
+    // Verificar que la respuesta del servidor es un codigo 403
+    $response = $this->post('api/entrepreneurship/create');
+    $response->assertStatus(403);
+
+  }
+
+  /** @test */
+  // api/entrepreneurship/create
   public function ok_is_returned_if_admin_create_entrepreneurship(){
     // Crear un usuario admin utilizando el Factory
     $admin = User::factory()->create();
